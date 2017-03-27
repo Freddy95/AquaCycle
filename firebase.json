@@ -4,11 +4,16 @@
   },
   "hosting": {
     "public": "public",
-    "rewrites": [
+    "redirects": [
       {
-        "source": "**",
-        "destination": "/GameDesignDocument/GameDesignDocument.html"
+        "source": "/benchmark1",
+        "destination": "/GameDesignDocument/GameDesignDocument.html",
+        "type" : 301
       }
-    ]
+    ],"rewrites": [ {
+      "source": "**",
+      "destination": "/404.html"
+    } ]
+
   }
 }
