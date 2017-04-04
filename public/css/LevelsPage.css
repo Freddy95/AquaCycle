@@ -11,6 +11,7 @@ body{
 #heading{
 	text-align: center;
 	color: #2a4157;
+	margin-bottom: 1%;
 }
 
 .level{
@@ -39,7 +40,7 @@ body{
     -ms-transform:scale(1.10); /* IE 9 */
     -o-transform:scale(1.10); /* Opera */
      transform:scale(1.10);
-     
+
 }
 .levelTitle{
 	color: #2a4157;
