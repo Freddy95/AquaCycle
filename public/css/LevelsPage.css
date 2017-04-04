@@ -1,46 +1,4 @@
-a{
-	color: gray;
-	cursor: pointer;
-}
-.active{
-	background-color: #F2E7C9;
-}
-.nav {
- width: 100%;
- background-color: #d0bda5;
-}
-.bg-primary{
-	background-color: #d0bda5;
-}
-.nav li {
- width: 25%; 
- text-align: center; 
- font-size: 150%; 
- border-left: 1px gray solid;
-}
 
-.nav >li > a:hover{
-    background-color: #F2E7C9;
-
-}
-.nav-b{
-	 border-left: 1px gray solid;
-
-}
-.nav-b a{
-	color: gray;
-	cursor: pointer;
-}
-.nav-b a:hover{
-	color: #49739b;
-}
-
-#nav-logo{
-	width: 50%;
-	height: 200%;
-	margin: auto;
-	margin-top: -10px;
-}
 body{
 	background-color: #69a7e1;
 }
@@ -68,7 +26,7 @@ body{
 	background-color: #d0bda5;
 	border-radius: 0px;
 	border-color: #d0bda5;
-
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 	 -webkit-transition: all 0.2s ease; /* Safari and Chrome */
   	-moz-transition: all 0.2s ease; /* Firefox */
   	-o-transition: all 0.2s ease; /* IE 9 */
@@ -81,6 +39,7 @@ body{
     -ms-transform:scale(1.10); /* IE 9 */
     -o-transform:scale(1.10); /* Opera */
      transform:scale(1.10);
+     
 }
 .levelTitle{
 	color: #2a4157;
@@ -88,7 +47,7 @@ body{
 hr{
 	margin-left: 5%;
 	margin-right: 5%;
-	border-color: #F2E7C9;
+	border-color: #B8A69B;
 }
 .sprite{
 	width: 25%;
