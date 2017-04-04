@@ -1,0 +1,101 @@
+a{
+	color: gray;
+	cursor: pointer;
+}
+.active{
+	background-color: #F2E7C9;
+}
+.nav {
+ width: 100%;
+ background-color: #d0bda5;
+}
+.bg-primary{
+	background-color: #d0bda5;
+}
+.nav li {
+ width: 25%; 
+ text-align: center; 
+ font-size: 150%; 
+ border-left: 1px gray solid;
+}
+
+.nav >li > a:hover{
+    background-color: #F2E7C9;
+
+}
+.nav-b{
+	 border-left: 1px gray solid;
+
+}
+.nav-b a{
+	color: gray;
+	cursor: pointer;
+}
+.nav-b a:hover{
+	color: #49739b;
+}
+
+#nav-logo{
+	width: 50%;
+	height: 200%;
+	margin: auto;
+	margin-top: -10px;
+}
+body{
+	background-color: #69a7e1;
+}
+
+
+.navbar{
+	margin-bottom: 0;
+	border-radius: 0px;
+}
+#heading{
+	text-align: center;
+	color: #2a4157;
+}
+
+.level{
+	text-align: center;
+	background-color: #d0bda5;
+}
+
+.well{
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-top: 0px;
+	padding-bottom: 0px;	
+	background-color: #d0bda5;
+	border-radius: 0px;
+	border-color: #d0bda5;
+
+	 -webkit-transition: all 0.2s ease; /* Safari and Chrome */
+  	-moz-transition: all 0.2s ease; /* Firefox */
+  	-o-transition: all 0.2s ease; /* IE 9 */
+  	-ms-transition: all 0.2s ease; /* Opera */
+  	transition: all 0.2s ease;
+}
+.well:hover{
+	-webkit-transform:scale(1.10); /* Safari and Chrome */
+    -moz-transform:scale(1.10); /* Firefox */
+    -ms-transform:scale(1.10); /* IE 9 */
+    -o-transform:scale(1.10); /* Opera */
+     transform:scale(1.10);
+}
+.levelTitle{
+	color: #2a4157;
+}
+hr{
+	margin-left: 5%;
+	margin-right: 5%;
+	border-color: #F2E7C9;
+}
+.sprite{
+	width: 25%;
+}
+p{
+	margin-top: 15px;
+}
+
+
+

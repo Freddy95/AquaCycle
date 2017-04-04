@@ -1,0 +1,75 @@
+
+.active{
+	background-color: #F2E7C9;
+}
+.nav {
+ width: 100%;
+ background-color: #d0bda5;
+}
+.bg-primary{
+	background-color: #d0bda5
+}
+.nav li {
+ width: 25%; 
+ text-align: center; 
+ font-size: 150%; 
+}
+.nav-b{
+	 border-left: 1px gray solid;
+
+}
+.nav-b a{
+	color: gray;
+	cursor: pointer;
+}
+.nav-b a:hover{
+	color: #49739b;
+}
+.nav >li > a:hover{
+    background-color: #F2E7C9;
+
+}
+
+#nav-logo{
+	width: 50%;
+	height: 200%;
+	margin: auto;
+	margin-top: -10px;
+}
+body{
+	background-color: #69a7e1;
+}
+.sprite{
+	text-align: center;
+	width: 70%;
+	height: auto;
+}
+.spriteImage{
+	width: 50%;
+	height: auto;
+}
+
+table{
+	width: 90%;
+	margin-left: 5%;
+}
+td{
+	padding-bottom: 2.5%;
+	padding-top: 2.5%;
+
+}
+#spriteTable tr{
+	border-bottom: 1px #d0bda5 solid;
+}
+
+.developers td{
+	text-align: center;
+	font-size: 130%;
+}
+.developers td a{
+	color: #49739b;
+}
+
+#spriteTable tr:hover{
+	background-color: #49739b;
+}
