@@ -7,6 +7,10 @@ body{
 	width: 70%;
 	height: auto;
 }
+.spriteDivImage{
+	width: 70%;
+	height: auto;
+}
 .spriteImage{
 	width: 50%;
 	height: auto;
@@ -15,15 +19,16 @@ body{
 table{
 	width: 90%;
 	margin-left: 5%;
+	border-collapse: collapse;
+	border-spacing: 0 1em;
 }
 td{
 	padding-bottom: 2.5%;
 	padding-top: 2.5%;
 
 }
-#spriteTable tr{
-	border-bottom: 1px #49739b solid;
-}
+
+
 
 .developers td{
 	text-align: center;
@@ -33,10 +38,32 @@ td{
 	color: #49739b;
 }
 
-#spriteTable tr:hover{
-	background-color: #49739b;
-}
 
 .sprite{
 	padding-left: 7.5%;
+}
+#heading{
+	text-align: center;
+	color: #2a4157;
+	margin-bottom: 1%;
+}
+.spriteRow{
+	display: block;
+	width: 90%;
+	height: 100%;
+	margin-left: 5%;
+	background-color: #d0bda5;
+	border-radius: 0px;
+	border-color: #d0bda5;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+	padding: 25px 5px 25px 5px;
+	margin-bottom: 3%;
+}
+
+
+.spriteRow:last-child{
+	margin-bottom: 0;
+}
+.col-md-10 p{
+	font-size: 150%;
 }
