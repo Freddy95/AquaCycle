@@ -5,6 +5,7 @@ var controls;
 
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
+var gamePaused = false;
 
 AquaCycle.Game.prototype = {
     create: function(){
@@ -18,19 +19,37 @@ AquaCycle.Game.prototype = {
             PAUSE:          this.game.input.keyboard.addKey(Phaser.Keyboard.ESC),
         };
         //add a listener function the shift key to toggle walking speed
-        this.controls.PAUSE.onDown.add(function(){
-                movingSlow = !movingSlow;
+        this.controls.TOGGLE_SPEED.onDown.add(function(){
+                this.movingSlow = !this.movingSlow;
+                console.log(this.movingSlow);
         },this);
+
         //add a listener function to esc key to generate pause menu
-        this.controls.PAUSE.onDown.add(pauseGame);
+        this.controls.PAUSE.onDown.add(this.pauseGame,this);
     },
 
     update: function(){
-        
     },
 
-    //TODO: figure out how to pause the game
+    //method to pause the game, will inver the paused boolean once pressed;
+    //TODO:display an html pause menu page
     pauseGame: function(){
+        if(this.gamePaused){
+            console.log("unpaused");
+            this.game.paused = false;
+        } else {
+            console.log("paused");
+            this.game.paused = true;
+        }
+
+        this.gamePaused = !this.gamePaused;
+    },
+
+    /*
+        This method will get the information on mouseclick down of a certain object clicked
+        In theory this will be a listener function added dynamically to each object generated
+    */
+    getObjectInformation: function(){
 
     }
 }
