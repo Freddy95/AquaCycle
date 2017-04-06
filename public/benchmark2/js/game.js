@@ -1,7 +1,7 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls;
+var controls,player;
 
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
@@ -26,9 +26,29 @@ AquaCycle.Game.prototype = {
 
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
+
+        loadPlayer();
+        //loadPredators();
+        //loadPrey();
+        //loadDiscoveries();
     },
 
     update: function(){
+        //player movement method
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+        this.player.body.angularVelocity = 0;
+
+        if(this.controls.LEFT.isDown){
+            this.player.body.angularVelocity = -200;
+        }
+        else if(this.controls.RIGHT.isDown){
+            this.player.body.angularVelocity = 200;
+        }
+        if(cursors.up.isDown){
+            sprite.body.velocity.copyFrom(
+                game.physics.arcade.velocityFromAngle(this.player.angle,300));
+        }
     },
 
     //method to pause the game, will inver the paused boolean once pressed;
