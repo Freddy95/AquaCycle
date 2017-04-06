@@ -2,7 +2,9 @@ var AquaCycle = AquaCycle || {};
 
 //placeholder resolution
 //TODO: Figure out how to get adaptive resolution
-AquaCycle.game = new Phaser.Game(1280,720,Phaser.AUTO, 'game_location');
+var gameWidth = $('#game_location').width;
+var gameHeight = $('#game_location').height
+AquaCycle.game = new Phaser.Game(gameWidth,gameHeight,Phaser.AUTO, 'game_location');
 
 AquaCycle.game.state.add('Boot', AquaCycle.Boot);
 AquaCycle.game.state.add('Preload', AquaCycle.Preload);
