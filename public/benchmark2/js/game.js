@@ -6,6 +6,9 @@ var controls,player;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
 var gamePaused = false;
+var playerLoaded = false;
+var SLOW_VELOCITY = 100;
+var FAST_VELOCITY = 200;
 
 AquaCycle.Game.prototype = {
     create: function(){
@@ -26,28 +29,51 @@ AquaCycle.Game.prototype = {
 
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
-
-        loadPlayer();
-        //loadPredators();
-        //loadPrey();
-        //loadDiscoveries();
+        this.loadPlayer();
     },
 
     update: function(){
         //player movement method
-        this.player.body.velocity.x = 0;
-        this.player.body.velocity.y = 0;
-        this.player.body.angularVelocity = 0;
+        if(playerLoaded){
+            this.player.body.velocity.x = 0;
+            this.player.body.velocity.y = 0;
+            this.player.body.angularVelocity = 0;
+            this.processMovement();
+            console.log(this.controls);
+        }
+      
+        
+    },
 
+    /*
+        Method to get user input and then change the playe sprites speed
+    */
+    processMovement: function(){
+        console.log("hello");
         if(this.controls.LEFT.isDown){
-            this.player.body.angularVelocity = -200;
+            console.log("left")
+            //change velocity varying on if the player is moving slow
+            if(this.movingSlow) {
+                this.player.body.angularVelocity = -SLOW_VELOCITY;
+            }
+            else {
+                this.player.body.angularVelocity = -FAST_VELOCITY;
+            }
         }
-        else if(this.controls.RIGHT.isDown){
-            this.player.body.angularVelocity = 200;
+
+        else if(this.controls.RIGHT.isDown) {
+            if(this.movingSlow) {
+                this.player.boy.angularVelocity = SLOW_VELOCITY;
+            }
+            else{
+                this.player.body.angularVelocity = FAST_VELOCITY;
+            }
         }
-        if(cursors.up.isDown){
-            sprite.body.velocity.copyFrom(
-                game.physics.arcade.velocityFromAngle(this.player.angle,300));
+
+        //TODO:FIgure out how to rotate from center
+        if(this.controls.UP.isDown) {
+            this.player.body.velocity.copyFrom(
+                this.game.physics.arcade.velocityFromAngle(this.player.angle,300));
         }
     },
 
@@ -61,7 +87,6 @@ AquaCycle.Game.prototype = {
             console.log("paused");
             this.game.paused = true;
         }
-
         this.gamePaused = !this.gamePaused;
     },
 
@@ -71,5 +96,16 @@ AquaCycle.Game.prototype = {
     */
     getObjectInformation: function(){
 
+    },
+
+    loadPlayer: function(){
+        this.player = AquaCycle.game.add.sprite(300,200,'player');
+        AquaCycle.game.physics.arcade.enable(this.player);
+        AquaCycle.game.camera.follow(this.player);
+        playerLoaded = true;
+    },
+
+    loadLevel:function(){
+        
     }
 }
