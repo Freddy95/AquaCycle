@@ -8,7 +8,7 @@ var movingSlow = false;
 var gamePaused = false;
 var playerLoaded = false;
 var SLOW_VELOCITY = 100;
-var FAST_VELOCITY = 200;
+var FAST_VELOCITY = 100;
 
 AquaCycle.Game.prototype = {
     create: function(){
@@ -73,7 +73,7 @@ AquaCycle.Game.prototype = {
         //TODO:FIgure out how to rotate from center
         if(this.controls.UP.isDown) {
             this.player.body.velocity.copyFrom(
-                this.game.physics.arcade.velocityFromAngle(this.player.angle,300));
+                this.game.physics.arcade.velocityFromAngle(this.player.angle,150));
         }
     },
 
