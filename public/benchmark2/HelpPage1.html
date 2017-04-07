@@ -10,6 +10,7 @@
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     	<link rel="stylesheet" type="text/css" href="css/HelpPage.css">
 		<link rel="stylesheet" type="text/css" href="css/NavBar1.css">
+		<link rel="stylesheet" type="text/css" href="css/Modal.css">
 	</head>
 	<body>
 		<nav class="navbar bg-primary">
@@ -22,7 +23,7 @@
 				        <img id="nav-logo" alt="AquaCycle Logo" src="images/logo1.png">
 				      </a>
 		    		</li>
-		    		<li class="nav-b active pull-right" id="helpLink"><a href="HelpPage.html">Help</a></li>
+		    		<li class="nav-b active pull-right" id="helpLink"><a data-toggle="modal" data-target="#myModal">Help</a></li>
 		    		<li class="nav-b pull-right"><a href="ControlsPage.html">Controls</a></li>
 			        <li class="nav-b pull-right"><a href="LevelsPage.html">Levels</a></li>
 			     	<li class="nav-b pull-right"><a href="LevelsPage.html">Home</a></li>
@@ -83,6 +84,51 @@
 					</td>
 				</tr>
 			</table>
+		</div>
+
+		<button type="button" class="btn btn-info btn-lg" >Open Modal</button>
+
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog modal-lg">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		     
+		      <div class="modal-body">
+		      	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <div class="col-md-3">
+		        	
+		        	<table>
+		        		<caption><h3>Pause Menu</h3></caption>
+		        		<tr>
+		        			<td><button class="btn btn-primary">Save</button></td>
+		        		</tr>
+		        		<tr>
+		        			<td><button class="btn btn-primary">Home</button></td>
+		        		</tr>
+		        		<tr>
+		        			<td><button class="btn btn-primary">Restart</button></td>
+		        		</tr>
+		        	</table>
+		        	     	
+		        </div>
+		        <div class="col-md-9" >
+		        	<h2 id="itemHeading">Items Found</h2>
+		        	<div id="items">
+			        	<img src="images/sprite.png" class="item">
+			        	<img src="images/sprite.png" class="item">
+			        	<img src="images/sprite.png" class="item">
+			        	<img src="images/sprite.png" class="item">
+			        	<img src="images/sprite.png" class="item">
+			        	<img src="images/sprite.png" class="item">
+		        	</div>
+		        </div>
+		      </div>
+		      
+		    </div>
+
+		  </div>
 		</div>
 	</body>
 </html>

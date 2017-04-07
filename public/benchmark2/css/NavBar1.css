@@ -1,4 +1,6 @@
-
+.active{
+	text-decoration: underline;
+}
 
 .nav {
  background-color: #d0bda5;
@@ -55,3 +57,4 @@ li.nav-b{
 #helpLink{
 	margin-right: 5%;
 }
+
