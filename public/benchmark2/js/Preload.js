@@ -1,8 +1,8 @@
 var AquaCycle = AquaCycle || {};
 
-AquaCycle.preload = function(){};
+AquaCycle.Preload = function(){};
 
-AquaCycle.preload.prototype = {
+AquaCycle.Preload.prototype = {
     preload: function(){
         //loading screen??
         //example this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 128, 'preloadbar');
