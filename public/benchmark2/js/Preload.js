@@ -7,7 +7,8 @@ AquaCycle.Preload.prototype = {
         //loading screen??
         //example this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 128, 'preloadbar');
         AquaCycle.game.load.spritesheet('player', '../assets/shark.png',64,128);
-        AquaCycle.game.load.script('Load_Player.js','Load_Player.js')
+        AquaCycle.game.load.tilemap('level1','../assets/level1_draft.json',null,Phaser.Tilemap.TILED_JSON);
+        AquaCycle.game.load.image('world','../assets/DepthTileMockups.png')
     },
 
     create: function(){
