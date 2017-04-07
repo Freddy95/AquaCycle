@@ -1,15 +1,16 @@
 
 .active{
-	background-color: #F2E7C9;
 }
 .nav {
- width: 100%;
+ width: 90%;
  background-color: #d0bda5;
+ margin-left: 5%;
 }
 .bg-primary{
 	background-color: #d0bda5;
 	border: 0px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.09), 0 6px 20px 0 rgba(0, 0, 0, 0.09); 
+	height: 90%;
 }
 .nav li {
  width: 25%; 
@@ -24,14 +25,19 @@
 	height: 50%;
 	margin-bottom: 3.5%;
 	width: 1px;
-	border-left: 1px #9E8576 solid;
+	
 
 }
 .nav .active:before{
-	border: 0px;
+	width: 70%;
+	margin-left: 15%;
+	left: 0;
+	height: 0;
+	margin-bottom: 17%;
+	border: 1px #826D61 solid; 
 }
 .nav .active + li:before{
-	border-left: 0px #F2E7C9;
+	/*border-left: 0px #F2E7C9;*/
 }
 .nav-b a{
 	color: #49739b;
@@ -41,9 +47,6 @@
 .nav >li> a:hover{
     background-color: #F2E7C9;
 
-}
-.nav >li:hover + li:before{
-	border-left: 0px #F2E7C9;
 }
 
 #nav-logo{

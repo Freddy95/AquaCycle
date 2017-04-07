@@ -2,12 +2,8 @@ a{
 	color: gray;
 	cursor: pointer;
 }
-.active{
-	background-color: #F2E7C9;
-}
-
-.bg-primary{
-	background-color: #d0bda5
+#buttons{
+	margin-top: 3%;
 }
 
 body{
@@ -47,4 +43,19 @@ hr{
 	margin-left: 5%;
 	margin-right: 5%;
 	border-color: #49739b;
+}
+#cursor{
+	width: 30%;
+
+	height: auto;
+	margin-right: 10%;
+	margin-top: 5%;
+}
+
+#mouseRow{
+	margin-top: 4%;
+}
+#mouse{
+	text-align: right;
+
 }
