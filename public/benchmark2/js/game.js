@@ -12,10 +12,7 @@ var FAST_VELOCITY = 200;
 var playerSpeed = 200;
 AquaCycle.Game.prototype = {
     create: function(){
-        this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('tileset','world');
-        this.backgroundLayer = this.map.createLayer('background');
-        this.backgroundLayer.resizeWorld();
+        this.loadLevel();
 
         //this.map.setCollisionBetween(1,)
         //this.backgroundlayer.resizeWorld();
@@ -93,8 +90,7 @@ AquaCycle.Game.prototype = {
         }
     },
 
-    //method to pause the game, will inver the paused boolean once pressed;
-    //TODO:display an html pause menu page
+    //method to pause the game, will invert the paused boolean once pressed;
     pauseGame: function(){
         if(this.gamePaused){
             console.log("unpaused");
@@ -123,6 +119,20 @@ AquaCycle.Game.prototype = {
     },
 
     loadLevel:function(){
-        
-    }
+        this.map = this.game.add.tilemap('level1');
+        this.map.addTilesetImage('tileset','world');
+        this.backgroundLayer = this.map.createLayer('background');
+        this.backgroundLayer.resizeWorld();   
+    },
+
+    findObjectsByType: function(type,map,layer){
+        var result = new Array();
+        map.object[layer].forEach(function(element){
+            if(element.properties.type === type){
+                element.y -= map.tileHeight;
+                result.push(element);
+            }
+        });
+        return result;
+    },
 }
