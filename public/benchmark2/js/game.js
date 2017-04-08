@@ -44,6 +44,14 @@ AquaCycle.Game.prototype = {
     },
 
     update: function(){
+        //if the modal is shown and the game is not paused it should be
+        if($('#myModal').hasClass('in') && !this.game.paused){
+            console.log("should be paused");
+            this.game.paused = true;
+            this.gamePaused = !this.gamePaused;
+        }
+
+
         //player movement method
         if(playerLoaded){
             this.player.body.velocity.x = 0;
@@ -54,7 +62,17 @@ AquaCycle.Game.prototype = {
       
         
     },
-
+    /*
+        Method for update to be called when game is paused
+    */
+    pauseUpdate: function(){
+        //if the pause menu is not shown the game should be playing
+        if(!($('#myModal').hasClass('in')) && this.game.paused){
+            console.log("should be unpaused");
+            this.game.paused = false;
+            this.gamePaused = !this.gamePaused;
+        }
+    },
     /*
         Method to get user input and then change the playe sprites speed
     */
@@ -85,6 +103,7 @@ AquaCycle.Game.prototype = {
             console.log("paused");
             this.game.paused = true;
         }
+        $('#btn').click();
         this.gamePaused = !this.gamePaused;
     },
 

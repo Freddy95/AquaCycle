@@ -25,7 +25,9 @@
 }
 table{
 	height: 40%;
-	margin-top: 50%;
+	margin-top: 40%;
+	margin-left: 5%;
+	width: 90%;
 }
 caption{
 	text-align: center;
@@ -45,4 +47,5 @@ caption{
 	width: 10%;
 	height: auto;
 }
+
 
