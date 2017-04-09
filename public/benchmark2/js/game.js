@@ -1,3 +1,5 @@
+/* Skeleton complete, what's left to do is to load object locations from the map */
+
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
@@ -54,6 +56,7 @@ AquaCycle.Game.prototype = {
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
+            this.player.animations.play("move",20,true);
             this.processMovement();
         }
       
@@ -85,8 +88,8 @@ AquaCycle.Game.prototype = {
 
         //TODO:FIgure out how to rotate from center
         if(this.controls.UP.isDown) {
-            this.player.body.velocity.copyFrom(
-                this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed));
+            console.log(this.player.angle);
+                this.game.physics.arcade.velocityFromAngle(this.player.angle*-1,playerSpeed));
         }
     },
 
@@ -108,11 +111,12 @@ AquaCycle.Game.prototype = {
         In theory this will be a listener function added dynamically to each object generated
     */
     getObjectInformation: function(){
-
+        
     },
 
     loadPlayer: function(){
-        this.player = AquaCycle.game.add.sprite(300,200,'player');
+        this.player = AquaCycle.game.add.sprite(128,64,'player');
+        this.player.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         playerLoaded = true;
@@ -135,4 +139,12 @@ AquaCycle.Game.prototype = {
         });
         return result;
     },
+
+    createFromTiledObject: function(element,group){
+        var sprite = group.create(element.x,element.y,element.properties.sprite);
+
+        Object.keys(element.properties).forEach(function(key){
+            sprite[key] = element.properties[key];
+        });
+    }
 }
