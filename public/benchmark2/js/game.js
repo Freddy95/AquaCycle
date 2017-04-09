@@ -121,6 +121,7 @@ AquaCycle.Game.prototype = {
         this.player.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
+        this.player.anchor.setTo(0.5,0.5);
         playerLoaded = true;
     },
 
