@@ -129,6 +129,7 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
+        this.player.body.collideWorldBounds = true;
         playerLoaded = true;
     },
 
@@ -140,6 +141,7 @@ AquaCycle.Game.prototype = {
         this.backgroundLayer.resizeWorld();   
     },
 
+    //method to load predator from the tileset, as of right now its hardcoded to only get shark sprit
     loadPredators: function(){
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
@@ -155,6 +157,8 @@ AquaCycle.Game.prototype = {
 
         this.predators.forEach(function(predator){
             predator.isMoving = false;
+            predator.body.collideWorldBounds = true;
+            predator.anchor.setTo(0.5,0.5);
         });
 
         
