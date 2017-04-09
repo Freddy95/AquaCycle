@@ -163,15 +163,16 @@ AquaCycle.Game.prototype = {
             if(predator.isMoving == false){
                 predator.isMoving = true;
                 
-                var randomDirection = Math.random();
+                var randomDirection = AquaCycle.game.rnd.integerInRange(0,1);
                 console.log(randomDirection);
-                if(randomDirection >0.5){
+                if(randomDirection == 0){
                     predator.body.velocity.x = 150;
                 }
-                if(randomDirection < 0.5){
+                if(randomDirection == 1){
                     predator.body.velocity.x = -150
                 }
-                //AquaCycle.game.time.events.add(600,this.stopPredators,AquaCycle.game);
+                
+                AquaCycle.game.time.events.add(600,this.stopPredators,this);
                 
               
             }
