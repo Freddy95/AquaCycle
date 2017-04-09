@@ -3,8 +3,8 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls,player,map,backgroundLayer;
-
+var controls,player,map,backgroundLayer,predators;
+var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
 var gamePaused = false;
@@ -40,6 +40,7 @@ AquaCycle.Game.prototype = {
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
+        this.loadPredators();
     },
 
     update: function(){
@@ -127,13 +128,24 @@ AquaCycle.Game.prototype = {
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
         this.map.addTilesetImage('tileset','world');
+        this.map.addTilesetImage('enemy', 'shark');
         this.backgroundLayer = this.map.createLayer('background');
         this.backgroundLayer.resizeWorld();   
     },
 
+    loadPredators: function(){
+        this.predators = this.game.add.group();
+        this.predators.enableBody = true;
+        var predator;
+        result = this.findObjectsByType('predator',this.map,'objectsLayer');
+        result.forEach(function(element){
+            this.createFromTiledObject(element,this.predators);
+        },this);
+    },
+
     findObjectsByType: function(type,map,layer){
         var result = new Array();
-        map.object[layer].forEach(function(element){
+        map.objects[layer].forEach(function(element){
             if(element.properties.type === type){
                 element.y -= map.tileHeight;
                 result.push(element);
@@ -144,7 +156,6 @@ AquaCycle.Game.prototype = {
 
     createFromTiledObject: function(element,group){
         var sprite = group.create(element.x,element.y,element.properties.sprite);
-
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });

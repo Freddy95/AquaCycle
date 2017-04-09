@@ -43,7 +43,7 @@
   </object>
   <object id="2" gid="46" x="322" y="693" width="128" height="64">
    <properties>
-    <property name="predator" value=""/>
+    <property name="type" value="predator"/>
    </properties>
   </object>
   <object id="3" gid="46" x="181" y="238" width="128" height="64">
