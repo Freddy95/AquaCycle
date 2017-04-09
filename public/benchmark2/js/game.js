@@ -1,8 +1,10 @@
+/* Skeleton complete, what's left to do is to load object locations from the map */
+
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls,player,map,backgroundLayer;
-
+var controls,player,map,backgroundLayer,predators;
+var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
 var gamePaused = false;
@@ -12,10 +14,7 @@ var FAST_VELOCITY = 200;
 var playerSpeed = 200;
 AquaCycle.Game.prototype = {
     create: function(){
-        this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('tileset','world');
-        this.backgroundLayer = this.map.createLayer('background');
-        this.backgroundLayer.resizeWorld();
+        this.loadLevel();
 
         //this.map.setCollisionBetween(1,)
         //this.backgroundlayer.resizeWorld();
@@ -41,6 +40,7 @@ AquaCycle.Game.prototype = {
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
+        this.loadPredators();
     },
 
     update: function(){
@@ -57,6 +57,7 @@ AquaCycle.Game.prototype = {
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
+            this.player.animations.play("move",20,true);
             this.processMovement();
         }
       
@@ -88,13 +89,13 @@ AquaCycle.Game.prototype = {
 
         //TODO:FIgure out how to rotate from center
         if(this.controls.UP.isDown) {
-            this.player.body.velocity.copyFrom(
-                this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed));
+                this.player.body.velocity.copyFrom(
+                    this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
+                    );
         }
     },
 
-    //method to pause the game, will inver the paused boolean once pressed;
-    //TODO:display an html pause menu page
+    //method to pause the game, will invert the paused boolean once pressed;
     pauseGame: function(){
         if(this.gamePaused){
             console.log("unpaused");
@@ -112,17 +113,55 @@ AquaCycle.Game.prototype = {
         In theory this will be a listener function added dynamically to each object generated
     */
     getObjectInformation: function(){
-
+        
     },
 
     loadPlayer: function(){
-        this.player = AquaCycle.game.add.sprite(300,200,'player');
+        this.player = AquaCycle.game.add.sprite(128,64,'player');
+        this.player.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
+        this.player.anchor.setTo(0.5,0.5);
         playerLoaded = true;
     },
 
     loadLevel:function(){
-        
+        this.map = this.game.add.tilemap('level1');
+        this.map.addTilesetImage('tileset','world');
+        this.map.addTilesetImage('enemy', 'shark');
+        this.backgroundLayer = this.map.createLayer('background');
+        this.backgroundLayer.resizeWorld();   
+    },
+
+    loadPredators: function(){
+        this.predators = this.game.add.group();
+        this.predators.enableBody = true;
+        var predator;
+        result = this.findObjectsByType('predator',this.map,'objectsLayer');
+         
+        console.log("result");
+        console.log(result);
+        result.forEach(function(element){
+            this.createFromTiledObject(element,this.predators);
+        },this);
+    },
+
+    findObjectsByType: function(type,map,layer){
+        var result = new Array();
+        map.objects[layer].forEach(function(element){
+            if(element.properties.type === type){
+                element.y -= map.tileHeight;
+                result.push(element);
+            }
+        });
+        return result;
+    },
+
+    createFromTiledObject: function(element,group){
+
+        var sprite = group.create(element.x,element.y,'shark');
+        Object.keys(element.properties).forEach(function(key){
+            sprite[key] = element.properties[key];
+        });
     }
 }
