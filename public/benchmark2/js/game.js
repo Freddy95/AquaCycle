@@ -138,6 +138,9 @@ AquaCycle.Game.prototype = {
         this.predators.enableBody = true;
         var predator;
         result = this.findObjectsByType('predator',this.map,'objectsLayer');
+         
+        console.log("result");
+        console.log(result);
         result.forEach(function(element){
             this.createFromTiledObject(element,this.predators);
         },this);
@@ -155,7 +158,8 @@ AquaCycle.Game.prototype = {
     },
 
     createFromTiledObject: function(element,group){
-        var sprite = group.create(element.x,element.y,element.properties.sprite);
+
+        var sprite = group.create(element.x,element.y,'shark');
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
