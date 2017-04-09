@@ -3,7 +3,9 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls,player,map,backgroundLayer,predators;
+var controls, player, predators;
+var map, backgroundlayer;
+var infobox, infotext, infostyle;
 var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
@@ -41,6 +43,7 @@ AquaCycle.Game.prototype = {
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
         this.loadPredators();
+        this.loadInfoBox();
     },
 
     update: function(){
@@ -144,6 +147,16 @@ AquaCycle.Game.prototype = {
         result.forEach(function(element){
             this.createFromTiledObject(element,this.predators);
         },this);
+    },
+
+    loadInfoBox: function() {
+    	//this.infobox = this.game.add.sprite(1004,556,'infobox');
+    	this.infobox = this.game.add.sprite(940,520,'infobox');
+    	this.infobox.alpha = 0.8;
+    	this.infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: this.infobox.width - 10, boundsAlignH: 'right' };
+    	this.infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',this.infostyle);
+    	this.infotext.x = this.infobox.x + 5;
+    	this.infotext.y = this.infobox.y + 5;
     },
 
     findObjectsByType: function(type,map,layer){

@@ -10,6 +10,7 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.tilemap('level1','../assets/level1_draft_enemies.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.image('world','../assets/DepthTileMockups.png');
         AquaCycle.game.load.image('shark','../assets/shark.png')
+        AquaCycle.game.load.image('infobox','../assets/infobox2.png');
     },
 
     create: function(){
