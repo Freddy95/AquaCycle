@@ -89,7 +89,7 @@ AquaCycle.Game.prototype = {
         //TODO:FIgure out how to rotate from center
         if(this.controls.UP.isDown) {
             console.log(this.player.angle);
-                this.game.physics.arcade.velocityFromAngle(this.player.angle*-1,playerSpeed));
+                this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed);
         }
     },
 
