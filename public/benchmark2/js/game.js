@@ -11,6 +11,7 @@ var result;
 var movingSlow = false;
 var gamePaused = false;
 var playerLoaded = false;
+var predatorsMoving = false;
 var SLOW_VELOCITY = 100;
 var FAST_VELOCITY = 200;
 var playerSpeed = 200;
@@ -34,7 +35,8 @@ AquaCycle.Game.prototype = {
                 this.movingSlow = !this.movingSlow;
                 if(this.movingSlow){
                     playerSpeed = SLOW_VELOCITY;
-                }else{
+                }
+                else{
                     playerSpeed = FAST_VELOCITY;
                 }
         },this);
@@ -57,11 +59,13 @@ AquaCycle.Game.prototype = {
 
         //player movement method
         if(playerLoaded){
+            this.game.physics.arcade.collide(this.player,this.predators);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
             this.player.animations.play("move",20,true);
             this.processMovement();
+            this.movePredators();
         }
       
         
@@ -145,8 +149,44 @@ AquaCycle.Game.prototype = {
         console.log("result");
         console.log(result);
         result.forEach(function(element){
+            element.properties.sprite = 'shark'
             this.createFromTiledObject(element,this.predators);
         },this);
+
+        this.predators.forEach(function(predator){
+            predator.isMoving = false;
+        });
+
+        
+    },
+    
+    movePredators: function(){
+        this.predators.forEach(function(predator){
+            if(predator.isMoving == false){
+                predator.isMoving = true;
+                
+                var randomDirection = AquaCycle.game.rnd.integerInRange(0,1);
+                console.log(randomDirection);
+                if(randomDirection == 0){
+                    predator.body.velocity.x = 150;
+                }
+                if(randomDirection == 1){
+                    predator.body.velocity.x = -150
+                }
+                
+                AquaCycle.game.time.events.add(600,this.stopPredators,this);
+                
+              
+            }
+            
+        });
+    },
+
+    stopPredators: function(){
+        console.log(hello);
+        this.predators.forEach(function(predator){
+            predator.isMoving = false;
+        });
     },
 
     loadInfoBox: function() {
@@ -172,7 +212,7 @@ AquaCycle.Game.prototype = {
 
     createFromTiledObject: function(element,group){
 
-        var sprite = group.create(element.x,element.y,'shark');
+        var sprite = group.create(element.x,element.y,element.properties.sprite);
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
