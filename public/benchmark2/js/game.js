@@ -65,7 +65,7 @@ AquaCycle.Game.prototype = {
             this.player.body.angularVelocity = 0;
             this.player.animations.play("move",20,true);
             this.processMovement();
-            this.movePredators();
+            //this.movePredators();
         }
       
         
@@ -193,10 +193,12 @@ AquaCycle.Game.prototype = {
     	//this.infobox = this.game.add.sprite(1004,556,'infobox');
     	this.infobox = this.game.add.sprite(940,520,'infobox');
     	this.infobox.alpha = 0.8;
+    	this.infobox.fixedToCamera = true;
     	this.infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: this.infobox.width - 10, boundsAlignH: 'right' };
     	this.infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',this.infostyle);
     	this.infotext.x = this.infobox.x + 5;
     	this.infotext.y = this.infobox.y + 5;
+    	this.infotext.fixedToCamera = true;
     },
 
     findObjectsByType: function(type,map,layer){

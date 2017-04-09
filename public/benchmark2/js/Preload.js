@@ -11,6 +11,7 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.image('world','../assets/DepthTileMockups.png');
         AquaCycle.game.load.image('shark','../assets/shark.png')
         AquaCycle.game.load.image('infobox','../assets/infobox2.png');
+        AquaCycle.game.load.image('heart','../assets/heart.png');
     },
 
     create: function(){
