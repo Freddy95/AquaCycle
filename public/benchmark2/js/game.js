@@ -163,17 +163,14 @@ AquaCycle.Game.prototype = {
             if(predator.isMoving == false){
                 predator.isMoving = true;
                 
-                var randomDirection = AquaCycle.game.rnd.integerInRange(0,1);
-                console.log(randomDirection);
+                var randomDirection = this.game.rnd.integerInRange(0,1);
                 if(randomDirection == 0){
                     predator.body.velocity.x = 150;
                 }
                 if(randomDirection == 1){
                     predator.body.velocity.x = -150
                 }
-                console.log(this.stopPredators);
-                this.timer = AquaCycle.game.time.events.add(600,this.stopPredators,this); 
-                console.log(this.timer);
+                this.timer = this.game.time.events.add(600,this.stopPredators,this); 
             }
             
         },this);
@@ -182,6 +179,9 @@ AquaCycle.Game.prototype = {
     stopPredators: function(){
         this.predators.forEach(function(predator){
             predator.isMoving = false;
+            predator.body.velocity.x = 0;
+            predator.body.velocity.y = 0;
+            predator.body.angularVelocity = 0;
         });
     },
 
