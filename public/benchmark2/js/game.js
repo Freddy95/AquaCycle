@@ -3,12 +3,15 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls,player,map,backgroundLayer,predators;
+var controls, player, predators;
+var map, backgroundlayer;
+var infobox, infotext, infostyle;
 var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
 var gamePaused = false;
 var playerLoaded = false;
+var predatorsMoving = false;
 var SLOW_VELOCITY = 100;
 var FAST_VELOCITY = 200;
 var playerSpeed = 200;
@@ -32,7 +35,8 @@ AquaCycle.Game.prototype = {
                 this.movingSlow = !this.movingSlow;
                 if(this.movingSlow){
                     playerSpeed = SLOW_VELOCITY;
-                }else{
+                }
+                else{
                     playerSpeed = FAST_VELOCITY;
                 }
         },this);
@@ -41,6 +45,7 @@ AquaCycle.Game.prototype = {
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
         this.loadPredators();
+        this.loadInfoBox();
     },
 
     update: function(){
@@ -54,11 +59,13 @@ AquaCycle.Game.prototype = {
 
         //player movement method
         if(playerLoaded){
+            this.game.physics.arcade.collide(this.player,this.predators);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
             this.player.animations.play("move",20,true);
             this.processMovement();
+            this.movePredators(this);
         }
       
         
@@ -142,8 +149,52 @@ AquaCycle.Game.prototype = {
         console.log("result");
         console.log(result);
         result.forEach(function(element){
+            element.properties.sprite = 'shark'
             this.createFromTiledObject(element,this.predators);
         },this);
+
+        this.predators.forEach(function(predator){
+            predator.isMoving = false;
+        });
+
+        
+    },
+    
+    movePredators: function(){
+        this.predators.forEach(function(predator){
+            if(predator.isMoving == false){
+                predator.isMoving = true;
+                
+                var randomDirection = this.game.rnd.integerInRange(0,1);
+                if(randomDirection == 0){
+                    predator.body.velocity.x = 150;
+                }
+                if(randomDirection == 1){
+                    predator.body.velocity.x = -150
+                }
+                this.timer = this.game.time.events.add(600,this.stopPredators,this); 
+            }
+            
+        },this);
+    },
+
+    stopPredators: function(){
+        this.predators.forEach(function(predator){
+            predator.isMoving = false;
+            predator.body.velocity.x = 0;
+            predator.body.velocity.y = 0;
+            predator.body.angularVelocity = 0;
+        });
+    },
+
+    loadInfoBox: function() {
+    	//this.infobox = this.game.add.sprite(1004,556,'infobox');
+    	this.infobox = this.game.add.sprite(940,520,'infobox');
+    	this.infobox.alpha = 0.8;
+    	this.infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: this.infobox.width - 10, boundsAlignH: 'right' };
+    	this.infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',this.infostyle);
+    	this.infotext.x = this.infobox.x + 5;
+    	this.infotext.y = this.infobox.y + 5;
     },
 
     findObjectsByType: function(type,map,layer){
@@ -159,7 +210,7 @@ AquaCycle.Game.prototype = {
 
     createFromTiledObject: function(element,group){
 
-        var sprite = group.create(element.x,element.y,'shark');
+        var sprite = group.create(element.x,element.y,element.properties.sprite);
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
