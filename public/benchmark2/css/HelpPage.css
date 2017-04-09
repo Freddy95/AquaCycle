@@ -16,7 +16,7 @@ body{
 	height: auto;
 }
 
-table{
+#devTable{
 	width: 90%;
 	margin-left: 5%;
 	border-collapse: collapse;
