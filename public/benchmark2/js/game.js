@@ -20,6 +20,7 @@ var playerSpeed = 200;
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
+
 AquaCycle.Game.prototype = {
     create: function(){
         this.loadLevel();
@@ -74,7 +75,9 @@ AquaCycle.Game.prototype = {
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
+            
             this.processMovement();
+            this.scalePlayer();
             this.movePredators(this);
         }
     },
@@ -171,6 +174,8 @@ AquaCycle.Game.prototype = {
         //add to experience bar
         if(expBar.width < 200){
             expBar.width = expBar.width + 20;
+            //this is down bc this is an anonymous function and lost context of "this"
+            console.log(this);
         }
         //change text of info box
         infotext.text = this.object.type;
@@ -221,6 +226,7 @@ AquaCycle.Game.prototype = {
             predator = this.predators.hash[i];
            
             //click event
+            
             predator.events.onInputDown.add(this.getObjectInformation, {object : predator});
         }
 
@@ -335,6 +341,18 @@ AquaCycle.Game.prototype = {
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
+    },
+
+    scalePlayer:function(){
+        if(expBar.width<=60){
+            this.player.scale.setTo(0.7,0.7);
+        }
+        else if(expBar.width<=120){
+            this.player.scale.setTo(1.0,1.0);
+        }
+        else if(expBar.width >120){
+            this.player.scale.setTo(1.4, 1.4);
+        }
     }
    
 }
