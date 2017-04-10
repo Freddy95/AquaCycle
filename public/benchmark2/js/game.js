@@ -53,6 +53,8 @@ AquaCycle.Game.prototype = {
         this.loadPredators();
         this.loadInfoBox();
         this.loadHealthBar();
+        this.loadExperienceBar();
+         
     },
 
     update: function(){
@@ -164,6 +166,10 @@ AquaCycle.Game.prototype = {
         In theory this will be a listener function added dynamically to each object generated
     */
     getObjectInformation: function(){
+        //add to experience bar
+        if(expBar.width < 200){
+            expBar.width = expBar.width + 20;
+        }
         //change text of info box
         infotext.text = this.object.type;
     },
@@ -285,7 +291,29 @@ AquaCycle.Game.prototype = {
 	    // Fix the health bar to the camera
 	    this.healthBar.fixedToCamera = true;
     },
-
+    loadExperienceBar: function(){
+        //this is the background of the bar
+        var bmd = this.game.add.bitmapData(200,40);
+         bmd.ctx.beginPath();
+         bmd.ctx.rect(0,0,180,30);
+         //color of background
+         bmd.ctx.fillStyle = '#BDC667';
+         bmd.ctx.fill();
+         var b = this.game.add.sprite(10,30, bmd);
+         b.fixedToCamera = true;
+         b.anchor.y = 0.5;
+         //actual bar
+         var exp = this.game.add.bitmapData(200,40);
+         exp.ctx.beginPath();
+         exp.ctx.rect(0,0,180,30);
+         //color filled in
+         exp.ctx.fillStyle = '#29BA66';
+         exp.ctx.fill();    
+         expBar = this.game.add.sprite(10,30,exp);
+         expBar.width = 0;       
+         expBar.fixedToCamera = true;
+         expBar.anchor.y = 0.5;
+    },
     findObjectsByType: function(type,map,layer){
         var result = new Array();
         map.objects[layer].forEach(function(element){
