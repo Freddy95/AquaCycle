@@ -151,7 +151,7 @@ AquaCycle.Game.prototype = {
         console.log("result");
         console.log(result);
         result.forEach(function(element){
-            element.properties.sprite = 'shark'
+            element.properties.sprite = 'predator'
             this.createFromTiledObject(element,this.predators);
         },this);
 
@@ -159,6 +159,7 @@ AquaCycle.Game.prototype = {
             predator.isMoving = false;
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
+            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         });
 
         
@@ -168,7 +169,7 @@ AquaCycle.Game.prototype = {
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
                 predator.isMoving = true;
-                
+                predator.animations.play("move",20,true);
                 var randomDirection = this.game.rnd.integerInRange(0,10);
                 if(randomDirection <= 5){
                     predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);

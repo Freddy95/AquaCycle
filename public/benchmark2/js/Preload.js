@@ -9,7 +9,8 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.spritesheet('player', '../assets/SharkSpriteSheet2.png',128,64);
         AquaCycle.game.load.tilemap('level1','../assets/level1_draft_enemies.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.image('world','../assets/DepthTileMockups.png');
-        AquaCycle.game.load.image('shark','../assets/shark.png')
+        AquaCycle.game.load.image('shark','../assets/shark.png');
+        AquaCycle.game.load.spritesheet('predator','../assets/LargerEnemySpriteSheet.png',192,96);
         AquaCycle.game.load.image('infobox','../assets/infobox2.png');
     },
 
