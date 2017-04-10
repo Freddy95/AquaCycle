@@ -169,13 +169,15 @@ AquaCycle.Game.prototype = {
     },
 
     loadPlayer: function(){
-        this.player = AquaCycle.game.add.sprite(128,64,'player');
+        result = this.findObjectsByType('playerStart', this.map, 'Object Layer 1')
+        this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
         IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
         SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
         FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
+
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
         this.player.invincible = false;
@@ -183,9 +185,12 @@ AquaCycle.Game.prototype = {
 
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('tileset','world');
-        this.map.addTilesetImage('enemy', 'shark');
-        this.backgroundLayer = this.map.createLayer('background');
+        this.map.addTilesetImage('DepthTileMockups','world');
+        //this.map.addTilesetImage('predator', 'predator');
+        this.map.addTilesetImage('DepthTileMockups','world2');
+        this.map.addTilesetImage('DepthTileMockups1','world1')
+        this.backgroundLayer = this.map.createLayer("Water");
+        this.blockedLayer = this.map.createLayer("Sand");
         this.backgroundLayer.resizeWorld();   
     },
 
@@ -194,7 +199,7 @@ AquaCycle.Game.prototype = {
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
         var predator;
-        result = this.findObjectsByType('predator',this.map,'objectsLayer');
+        result = this.findObjectsByType('predator',this.map,'Object Layer 1');
          
         console.log("result");
         console.log(result);
