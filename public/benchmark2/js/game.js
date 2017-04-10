@@ -5,7 +5,7 @@ AquaCycle.Game = function(){};
 // global variables to be initialized
 var controls, player, predators;
 var map, backgroundlayer;
-var infobox, infotext, infostyle;
+var infobox, infotext, infostyle, typetext, typestyle;
 var healthBar;
 var expBar;
 var result;
@@ -20,6 +20,7 @@ var playerSpeed = 200;
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
+
 AquaCycle.Game.prototype = {
     create: function(){
         this.loadLevel();
@@ -74,7 +75,9 @@ AquaCycle.Game.prototype = {
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
+            
             this.processMovement();
+            this.scalePlayer();
             this.movePredators(this);
         }
     },
@@ -171,6 +174,8 @@ AquaCycle.Game.prototype = {
         //add to experience bar
         if(expBar.width < 200){
             expBar.width = expBar.width + 20;
+            //this is down bc this is an anonymous function and lost context of "this"
+            console.log(this);
         }
         //change text of info box
         infotext.text = this.object.type;
@@ -221,6 +226,7 @@ AquaCycle.Game.prototype = {
             predator = this.predators.hash[i];
            
             //click event
+            
             predator.events.onInputDown.add(this.getObjectInformation, {object : predator});
         }
 
@@ -274,15 +280,22 @@ AquaCycle.Game.prototype = {
     },
 
     loadInfoBox: function() {
-    	//infobox = this.game.add.sprite(1004,556,'infobox');
+    	// Add the info box and the infobox text
     	infobox = this.game.add.sprite(940,520,'infobox');
     	infobox.alpha = 0.8;
     	infobox.fixedToCamera = true;
     	infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
-    	infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',infostyle);
+    	infotext = this.game.add.text(0,0,'Information:',infostyle);
     	infotext.x = infobox.x + 5;
     	infotext.y = infobox.y + 5;
     	infotext.fixedToCamera = true;
+
+    	// Add the type text to the box
+    	typestyle = { font: '14px Arial', fill: 'green', boundsAlignH: 'center' };
+    	typetext = this.game.add.text(0,0,'Item',typestyle);
+    	typetext.x = infobox.x + 5;
+    	typetext.y = infobox.y + 5;
+    	typetext.fixedToCamera = true;
     },
 
     loadHealthBar: function() {
@@ -335,6 +348,18 @@ AquaCycle.Game.prototype = {
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
+    },
+
+    scalePlayer:function(){
+        if(expBar.width<=60){
+            this.player.scale.setTo(0.7,0.7);
+        }
+        else if(expBar.width<=120){
+            this.player.scale.setTo(1.0,1.0);
+        }
+        else if(expBar.width >120){
+            this.player.scale.setTo(1.4, 1.4);
+        }
     }
    
 }
