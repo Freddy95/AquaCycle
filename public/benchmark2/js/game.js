@@ -75,7 +75,7 @@ AquaCycle.Game.prototype = {
     takeDamage: function() {
     	// The player has hit something that will cause it to take damage
     	if(!this.player.invincible) {
-    		if(this.healthBar.children.pop() == null) {
+    		if(this.healthBar.children[0] == null) {
     			// play a dying animation and end the game
     			console.log("You died.");
     		} else {
@@ -86,7 +86,7 @@ AquaCycle.Game.prototype = {
 		        // Change the player's alpha level
 		        this.player.alpha = 0.5;
 		        // Add timer event to change back vulnerability
-		        this.game.time.events.add(1000, this.vulnerable, this);
+		        this.game.time.events.add(2000, this.vulnerable, this);
     		}
     	}
     },
