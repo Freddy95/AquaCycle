@@ -177,8 +177,24 @@ AquaCycle.Game.prototype = {
             //this is down bc this is an anonymous function and lost context of "this"
             console.log(this);
         }
-        //change text of info box
-        infotext.text = this.object.type;
+        infotext.text = this.object.info;
+        // Changing the title and color for each type of item
+        if(this.object.type == "predator") {
+        	// Set style and change title
+        	typetext.text = "Predator Information";
+        	typestyle = { font: '14px Arial', fill: 'red' };
+        	typetext.setStyle(typestyle);
+        } else if (this.object.type == "item") {
+        	// Set style and change title
+        	typetext.text = "Item Information";
+        	typestyle = { font: '14px Arial', fill: 'blue' };
+        	typetext.setStyle(typestyle);
+        } else if (this.object.type == "prey") {
+        	// Set style and change title
+        	typetext.text = "Prey Information";
+        	typestyle = { font: '14px Arial', fill: 'green' };
+        	typetext.setStyle(typestyle);
+        }
     },
 
     loadPlayer: function(){
@@ -285,14 +301,14 @@ AquaCycle.Game.prototype = {
     	infobox.alpha = 0.8;
     	infobox.fixedToCamera = true;
     	infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
-    	infotext = this.game.add.text(0,0,'Information:',infostyle);
+    	infotext = this.game.add.text(0,0,'BLAH BLAH BLAH',infostyle);
     	infotext.x = infobox.x + 5;
-    	infotext.y = infobox.y + 5;
+    	infotext.y = infobox.y + 24;
     	infotext.fixedToCamera = true;
 
     	// Add the type text to the box
-    	typestyle = { font: '14px Arial', fill: 'green', boundsAlignH: 'center' };
-    	typetext = this.game.add.text(0,0,'Item',typestyle);
+    	typestyle = { font: '14px Arial', fill: '#2a4157', boundsAlignH: 'center' };
+    	typetext = this.game.add.text(0,0,'Information',typestyle);
     	typetext.x = infobox.x + 5;
     	typetext.y = infobox.y + 5;
     	typetext.fixedToCamera = true;
