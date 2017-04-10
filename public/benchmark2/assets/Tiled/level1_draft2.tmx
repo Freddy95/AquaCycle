@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="3199">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="3200">
  <tileset firstgid="1" name="DepthTileMockups" tilewidth="32" tileheight="32" tilecount="45" columns="5">
   <image source="../DepthTileMockups.png" width="160" height="288"/>
  </tileset>
@@ -16801,6 +16801,12 @@
     <property name="info" value="Tiger Sharks, or “Sea Tigers” as they are sometimes called, are a kind of shark that can grow up to 5 meters in length (twice the size of the average adult human). They are most known for their diets as they eat a range of sea creatures including fish, seals, dolphins, squids, and other sharks. They have also been known to digest trash that they find in the ocean."/>
     <property name="name" value="tigershark"/>
     <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3199" gid="103" x="1316" y="4300" width="32" height="32">
+   <properties>
+    <property name="name" value="pinkshrimp"/>
+    <property name="type" value="prey"/>
    </properties>
   </object>
  </objectgroup>

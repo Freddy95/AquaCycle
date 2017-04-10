@@ -14,9 +14,9 @@ var movingSlow = false;
 var gamePaused = false;
 var playerLoaded = false;
 var predatorsMoving = false;
-var SLOW_VELOCITY = 100;
-var FAST_VELOCITY = 200;
-var playerSpeed = 200;
+var SLOW_VELOCITY = 200;
+var FAST_VELOCITY = 500;
+var playerSpeed = 350;
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
@@ -49,6 +49,7 @@ AquaCycle.Game.prototype = {
 
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
+        this.loadItems();
         this.loadPlayer();
         this.loadPredators();
         this.loadInfoBox();
@@ -182,7 +183,7 @@ AquaCycle.Game.prototype = {
     },
 
     loadPlayer: function(){
-        result = this.findObjectsByType('playerStart', this.map, 'Object Layer 1')
+        result = this.findObjectsByType('playerStart', this.map, 'itemLayer')
         this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
         IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
         SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
@@ -202,9 +203,9 @@ AquaCycle.Game.prototype = {
         //this.map.addTilesetImage('predator', 'predator');
         this.map.addTilesetImage('DepthTileMockups','world2');
         this.map.addTilesetImage('DepthTileMockups1','world1')
-        this.backgroundLayer = this.map.createLayer("Water");
-        this.blockedLayer = this.map.createLayer("Sand");
-        this.map.setCollisionBetween(1, 600, true, 'Sand');
+        this.backgroundLayer = this.map.createLayer("collideLayer");
+        this.blockedLayer = this.map.createLayer("background");
+        this.map.setCollisionBetween(1, 600, true, 'background');
 
         this.backgroundLayer.resizeWorld();   
     },
@@ -214,7 +215,7 @@ AquaCycle.Game.prototype = {
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
         var predator;
-        result = this.findObjectsByType('predator',this.map,'Object Layer 1');
+        result = this.findObjectsByType('predator',this.map,'itemLayer');
          
         console.log("result");
         console.log(result);
@@ -242,7 +243,29 @@ AquaCycle.Game.prototype = {
 
         
     },
-    
+    loadItems: function(){
+        this.items = this.game.add.group();
+        this.items.enableBody = true;
+        var item;
+        var result = this.findObjectsByType('item', this.map, 'itemLayer');
+        console.log('result');
+        console.log(result);
+        result.forEach(function(element){
+            element.properties.sprite = element.properties.name;
+            this.createFromTiledObject(element,this.items);
+        },this);  
+        for (var i = 0; i < this.items.hash.length; i++) {
+            item = this.items.hash[i];
+           
+            //click event
+            
+            item.events.onInputDown.add(this.getObjectInformation, {object : item});
+        }
+        this.items.forEach(function(it){
+            it.inputEnabled = true;
+        });
+
+    },
     movePredators: function(){
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
