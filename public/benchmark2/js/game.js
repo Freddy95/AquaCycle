@@ -47,11 +47,14 @@ AquaCycle.Game.prototype = {
         },this);
 
         //add a listener function to esc key to generate pause menu
+        console.log('PAUSE');
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
         this.loadPredators();
         this.loadInfoBox();
         this.loadHealthBar();
+        this.loadExperienceBar();
+         
     },
 
     update: function(){
@@ -156,22 +159,31 @@ AquaCycle.Game.prototype = {
         this.gamePaused = !this.gamePaused;
     },
 
+   
+
     /*
         This method will get the information on mouseclick down of a certain object clicked
         In theory this will be a listener function added dynamically to each object generated
     */
     getObjectInformation: function(){
-        
+        //add to experience bar
+        if(expBar.width < 200){
+            expBar.width = expBar.width + 20;
+        }
+        //change text of info box
+        infotext.text = this.object.type;
     },
 
     loadPlayer: function(){
-        this.player = AquaCycle.game.add.sprite(128,64,'player');
+        result = this.findObjectsByType('playerStart', this.map, 'Object Layer 1')
+        this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
         IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
         SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
         FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
+
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
         this.player.invincible = false;
@@ -179,9 +191,12 @@ AquaCycle.Game.prototype = {
 
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('tileset','world');
-        this.map.addTilesetImage('enemy', 'shark');
-        this.backgroundLayer = this.map.createLayer('background');
+        this.map.addTilesetImage('DepthTileMockups','world');
+        //this.map.addTilesetImage('predator', 'predator');
+        this.map.addTilesetImage('DepthTileMockups','world2');
+        this.map.addTilesetImage('DepthTileMockups1','world1')
+        this.backgroundLayer = this.map.createLayer("Water");
+        this.blockedLayer = this.map.createLayer("Sand");
         this.backgroundLayer.resizeWorld();   
     },
 
@@ -190,20 +205,29 @@ AquaCycle.Game.prototype = {
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
         var predator;
-        result = this.findObjectsByType('predator',this.map,'objectsLayer');
+        result = this.findObjectsByType('predator',this.map,'Object Layer 1');
          
         console.log("result");
         console.log(result);
         result.forEach(function(element){
             element.properties.sprite = 'predator'
             this.createFromTiledObject(element,this.predators);
-        },this);
+        },this);  
+        for (var i = 0; i < this.predators.hash.length; i++) {
+            predator = this.predators.hash[i];
+           
+            //click event
+            predator.events.onInputDown.add(this.getObjectInformation, {object : predator});
+        }
 
         this.predators.forEach(function(predator){
             predator.isMoving = false;
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
+            
             predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
+            //allows predators to be clicked on
+            predator.inputEnabled = true;
         });
 
         
@@ -246,15 +270,15 @@ AquaCycle.Game.prototype = {
     },
 
     loadInfoBox: function() {
-    	//this.infobox = this.game.add.sprite(1004,556,'infobox');
-    	this.infobox = this.game.add.sprite(940,520,'infobox');
-    	this.infobox.alpha = 0.8;
-    	this.infobox.fixedToCamera = true;
-    	this.infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: this.infobox.width - 10, boundsAlignH: 'right' };
-    	this.infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',this.infostyle);
-    	this.infotext.x = this.infobox.x + 5;
-    	this.infotext.y = this.infobox.y + 5;
-    	this.infotext.fixedToCamera = true;
+    	//infobox = this.game.add.sprite(1004,556,'infobox');
+    	infobox = this.game.add.sprite(940,520,'infobox');
+    	infobox.alpha = 0.8;
+    	infobox.fixedToCamera = true;
+    	infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
+    	infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',infostyle);
+    	infotext.x = infobox.x + 5;
+    	infotext.y = infobox.y + 5;
+    	infotext.fixedToCamera = true;
     },
 
     loadHealthBar: function() {
@@ -267,7 +291,29 @@ AquaCycle.Game.prototype = {
 	    // Fix the health bar to the camera
 	    this.healthBar.fixedToCamera = true;
     },
-
+    loadExperienceBar: function(){
+        //this is the background of the bar
+        var bmd = this.game.add.bitmapData(200,40);
+         bmd.ctx.beginPath();
+         bmd.ctx.rect(0,0,180,30);
+         //color of background
+         bmd.ctx.fillStyle = '#BDC667';
+         bmd.ctx.fill();
+         var b = this.game.add.sprite(10,30, bmd);
+         b.fixedToCamera = true;
+         b.anchor.y = 0.5;
+         //actual bar
+         var exp = this.game.add.bitmapData(200,40);
+         exp.ctx.beginPath();
+         exp.ctx.rect(0,0,180,30);
+         //color filled in
+         exp.ctx.fillStyle = '#29BA66';
+         exp.ctx.fill();    
+         expBar = this.game.add.sprite(10,30,exp);
+         expBar.width = 0;       
+         expBar.fixedToCamera = true;
+         expBar.anchor.y = 0.5;
+    },
     findObjectsByType: function(type,map,layer){
         var result = new Array();
         map.objects[layer].forEach(function(element){
@@ -286,4 +332,7 @@ AquaCycle.Game.prototype = {
             sprite[key] = element.properties[key];
         });
     }
+   
 }
+
+
