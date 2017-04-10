@@ -6,6 +6,8 @@ AquaCycle.Game = function(){};
 var controls, player, predators;
 var map, backgroundlayer;
 var infobox, infotext, infostyle;
+var healthBar;
+var expBar;
 var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
@@ -46,6 +48,7 @@ AquaCycle.Game.prototype = {
         this.loadPlayer();
         this.loadPredators();
         this.loadInfoBox();
+        this.loadHealthBar();
     },
 
     update: function(){
@@ -59,16 +62,41 @@ AquaCycle.Game.prototype = {
 
         //player movement method
         if(playerLoaded){
-            this.game.physics.arcade.collide(this.player,this.predators);
+            //this.game.physics.arcade.collide(this.player,this.predators);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
             this.player.animations.play("move",20,true);
             this.processMovement();
             //this.movePredators();
+            this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
         }
-      
-        
+    },
+
+    takeDamage: function() {
+    	// The player has hit something that will cause it to take damage
+    	if(!this.player.invincible) {
+    		if(this.healthBar.children.pop() == null) {
+    			// play a dying animation and end the game
+    			console.log("You died.");
+    		} else {
+    			// Remove one heart from the health bar
+    			this.healthBar.children.pop();
+		        // Change player's vulnerability
+		        this.vulnerable();
+		        // Change the player's alpha level
+		        this.player.alpha = 0.5;
+		        // Add timer event to change back vulnerability
+		        this.game.time.events.add(1000, this.vulnerable, this);
+    		}
+    	}
+    },
+
+    vulnerable: function() {
+    	// Change the player's invincibility
+	    this.player.invincible = !this.player.invincible;
+	    // Change the player's alpha level back
+	    this.player.alpha = 1;
     },
     /*
         Method for update to be called when game is paused
@@ -98,7 +126,7 @@ AquaCycle.Game.prototype = {
         if(this.controls.UP.isDown) {
                 this.player.body.velocity.copyFrom(
                     this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
-                    );
+                );
         }
     },
 
@@ -130,6 +158,7 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
         playerLoaded = true;
+        this.player.invincible = false;
     },
 
     loadLevel:function(){
@@ -199,6 +228,17 @@ AquaCycle.Game.prototype = {
     	this.infotext.x = this.infobox.x + 5;
     	this.infotext.y = this.infobox.y + 5;
     	this.infotext.fixedToCamera = true;
+    },
+
+    loadHealthBar: function() {
+    	// Load the health bar
+	    this.healthBar = this.game.add.group();
+	    // Add health bar heart by heart
+	    for (var i = 0; i < 5; i++) {
+	        var heart = this.healthBar.create(i * 32, 32, 'heart');
+	    }
+	    // Fix the health bar to the camera
+	    this.healthBar.fixedToCamera = true;
     },
 
     findObjectsByType: function(type,map,layer){
