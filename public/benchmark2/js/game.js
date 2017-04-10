@@ -17,6 +17,9 @@ var predatorsMoving = false;
 var SLOW_VELOCITY = 100;
 var FAST_VELOCITY = 200;
 var playerSpeed = 200;
+var IDLE_ANIM;
+var SLOW_ANIM;
+var FAST_ANIM;
 AquaCycle.Game.prototype = {
     create: function(){
         this.loadLevel();
@@ -66,7 +69,6 @@ AquaCycle.Game.prototype = {
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
-            this.player.animations.play("move",20,true);
             this.processMovement();
             this.movePredators(this);
         }
@@ -125,8 +127,20 @@ AquaCycle.Game.prototype = {
         if(this.controls.UP.isDown) {
                 this.player.body.velocity.copyFrom(
                     this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
-                );
+                    );
+                //check player velocity to determine animation to play
+                if(playerSpeed == SLOW_VELOCITY){
+                    this.player.animations.play('slow');
+                }else{
+                    this.player.animations.play('fast');
+                }
+        }else{
+            //check to see if player is currently idling
+            if(this.player.animations.currentAnim !=  IDLE_ANIM){
+                this.player.animations.play('idle');
+            }
         }
+
     },
 
     //method to pause the game, will invert the paused boolean once pressed;
@@ -152,7 +166,9 @@ AquaCycle.Game.prototype = {
 
     loadPlayer: function(){
         this.player = AquaCycle.game.add.sprite(128,64,'player');
-        this.player.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
+        IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
+        SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
+        FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
@@ -179,7 +195,7 @@ AquaCycle.Game.prototype = {
         console.log("result");
         console.log(result);
         result.forEach(function(element){
-            element.properties.sprite = 'shark'
+            element.properties.sprite = 'predator'
             this.createFromTiledObject(element,this.predators);
         },this);
 
@@ -187,6 +203,7 @@ AquaCycle.Game.prototype = {
             predator.isMoving = false;
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
+            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         });
 
         
@@ -196,7 +213,7 @@ AquaCycle.Game.prototype = {
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
                 predator.isMoving = true;
-                
+                predator.animations.play("move",20,true);
                 var randomDirection = this.game.rnd.integerInRange(0,10);
                 if(randomDirection <= 5){
                     predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
