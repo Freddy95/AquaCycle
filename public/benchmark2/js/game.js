@@ -47,13 +47,13 @@ AquaCycle.Game.prototype = {
         },this);
 
         //add a listener function to esc key to generate pause menu
-        console.log('PAUSE');
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         this.loadPlayer();
         this.loadPredators();
         this.loadInfoBox();
         this.loadHealthBar();
         this.loadExperienceBar();
+         
          
     },
 
@@ -69,6 +69,8 @@ AquaCycle.Game.prototype = {
         //player movement method
         if(playerLoaded){
             this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
+            this.game.physics.arcade.collide(this.player, this.blockedLayer);
+            this.game.physics.arcade.collide(this.predators,this.blockedLayer);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
@@ -197,6 +199,8 @@ AquaCycle.Game.prototype = {
         this.map.addTilesetImage('DepthTileMockups1','world1')
         this.backgroundLayer = this.map.createLayer("Water");
         this.blockedLayer = this.map.createLayer("Sand");
+        this.map.setCollisionBetween(1, 600, true, 'Sand');
+
         this.backgroundLayer.resizeWorld();   
     },
 
