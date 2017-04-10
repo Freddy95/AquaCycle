@@ -62,14 +62,13 @@ AquaCycle.Game.prototype = {
 
         //player movement method
         if(playerLoaded){
-            //this.game.physics.arcade.collide(this.player,this.predators);
+            this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
             this.player.animations.play("move",20,true);
             this.processMovement();
-            //this.movePredators();
-            this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
+            this.movePredators(this);
         }
     },
 
@@ -157,6 +156,7 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
+        this.player.body.collideWorldBounds = true;
         playerLoaded = true;
         this.player.invincible = false;
     },
@@ -169,6 +169,7 @@ AquaCycle.Game.prototype = {
         this.backgroundLayer.resizeWorld();   
     },
 
+    //method to load predator from the tileset, as of right now its hardcoded to only get shark sprit
     loadPredators: function(){
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
@@ -184,6 +185,8 @@ AquaCycle.Game.prototype = {
 
         this.predators.forEach(function(predator){
             predator.isMoving = false;
+            predator.body.collideWorldBounds = true;
+            predator.anchor.setTo(0.5,0.5);
         });
 
         
@@ -194,27 +197,34 @@ AquaCycle.Game.prototype = {
             if(predator.isMoving == false){
                 predator.isMoving = true;
                 
-                var randomDirection = AquaCycle.game.rnd.integerInRange(0,1);
-                console.log(randomDirection);
-                if(randomDirection == 0){
-                    predator.body.velocity.x = 150;
+                var randomDirection = this.game.rnd.integerInRange(0,10);
+                if(randomDirection <= 5){
+                    predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
                 }
-                if(randomDirection == 1){
-                    predator.body.velocity.x = -150
+                if(randomDirection > 6){
+                    predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
                 }
-                
-                AquaCycle.game.time.events.add(600,this.stopPredators,this);
-                
-              
+                predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
+                //var randomTime = this.game.rnd.integerInRange(1,8)*100;
+                //this.game.time.events.add(randomTime,this.anglePredators,this);
+                this.game.time.events.add(1000,this.stopPredators,this); 
             }
             
-        });
+        },this);
     },
 
     stopPredators: function(){
-        console.log(hello);
         this.predators.forEach(function(predator){
             predator.isMoving = false;
+            predator.body.velocity.x = 0;
+            predator.body.velocity.y = 0;
+            predator.body.angularVelocity = 0;
+        });
+    },
+
+    anglePredators: function(){
+        this.predators.forEach(function(predator){
+            predator.body.angularVelocity = 200;
         });
     },
 
