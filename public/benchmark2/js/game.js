@@ -6,6 +6,8 @@ AquaCycle.Game = function(){};
 var controls, player, predators;
 var map, backgroundlayer;
 var infobox, infotext, infostyle;
+var healthBar;
+var expBar;
 var result;
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
@@ -49,6 +51,7 @@ AquaCycle.Game.prototype = {
         this.loadPlayer();
         this.loadPredators();
         this.loadInfoBox();
+        this.loadHealthBar();
     },
 
     update: function(){
@@ -62,15 +65,39 @@ AquaCycle.Game.prototype = {
 
         //player movement method
         if(playerLoaded){
-            this.game.physics.arcade.collide(this.player,this.predators);
+            this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
             this.processMovement();
             this.movePredators(this);
         }
-      
-        
+    },
+
+    takeDamage: function() {
+    	// The player has hit something that will cause it to take damage
+    	if(!this.player.invincible) {
+    		if(this.healthBar.children.pop() == null) {
+    			// play a dying animation and end the game
+    			console.log("You died.");
+    		} else {
+    			// Remove one heart from the health bar
+    			this.healthBar.children.pop();
+		        // Change player's vulnerability
+		        this.vulnerable();
+		        // Change the player's alpha level
+		        this.player.alpha = 0.5;
+		        // Add timer event to change back vulnerability
+		        this.game.time.events.add(1000, this.vulnerable, this);
+    		}
+    	}
+    },
+
+    vulnerable: function() {
+    	// Change the player's invincibility
+	    this.player.invincible = !this.player.invincible;
+	    // Change the player's alpha level back
+	    this.player.alpha = 1;
     },
     /*
         Method for update to be called when game is paused
@@ -147,6 +174,7 @@ AquaCycle.Game.prototype = {
         this.player.anchor.setTo(0.5,0.5);
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
+        this.player.invincible = false;
     },
 
     loadLevel:function(){
@@ -167,7 +195,7 @@ AquaCycle.Game.prototype = {
         console.log("result");
         console.log(result);
         result.forEach(function(element){
-            element.properties.sprite = 'shark'
+            element.properties.sprite = 'predator'
             this.createFromTiledObject(element,this.predators);
         },this);
 
@@ -175,6 +203,7 @@ AquaCycle.Game.prototype = {
             predator.isMoving = false;
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
+            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
         });
 
         
@@ -184,15 +213,18 @@ AquaCycle.Game.prototype = {
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
                 predator.isMoving = true;
-                
-                var randomDirection = this.game.rnd.integerInRange(0,1);
-                if(randomDirection == 0){
-                    predator.body.velocity.x = 150;
+                predator.animations.play("move",20,true);
+                var randomDirection = this.game.rnd.integerInRange(0,10);
+                if(randomDirection <= 5){
+                    predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
                 }
-                if(randomDirection == 1){
-                    predator.body.velocity.x = -150
+                if(randomDirection > 6){
+                    predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
                 }
-                this.timer = this.game.time.events.add(600,this.stopPredators,this); 
+                predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
+                //var randomTime = this.game.rnd.integerInRange(1,8)*100;
+                //this.game.time.events.add(randomTime,this.anglePredators,this);
+                this.game.time.events.add(1000,this.stopPredators,this); 
             }
             
         },this);
@@ -207,14 +239,33 @@ AquaCycle.Game.prototype = {
         });
     },
 
+    anglePredators: function(){
+        this.predators.forEach(function(predator){
+            predator.body.angularVelocity = 200;
+        });
+    },
+
     loadInfoBox: function() {
     	//this.infobox = this.game.add.sprite(1004,556,'infobox');
     	this.infobox = this.game.add.sprite(940,520,'infobox');
     	this.infobox.alpha = 0.8;
+    	this.infobox.fixedToCamera = true;
     	this.infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: this.infobox.width - 10, boundsAlignH: 'right' };
     	this.infotext = this.game.add.text(0,0,'Information:\nThis is an example of the text that would go in this information box. I am going to keep typing for a long time so I can fill the box somewhat and get an example of what the text wrap may look like. I think this is long enough. Goodbye.',this.infostyle);
     	this.infotext.x = this.infobox.x + 5;
     	this.infotext.y = this.infobox.y + 5;
+    	this.infotext.fixedToCamera = true;
+    },
+
+    loadHealthBar: function() {
+    	// Load the health bar
+	    this.healthBar = this.game.add.group();
+	    // Add health bar heart by heart
+	    for (var i = 0; i < 5; i++) {
+	        var heart = this.healthBar.create(i * 32, 32, 'heart');
+	    }
+	    // Fix the health bar to the camera
+	    this.healthBar.fixedToCamera = true;
     },
 
     findObjectsByType: function(type,map,layer){
