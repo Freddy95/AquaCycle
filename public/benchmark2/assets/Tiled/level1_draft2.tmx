@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="3074">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="3163">
  <tileset firstgid="1" name="DepthTileMockups" tilewidth="32" tileheight="32" tilecount="45" columns="5">
   <image source="../DepthTileMockups.png" width="160" height="288"/>
  </tileset>
@@ -15327,6 +15327,331 @@
    <properties>
     <property name="info" value="Shipwrecks like this one can be found off of many coasts, Florida included. The remains of these old lost boats often become homes to creatures that live on or near the seafloor. They sometimes even replace coral reefs that have died off, becoming an artificial reef."/>
     <property name="type" value="item"/>
+   </properties>
+  </object>
+  <object id="3074" gid="115" x="4416" y="3968" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3076" gid="115" x="4544" y="3968" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3077" gid="115" x="4416" y="3904" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3078" gid="115" x="4512" y="3968" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3079" gid="115" x="4544" y="4064" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3080" gid="115" x="4320" y="4000" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3081" gid="115" x="4032" y="4000" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3082" gid="115" x="4000" y="4160" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3083" gid="115" x="4000" y="4160" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3084" gid="115" x="4032" y="4320" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3085" gid="115" x="3872" y="4320" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3086" gid="115" x="4064" y="4352" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3090" gid="115" x="2976" y="4000" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3091" gid="115" x="3264" y="4160" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3092" gid="115" x="3168" y="3904" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3093" gid="115" x="2880" y="3840" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3094" gid="115" x="3072" y="4032" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3095" gid="115" x="3040" y="3872" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3096" gid="115" x="3168" y="4096" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3099" gid="115" x="2112" y="4096" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3101" gid="115" x="2272" y="4000" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3102" gid="115" x="2144" y="3776" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3104" gid="115" x="800" y="4256" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3105" gid="115" x="832" y="3968" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3106" gid="115" x="1024" y="4096" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3107" gid="115" x="864" y="4128" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3108" gid="115" x="192" y="3616" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3109" gid="115" x="384" y="3648" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3110" gid="115" x="192" y="3456" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3111" gid="115" x="288" y="3456" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3112" gid="115" x="640" y="2784" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3113" gid="115" x="448" y="2624" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3114" gid="115" x="608" y="2528" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3115" gid="115" x="736" y="2688" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3116" gid="115" x="480" y="2464" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3117" gid="115" x="1984" y="2816" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3118" gid="115" x="1856" y="2624" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3119" gid="115" x="2112" y="2656" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3120" gid="115" x="2176" y="2848" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3121" gid="115" x="1984" y="2944" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3122" gid="115" x="2880" y="2112" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3123" gid="115" x="2688" y="1856" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3124" gid="115" x="2944" y="1824" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3125" gid="115" x="2784" y="1984" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3126" gid="115" x="2816" y="1824" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3127" gid="115" x="3680" y="2784" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3128" gid="115" x="3552" y="2496" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3129" gid="115" x="3808" y="2432" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3130" gid="115" x="1632" y="928" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3131" gid="115" x="1280" y="768" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3132" gid="115" x="1696" y="640" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3133" gid="115" x="2016" y="928" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3134" gid="115" x="1600" y="1120" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3135" gid="115" x="4032" y="736" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3136" gid="115" x="3680" y="512" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3137" gid="115" x="3680" y="864" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3138" gid="115" x="3872" y="672" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3139" gid="115" x="3872" y="384" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3140" gid="115" x="2592" y="288" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3141" gid="115" x="2752" y="512" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3142" gid="115" x="2496" y="512" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3143" gid="115" x="2944" y="288" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3144" gid="115" x="2848" y="672" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3145" gid="115" x="352" y="992" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="3146" gid="115" x="416" y="1216" width="32" height="32">
+   <properties>
+    <property name="type" value="predator"/>
    </properties>
   </object>
  </objectgroup>
