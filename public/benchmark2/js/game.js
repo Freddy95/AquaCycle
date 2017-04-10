@@ -169,14 +169,17 @@ AquaCycle.Game.prototype = {
             if(predator.isMoving == false){
                 predator.isMoving = true;
                 
-                var randomDirection = this.game.rnd.integerInRange(0,1);
-                if(randomDirection == 0){
-                    predator.body.velocity.x = 150;
+                var randomDirection = this.game.rnd.integerInRange(0,10);
+                if(randomDirection <= 5){
+                    predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
                 }
-                if(randomDirection == 1){
-                    predator.body.velocity.x = -150
+                if(randomDirection > 6){
+                    predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
                 }
-                this.timer = this.game.time.events.add(600,this.stopPredators,this); 
+                predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
+                //var randomTime = this.game.rnd.integerInRange(1,8)*100;
+                //this.game.time.events.add(randomTime,this.anglePredators,this);
+                this.game.time.events.add(1000,this.stopPredators,this); 
             }
             
         },this);
@@ -188,6 +191,12 @@ AquaCycle.Game.prototype = {
             predator.body.velocity.x = 0;
             predator.body.velocity.y = 0;
             predator.body.angularVelocity = 0;
+        });
+    },
+
+    anglePredators: function(){
+        this.predators.forEach(function(predator){
+            predator.body.angularVelocity = 200;
         });
     },
 
