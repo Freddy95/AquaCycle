@@ -94,14 +94,20 @@ AquaCycle.Game.prototype = {
     },
 
     eat: function(player, edible) {
-    	// Eat a shrimp
-    	edible.destroy();
     	//add to experience bars
         if(expBar.width < 200){
             expBar.width = expBar.width + 5;
             //this is down bc this is an anonymous function and lost context of "this"
             console.log(this);
         }
+        if(itemsFound.indexOf(edible.name) === -1){
+            itemsFound.push(edible.name);
+            
+            var objectImage = "<img src=\"../assets/" + edible.name + ".png\" class=\"item\">"
+            $('#items').append(objectImage);
+        }
+        // Eat a shrimp
+    	edible.destroy();
     },
 
     takeDamage: function() {
@@ -152,7 +158,7 @@ AquaCycle.Game.prototype = {
     */
     pauseUpdate: function(){
         //if the pause menu is not shown the game should be playing
-        if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null) && this.expBar.width != 200){
+        if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null) && expBar.width != 200){
             console.log("should be unpaused");
             this.game.paused = false;
             this.gamePaused = !this.gamePaused;
