@@ -52,11 +52,12 @@ AquaCycle.Game.prototype = {
         
         this.loadPlayer();
         this.loadPredators();
-        this.loadInfoBox();
         this.loadHealthBar();
         this.loadExperienceBar();
         this.loadPrey();
         this.loadItems();
+        // This always has to be called last
+        this.loadInfoBox();
     },
 
     update: function(){
@@ -80,6 +81,7 @@ AquaCycle.Game.prototype = {
             this.processMovement();
             this.scalePlayer();
             this.movePredators(this);
+            this.movePrey(this);
         }
     },
 
@@ -359,9 +361,30 @@ AquaCycle.Game.prototype = {
         });
     },
 
-    anglePredators: function(){
-        this.predators.forEach(function(predator){
-            predator.body.angularVelocity = 200;
+    movePrey: function(){
+        this.prey.forEach(function(p){
+            if(p.isMoving == false){
+                p.isMoving = true;
+                var randomDirection = this.game.rnd.integerInRange(0,10);
+                if(randomDirection <= 5){
+                    p.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
+                }
+                if(randomDirection > 6){
+                    p.body.angularVelocity = this.game.rnd.integerInRange(0,150);
+                }
+                p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(p.angle,150));
+                this.game.time.events.add(1000,this.stopPrey,this); 
+            }
+            
+        },this);
+    },
+
+    stopPrey: function(){
+        this.prey.forEach(function(p){
+            p.isMoving = false;
+            p.body.velocity.x = 0;
+            p.body.velocity.y = 0;
+            p.body.angularVelocity = 0;
         });
     },
 
