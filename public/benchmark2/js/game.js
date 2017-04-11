@@ -14,6 +14,7 @@ var movingSlow = false;
 var gamePaused = false;
 var playerLoaded = false;
 var predatorsMoving = false;
+var deathPlaying = false;
 var SLOW_VELOCITY = 200;
 var FAST_VELOCITY = 500;
 var playerSpeed = 350;
@@ -93,7 +94,9 @@ AquaCycle.Game.prototype = {
                 this.healthBar.children.pop();
     			console.log("You died.");
                 $('#diebtn').click();
-                this.game.paused = true;
+                this.game.time.events.add(0,this.playDeath,this,false);
+                this.game.time.events.add(50,this.playDeath,this,true);
+                //this.game.paused = true;
 
     		} else {
     			// Remove one heart from the health bar
@@ -106,6 +109,19 @@ AquaCycle.Game.prototype = {
 		        this.game.time.events.add(2000, this.vulnerable, this);
     		}
     	}
+    },
+    playDeath: function(finished){
+        if(!deathPlaying){
+            deathPlaying = true;
+            var newSize = this.player.scale.x/1.2;
+            this.player.scale.setTo(newSize,newSize);
+            if(finished){
+                console.log("You died.");
+                $('#diebtn').click();
+                this.game.paused = true;
+            }
+            deathPlaying = false;
+        }
     },
 
     vulnerable: function() {
@@ -462,15 +478,17 @@ AquaCycle.Game.prototype = {
     },
 
     scalePlayer:function(){
-        if(expBar.width<=60){
-            this.player.scale.setTo(0.7,0.7);
-        }
-        else if(expBar.width<=120){
-            this.player.scale.setTo(1.0,1.0);
-        }
-        else if(expBar.width >120){
-            this.player.scale.setTo(1.4, 1.4);
-        }
+        if(this.healthBar.children[1]!=null){
+                if(expBar.width<=60){
+                    this.player.scale.setTo(0.7,0.7);
+                }
+                else if(expBar.width<=120){
+                    this.player.scale.setTo(1.0,1.0);
+                }
+                else if(expBar.width >120){
+                    this.player.scale.setTo(1.4, 1.4);
+                }
+            }
     },
     addObjectToPlayer:function(object){
         
