@@ -86,9 +86,13 @@ AquaCycle.Game.prototype = {
     takeDamage: function() {
     	// The player has hit something that will cause it to take damage
     	if(!this.player.invincible) {
-    		if(this.healthBar.children[0] == null) {
+    		if(this.healthBar.children[1] == null) {
     			// play a dying animation and end the game
+                this.healthBar.children.pop();
     			console.log("You died.");
+                $('#diebtn').click();
+                this.game.paused = true;
+
     		} else {
     			// Remove one heart from the health bar
     			this.healthBar.children.pop();
@@ -113,7 +117,7 @@ AquaCycle.Game.prototype = {
     */
     pauseUpdate: function(){
         //if the pause menu is not shown the game should be playing
-        if(!($('#myModal').hasClass('in')) && this.game.paused){
+        if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null)){
             console.log("should be unpaused");
             this.game.paused = false;
             this.gamePaused = !this.gamePaused;
