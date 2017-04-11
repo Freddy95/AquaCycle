@@ -51,6 +51,11 @@ caption{
 #dieModal{
 	text-align: center;
 }
+
+#winModal{
+	text-align: center;
+}
+
 #dieTable{
 	margin-top: auto;
 }
