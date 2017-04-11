@@ -55,8 +55,7 @@ AquaCycle.Game.prototype = {
         this.loadInfoBox();
         this.loadHealthBar();
         this.loadExperienceBar();
-         
-         
+        this.loadPrey();
     },
 
     update: function(){
@@ -236,9 +235,7 @@ AquaCycle.Game.prototype = {
         this.predators.enableBody = true;
         var predator;
         result = this.findObjectsByType('predator',this.map,'itemLayer');
-         
-        console.log("result");
-        console.log(result);
+        
         result.forEach(function(element){
             element.properties.sprite = 'predator'
             this.createFromTiledObject(element,this.predators);
@@ -263,13 +260,46 @@ AquaCycle.Game.prototype = {
 
         
     },
+
+    //method to load prey from the tileset
+    loadPrey: function(){
+        this.prey = this.game.add.group();
+        this.prey.enableBody = true;
+        var p;
+        var result = this.findObjectsByType('prey',this.map,'itemLayer');
+        
+        console.log(result);
+        result.forEach(function(element) {
+            element.properties.sprite = element.properties.name;
+            this.createFromTiledObject(element,this.prey);
+        },this);  
+
+        for (var i = 0; i < this.prey.hash.length; i++) {
+            p = this.prey.hash[i];
+           
+            //click event
+            p.events.onInputDown.add(this.getObjectInformation, {object : p});
+        }
+
+        this.prey.forEach(function(p){
+            p.isMoving = false;
+            p.body.collideWorldBounds = true;
+            p.anchor.setTo(0.5,0.5);
+            
+            //allows prey to be clicked on
+            p.inputEnabled = true;
+        });
+
+        
+    },
+
     loadItems: function(){
         this.items = this.game.add.group();
         this.items.enableBody = true;
         var item;
         var result = this.findObjectsByType('item', this.map, 'itemLayer');
-        console.log('result');
-        console.log(result);
+
+
         result.forEach(function(element){
             element.properties.sprite = element.properties.name;
             this.createFromTiledObject(element,this.items);
@@ -278,14 +308,15 @@ AquaCycle.Game.prototype = {
             item = this.items.hash[i];
            
             //click event
-            
             item.events.onInputDown.add(this.getObjectInformation, {object : item});
         }
+
         this.items.forEach(function(it){
             it.inputEnabled = true;
         });
 
     },
+
     movePredators: function(){
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
@@ -328,14 +359,14 @@ AquaCycle.Game.prototype = {
     	infobox.alpha = 0.8;
     	infobox.fixedToCamera = true;
     	infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
-    	infotext = this.game.add.text(0,0,'BLAH BLAH BLAH', infostyle);
+    	infotext = this.game.add.text(0,0,'', infostyle);
     	infotext.x = infobox.x + 5;
     	infotext.y = infobox.y + 30;
     	infotext.fixedToCamera = true;
 
     	// Add the type text to the box
     	typestyle = { font: '20px Arial', fill: '#2a4157', boundsAlignH: 'center' };
-    	typetext = this.game.add.text(0,0,'',typestyle);
+    	typetext = this.game.add.text(0,0,'Information Box',typestyle);
     	typetext.x = infobox.x + 5;
     	typetext.y = infobox.y + 5;
     	typetext.fixedToCamera = true;
