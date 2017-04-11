@@ -183,17 +183,17 @@ AquaCycle.Game.prototype = {
         if(this.object.type == "predator") {
         	// Set style and change title
         	typetext.text = "Predator Information";
-        	typestyle = { font: '14px Arial', fill: 'red' };
+        	typestyle = { font: '20px Arial', fill: 'red' };
         	typetext.setStyle(typestyle);
         } else if (this.object.type == "item") {
         	// Set style and change title
         	typetext.text = "Item Information";
-        	typestyle = { font: '14px Arial', fill: 'blue' };
+        	typestyle = { font: '20px Arial', fill: 'blue' };
         	typetext.setStyle(typestyle);
         } else if (this.object.type == "prey") {
         	// Set style and change title
         	typetext.text = "Prey Information";
-        	typestyle = { font: '14px Arial', fill: 'green' };
+        	typestyle = { font: '20px Arial', fill: 'green' };
         	typetext.setStyle(typestyle);
         }
     },
@@ -320,18 +320,18 @@ AquaCycle.Game.prototype = {
 
     loadInfoBox: function() {
     	// Add the info box and the infobox text
-    	infobox = this.game.add.sprite(940,520,'infobox');
+    	infobox = this.game.add.sprite(950,10,'infobox');
     	infobox.alpha = 0.8;
     	infobox.fixedToCamera = true;
-    	infostyle = { font: '14px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
-    	infotext = this.game.add.text(0,0,'BLAH BLAH BLAH',infostyle);
+    	infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
+    	infotext = this.game.add.text(0,0,'BLAH BLAH BLAH', infostyle);
     	infotext.x = infobox.x + 5;
-    	infotext.y = infobox.y + 24;
+    	infotext.y = infobox.y + 30;
     	infotext.fixedToCamera = true;
 
     	// Add the type text to the box
-    	typestyle = { font: '14px Arial', fill: '#2a4157', boundsAlignH: 'center' };
-    	typetext = this.game.add.text(0,0,'Information',typestyle);
+    	typestyle = { font: '20px Arial', fill: '#2a4157', boundsAlignH: 'center' };
+    	typetext = this.game.add.text(0,0,'',typestyle);
     	typetext.x = infobox.x + 5;
     	typetext.y = infobox.y + 5;
     	typetext.fixedToCamera = true;
@@ -347,13 +347,14 @@ AquaCycle.Game.prototype = {
 	    // Fix the health bar to the camera
 	    this.healthBar.fixedToCamera = true;
     },
+
     loadExperienceBar: function(){
         //this is the background of the bar
         var bmd = this.game.add.bitmapData(200,40);
          bmd.ctx.beginPath();
          bmd.ctx.rect(0,0,180,30);
          //color of background
-         bmd.ctx.fillStyle = '#BDC667';
+         bmd.ctx.fillStyle = '#3c3c3c';
          bmd.ctx.fill();
          var b = this.game.add.sprite(10,30, bmd);
          b.fixedToCamera = true;
@@ -363,13 +364,14 @@ AquaCycle.Game.prototype = {
          exp.ctx.beginPath();
          exp.ctx.rect(0,0,180,30);
          //color filled in
-         exp.ctx.fillStyle = '#29BA66';
+         exp.ctx.fillStyle = '#a8c3d4';
          exp.ctx.fill();    
          expBar = this.game.add.sprite(10,30,exp);
          expBar.width = 0;       
          expBar.fixedToCamera = true;
          expBar.anchor.y = 0.5;
     },
+
     findObjectsByType: function(type,map,layer){
         var result = new Array();
         map.objects[layer].forEach(function(element){
