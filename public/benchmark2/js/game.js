@@ -233,10 +233,10 @@ AquaCycle.Game.prototype = {
         this.map.addTilesetImage('DepthTileMockups','world');
         //this.map.addTilesetImage('predator', 'predator');
         this.map.addTilesetImage('DepthTileMockups','world2');
-        this.map.addTilesetImage('DepthTileMockups1','world1')
-        this.backgroundLayer = this.map.createLayer("collideLayer");
-        this.blockedLayer = this.map.createLayer("background");
-        this.map.setCollisionBetween(1, 600, true, 'background');
+        this.map.addTilesetImage('DepthTileMockups1','world1');
+        this.backgroundLayer = this.map.createLayer("background");
+        this.blockedLayer = this.map.createLayer("collideLayer");
+        this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
         this.backgroundLayer.resizeWorld();   
     },
