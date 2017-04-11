@@ -111,7 +111,6 @@ AquaCycle.Game.prototype = {
     			// play a dying animation and end the game
                 this.healthBar.children.pop();
     			//console.log("You died.");
-                $('#diebtn').click();
                 this.game.time.events.add(0,this.playDeath,this,false);
                 this.game.time.events.add(50,this.playDeath,this,true);
                 //this.game.paused = true;
