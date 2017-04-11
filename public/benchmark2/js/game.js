@@ -3,7 +3,7 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
 // global variables to be initialized
-var controls, player, predators;
+var controls, player, predators, prey;
 var map, backgroundlayer;
 var infobox, infotext, infostyle, typetext, typestyle;
 var healthBar;
@@ -76,6 +76,7 @@ AquaCycle.Game.prototype = {
             this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
             this.game.physics.arcade.collide(this.player, this.blockedLayer);
             this.game.physics.arcade.collide(this.predators,this.blockedLayer);
+            this.game.physics.arcade.collide(this.prey, this.blockedLayer);
             this.game.physics.arcade.overlap(this.player, this.prey, this.eat, null, this);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
@@ -87,7 +88,7 @@ AquaCycle.Game.prototype = {
             this.movePrey(this);
         }
 
-        if(expBar.width == 200) {
+        if(expBar.width >= 200) {
             $('#winbtn').click();
             this.game.paused = true;
         }
