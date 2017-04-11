@@ -10,7 +10,7 @@
 .modal-body{
 	padding: 0;
 }
-.modal-body{
+#modal-body{
 	height: 70vh;
 	padding-bottom: 0px;
 	padding-top: 0px;
@@ -48,4 +48,9 @@ caption{
 	height: auto;
 }
 
-
+#dieModal{
+	text-align: center;
+}
+#dieTable{
+	margin-top: auto;
+}
