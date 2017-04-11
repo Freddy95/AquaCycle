@@ -9,6 +9,7 @@ var infobox, infotext, infostyle, typetext, typestyle;
 var healthBar;
 var expBar;
 var result;
+var itemsFound = [];
 //this is the toggle boolean for chaning the user's speed from "running" to "walking",
 var movingSlow = false;
 var gamePaused = false;
@@ -50,13 +51,13 @@ AquaCycle.Game.prototype = {
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         
-        this.loadPlayer();
-        this.loadPredators();
-        this.loadHealthBar();
-        this.loadExperienceBar();
         this.loadPrey();
         this.loadItems();
-        // This always has to be called last
+        this.loadPredators();
+        this.loadPlayer();
+        // These always have to be called last
+        this.loadHealthBar();
+        this.loadExperienceBar();
         this.loadInfoBox();
     },
 
@@ -74,6 +75,7 @@ AquaCycle.Game.prototype = {
             this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
             this.game.physics.arcade.collide(this.player, this.blockedLayer);
             this.game.physics.arcade.collide(this.predators,this.blockedLayer);
+            this.game.physics.arcade.overlap(this.player, this.prey, this.eat, null, this);
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
             this.player.body.angularVelocity = 0;
@@ -83,6 +85,22 @@ AquaCycle.Game.prototype = {
             this.movePredators(this);
             this.movePrey(this);
         }
+
+        if(expBar.width == 200) {
+            $('#winbtn').click();
+            this.game.paused = true;
+        }
+    },
+
+    eat: function(player, edible) {
+    	// Eat a shrimp
+    	edible.destroy();
+    	//add to experience bars
+        if(expBar.width < 200){
+            expBar.width = expBar.width + 5;
+            //this is down bc this is an anonymous function and lost context of "this"
+            console.log(this);
+        }
     },
 
     takeDamage: function() {
@@ -91,7 +109,7 @@ AquaCycle.Game.prototype = {
     		if(this.healthBar.children[1] == null) {
     			// play a dying animation and end the game
                 this.healthBar.children.pop();
-    			console.log("You died.");
+    			//console.log("You died.");
                 $('#diebtn').click();
                 this.game.paused = true;
 
@@ -119,7 +137,7 @@ AquaCycle.Game.prototype = {
     */
     pauseUpdate: function(){
         //if the pause menu is not shown the game should be playing
-        if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null)){
+        if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null) && this.expBar.width != 200){
             console.log("should be unpaused");
             this.game.paused = false;
             this.gamePaused = !this.gamePaused;
@@ -171,8 +189,6 @@ AquaCycle.Game.prototype = {
         this.gamePaused = !this.gamePaused;
     },
 
-   
-
     /*
         This method will get the information on mouseclick down of a certain object clicked
         In theory this will be a listener function added dynamically to each object generated
@@ -187,7 +203,7 @@ AquaCycle.Game.prototype = {
             var objectImage = "<img src=\"../assets/" + this.object.name + ".png\" class=\"item\">"
             $('#items').append(objectImage);
         }
-        //add to experience baris
+        //add to experience bars
         if(expBar.width < 200){
             expBar.width = expBar.width + 20;
             //this is down bc this is an anonymous function and lost context of "this"
@@ -222,7 +238,6 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
-        this.player.objects = [];
         
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
@@ -259,7 +274,7 @@ AquaCycle.Game.prototype = {
            
             //click event
             console.log(this.player);
-            predator.events.onInputDown.add(this.getObjectInformation, {objs : this.player.objects, object : predator });
+            predator.events.onInputDown.add(this.getObjectInformation, {objs : itemsFound, object : predator });
         }
 
         this.predators.forEach(function(predator){
@@ -292,7 +307,7 @@ AquaCycle.Game.prototype = {
             p = this.prey.hash[i];
            
             //click event
-            p.events.onInputDown.add(this.getObjectInformation, {object : p, objs : this.player.objects});
+            p.events.onInputDown.add(this.getObjectInformation, {object : p, objs : itemsFound});
         }
 
         this.prey.forEach(function(p){
@@ -322,7 +337,7 @@ AquaCycle.Game.prototype = {
             item = this.items.hash[i];
            
             //click event
-            item.events.onInputDown.add(this.getObjectInformation, {object : item, objs : this.player.objects});
+            item.events.onInputDown.add(this.getObjectInformation, {object : item, objs : itemsFound});
         }
 
         this.items.forEach(function(it){

@@ -20,6 +20,7 @@
         <div id ="game_location"></div>
         <button type="button" id="btn" data-toggle="modal" data-target="#myModal" style="display:none"></button>
         <button type="button" id="diebtn" data-toggle="modal" data-target="#dieModal" style="display:none" data-backdrop="static"></button>
+        <button type="button" id="winbtn" data-toggle="modal" data-target="#winModal" style="display:none" data-backdrop="static"></button>
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog modal-lg">
 
@@ -65,6 +66,28 @@
              
               <div class="modal-body">
                <h3>You Died</h3>
+               <table id="dieTable">
+                <tr>
+                    <td><a class="btn btn-danger" href="javascript:history.go(0)">Restart</a></td>
+                    <td><a class="btn btn-primary" href="../GameStartPage.html">Home</a></td>
+                </tr>
+               </table>
+               
+               
+              </div>
+            <div class="modal-footer"></div>
+            </div>
+
+          </div>
+        </div>
+        <div id="winModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+             
+              <div class="modal-body">
+               <h3>You Won!</h3>
                <table id="dieTable">
                 <tr>
                     <td><a class="btn btn-danger" href="javascript:history.go(0)">Restart</a></td>
