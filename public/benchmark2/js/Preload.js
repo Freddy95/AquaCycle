@@ -5,7 +5,7 @@ AquaCycle.Preload = function(){};
 AquaCycle.Preload.prototype = {
     preload: function(){
         AquaCycle.game.load.spritesheet('player', '../assets/SharkSpriteSheet2.png',128,64);
-        AquaCycle.game.load.image('shipwreck','../assets/shipwreck2.png');
+        AquaCycle.game.load.image('shipwreck','../assets/shipwreck.png');
         AquaCycle.game.load.tilemap('level1','../assets/level1.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.image('world','../assets/DepthTileMockups.png');
         AquaCycle.game.load.image('world1','../assets/GIMP/DepthTileMockups1.png');
