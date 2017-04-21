@@ -20,6 +20,7 @@ var playerSpeed = 350;
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
+var DIE_ANIM;
 
 AquaCycle.Game.prototype = {
     /*****************************************************
@@ -28,8 +29,6 @@ AquaCycle.Game.prototype = {
     create: function(){
         this.loadLevel();
 
-        //this.map.setCollisionBetween(1,)
-        //this.backgroundlayer.resizeWorld();
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
             UP:             this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -192,9 +191,12 @@ AquaCycle.Game.prototype = {
     loadPlayer: function(){
         result = this.findObjectsByType('playerStart', this.map, 'itemLayer')
         this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
-        IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
-        SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
-        FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
+        //IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
+        //SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
+        //FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
+        IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
+        SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
+        FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
@@ -202,6 +204,7 @@ AquaCycle.Game.prototype = {
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
         this.player.invincible = false;
+        this.player.angle = -90;
         console.log(this.player);
     },
 
@@ -216,7 +219,6 @@ AquaCycle.Game.prototype = {
             this.player.body.angularVelocity = playerSpeed;
         }
 
-        //TODO:FIgure out how to rotate from center
         if(this.controls.UP.isDown) {
                 this.player.body.velocity.copyFrom(
                     this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
@@ -227,7 +229,7 @@ AquaCycle.Game.prototype = {
                 }else{
                     this.player.animations.play('fast');
                 }
-        }else{
+        }else {
             //check to see if player is currently idling
             if(this.player.animations.currentAnim !=  IDLE_ANIM){
                 this.player.animations.play('idle');
@@ -259,10 +261,26 @@ AquaCycle.Game.prototype = {
     		if(this.healthBar.children[1] == null) {
     			// play a dying animation and end the game
                 this.healthBar.children.pop();
-    			//console.log("You died.");
-                this.game.time.events.add(0,this.playDeath,this,false);
-                this.game.time.events.add(50,this.playDeath,this,true);
-                //this.game.paused = true;
+
+                // Create the dying shark
+                this.dead_player = this.game.add.sprite(this.player.body.x, this.player.body.y, 'player');
+                DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
+                this.dead_player.angle = this.player.angle;
+
+                if(expBar.width<=60){
+                    this.dead_player.scale.setTo(0.7,0.7);
+                }
+                else if(expBar.width<=120){
+                    this.dead_player.scale.setTo(1.0,1.0);
+                }
+                else if(expBar.width >120){
+                    this.dead_player.scale.setTo(1.4, 1.4);
+                }
+
+                // Remove the player
+                playerLoaded = false;
+
+                this.game.time.events.add(1, this.playDeath, this);
 
     		} else {
     			// Remove one heart from the health bar
@@ -284,8 +302,16 @@ AquaCycle.Game.prototype = {
         this.player.alpha = 1;
     },
 
-    playDeath: function(finished){
-        if(!deathPlaying){
+    playDeath: function(){
+        AquaCycle.game.camera.follow(this.dead_player);
+
+        this.player.destroy();
+                
+        this.dead_player.animations.play('die');
+
+        this.game.time.events.add(3000, this.endGame, this);
+
+        /*if(!deathPlaying){
             deathPlaying = true;
             var newSize = this.player.scale.x/1.2;
             this.player.scale.setTo(newSize,newSize);
@@ -295,7 +321,12 @@ AquaCycle.Game.prototype = {
                 this.game.paused = true;
             }
             deathPlaying = false;
-        }
+        }*/
+    },
+
+    endGame: function() {
+        $('#diebtn').click();
+        this.game.paused = true;
     },
 
     scalePlayer:function(){
