@@ -84,7 +84,6 @@ AquaCycle.Game.prototype = {
             this.gamePaused = !this.gamePaused;
         }
 
-
         //player movement method
         if(playerLoaded){
             this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
@@ -206,9 +205,6 @@ AquaCycle.Game.prototype = {
     loadPlayer: function(){
         result = this.findObjectsByType('playerStart', this.map, 'itemLayer')
         this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
-        //IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 10, true);
-        //SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],20, true);
-        //FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16],30, true);
         IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
         SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
         FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
@@ -324,18 +320,6 @@ AquaCycle.Game.prototype = {
         this.dead_player.animations.play('die');
 
         this.game.time.events.add(3000, this.endGame, this);
-
-        /*if(!deathPlaying){
-            deathPlaying = true;
-            var newSize = this.player.scale.x/1.2;
-            this.player.scale.setTo(newSize,newSize);
-            if(finished){
-                console.log("You died.");
-                $('#diebtn').click();
-                this.game.paused = true;
-            }
-            deathPlaying = false;
-        }*/
     },
 
     endGame: function() {
