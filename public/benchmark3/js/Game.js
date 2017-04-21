@@ -112,9 +112,13 @@ AquaCycle.Game.prototype = {
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
+    checkCurrentLevel:function(){
+
+    },
+
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('DepthTileMockups','world');
+        //this.map.addTilesetImage('DepthTileMockups','world');
         //this.map.addTilesetImage('predator', 'predator');
         this.map.addTilesetImage('DepthTileMockups','world2');
         this.map.addTilesetImage('DepthTileMockups1','world1');
@@ -213,7 +217,7 @@ AquaCycle.Game.prototype = {
         this.player.body.collideWorldBounds = true;
         playerLoaded = true;
         this.player.invincible = false;
-        console.log(this.player);
+    
     },
 
     // Method to get user input and then change the player sprite's speed
