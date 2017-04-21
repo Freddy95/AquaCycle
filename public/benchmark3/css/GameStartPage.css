@@ -1,0 +1,40 @@
+
+
+
+#logo{
+	margin-top: 10%;
+	width: 30%;
+	height: 30%;
+}
+
+.col-md-12{
+	text-align: center;
+}
+.btn{
+	margin-top: 10%;
+	background-color: #d0bda5;
+	font-size: 16px;
+	width: 106px;
+}
+
+button:hover{
+	background-color: #F2E7C9;
+}
+#newGame{
+	margin-right: 5%;
+}
+#continue{
+	margin-left: 5%;
+}
+
+body{
+	background-color: #69a7e1;
+}
+	
+
+#worldImage{
+	position: absolute;
+	margin-top: -2px;
+	margin-left: -15px;
+	height: 100%;
+}

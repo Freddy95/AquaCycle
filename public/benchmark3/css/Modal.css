@@ -1,0 +1,61 @@
+.modal-content{
+	background-color: #F2E7C9;
+}
+.modal-header{
+	padding-bottom: 0px;
+}
+.modal-footer{
+	padding-top: 0px;
+}
+.modal-body{
+	padding: 0;
+}
+#modal-body{
+	height: 70vh;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+#pauseSettings{
+	text-align: center;
+	height: 100%;
+	border-right: 1px #826D61 solid;
+}
+#itemsFound{
+	padding-top: 5px;
+}
+table{
+	height: 40%;
+	margin-top: 40%;
+	margin-left: 5%;
+	width: 90%;
+}
+caption{
+	text-align: center;
+	color: #2a4157;
+}
+#itemHeading{
+	text-align: center;
+	color: #2a4157;
+}
+
+.btn{
+	width: 50%; 
+}
+.item{
+	margin-left: 8%;
+	margin-top: 5%;
+	width: 10%;
+	height: auto;
+}
+
+#dieModal{
+	text-align: center;
+}
+
+#winModal{
+	text-align: center;
+}
+
+#dieTable{
+	margin-top: auto;
+}
