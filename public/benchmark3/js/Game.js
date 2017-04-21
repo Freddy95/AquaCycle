@@ -21,7 +21,7 @@ var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
 var DIE_ANIM;
-
+var CURRENT_LEVEL;
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -62,7 +62,7 @@ AquaCycle.Game.prototype = {
         },this);
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
-        
+        this.checkCurrentLevel();
         this.loadPrey();
         this.loadItems();
         this.loadPredators();
@@ -108,11 +108,26 @@ AquaCycle.Game.prototype = {
     },
 
     /*****************************************************
+    *   CONFIG FUNCTIONS
+    ******************************************************/
+
+
+    checkCurrentLevel:function() {
+        //a jquery library to get the current level from a stored cookie
+       CURRENT_LEVEL = Cookies.get('currentLevel');
+       if (CURRENT_LEVEL == null ) {
+            Cookies.set('currentLevel','1');
+            CURRENT_LEVEL = 1;
+       }
+       else {
+         
+       }
+    }, 
+    
+    /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
-    checkCurrentLevel:function(){
 
-    },
 
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
@@ -352,7 +367,7 @@ AquaCycle.Game.prototype = {
         result = this.findObjectsByType('predator',this.map,'itemLayer');
         
         result.forEach(function(element){
-            element.properties.sprite = 'predator'
+            element.properties.sprite = 'predator';
             this.createFromTiledObject(element,this.predators);
         },this);  
         for (var i = 0; i < this.predators.hash.length; i++) {
