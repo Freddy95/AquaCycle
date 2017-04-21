@@ -36,6 +36,9 @@ AquaCycle.Game.prototype = {
             LEFT:           this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             RIGHT:          this.game.input.keyboard.addKey(Phaser.Keyboard.D),
             TOGGLE_SPEED:   this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
+            ONE:            this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
+            TWO:            this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
+            THREE:          this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
             PAUSE:          this.game.input.keyboard.addKey(Phaser.Keyboard.ESC),
         };
         //add a listener function the shift key to toggle walking speed
@@ -49,6 +52,14 @@ AquaCycle.Game.prototype = {
                 }
         },this);
 
+        //add a listener function so that when the one button is pressed level one is loaded
+        /*
+            TODO: IF we can save a cookie we can keep track of what level the  player is currently
+            on that way we can just check to see what level the user is on via cookie and load the appropriate level
+        */
+        this.controls.ONE.onDown.add(function(){
+            this.state.start('Game');
+        },this);
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         
@@ -100,9 +111,13 @@ AquaCycle.Game.prototype = {
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
+    checkCurrentLevel:function(){
+
+    },
+
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
-        this.map.addTilesetImage('DepthTileMockups','world');
+        //this.map.addTilesetImage('DepthTileMockups','world');
         //this.map.addTilesetImage('predator', 'predator');
         this.map.addTilesetImage('DepthTileMockups','world2');
         this.map.addTilesetImage('DepthTileMockups1','world1');
@@ -205,7 +220,6 @@ AquaCycle.Game.prototype = {
         playerLoaded = true;
         this.player.invincible = false;
         this.player.angle = -90;
-        console.log(this.player);
     },
 
     // Method to get user input and then change the player sprite's speed
