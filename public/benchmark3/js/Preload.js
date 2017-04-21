@@ -12,10 +12,10 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.image('heart','../assets/heart.png');
 
         // Load the player sprite sheets
-        AquaCycle.game.load.spritesheet('player', '../assets/SharkSpriteSheet2.png',128,64);
+        AquaCycle.game.load.spritesheet('player', '../assets/blacktip_shark.png',128,64);
 
         // Load the predator sprite sheets
-        AquaCycle.game.load.spritesheet('predator','../assets/LargerEnemySpriteSheet.png',192,96);
+        AquaCycle.game.load.spritesheet('predator','../assets/tiger_shark.png',192,96);
 
         // Load the prey sprite sheets
         AquaCycle.game.load.image('pinkshrimp','../assets/pinkshrimp.png');
