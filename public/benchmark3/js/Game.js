@@ -110,8 +110,6 @@ AquaCycle.Game.prototype = {
     /*****************************************************
     *   CONFIG FUNCTIONS
     ******************************************************/
-
-
     checkCurrentLevel:function() {
         //a jquery library to get the current level from a stored cookie
        CURRENT_LEVEL = Cookies.get('currentLevel');
@@ -122,13 +120,11 @@ AquaCycle.Game.prototype = {
        else {
          
        }
-    }, 
+    },
     
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
-
-
     loadLevel:function(){
         this.map = this.game.add.tilemap('level1');
         //this.map.addTilesetImage('DepthTileMockups','world');
@@ -196,6 +192,9 @@ AquaCycle.Game.prototype = {
         typetext.fixedToCamera = true;
     },
 
+    /*****************************************************
+    *   HELPER FUNCTIONS
+    ******************************************************/
     findObjectsByType: function(type,map,layer){
         var result = new Array();
         map.objects[layer].forEach(function(element){
@@ -382,6 +381,7 @@ AquaCycle.Game.prototype = {
             predator.isMoving = false;
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
+            //predator.body.allowRotation = false;
             
             predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
             //allows predators to be clicked on
@@ -392,8 +392,14 @@ AquaCycle.Game.prototype = {
     },
 
     movePredators: function(){
+        // TODO: Need to smooth out movement
+        // Then need to make predators move toward player when in two diff agro ranges
+            // one for close up and the other a bit farther away with faster movement
+            // Add something like an isStalking boolean
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
+                predator.body.angularVelocity = 0;
+                predator.body.fixedRotation = true;
                 predator.isMoving = true;
                 predator.animations.play("move",20,true);
                 var randomDirection = this.game.rnd.integerInRange(0,10);
@@ -406,7 +412,7 @@ AquaCycle.Game.prototype = {
                 predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
                 //var randomTime = this.game.rnd.integerInRange(1,8)*100;
                 //this.game.time.events.add(randomTime,this.anglePredators,this);
-                this.game.time.events.add(1000,this.stopPredators,this); 
+                this.game.time.events.add(300,this.stopPredators,this);
             }
             
         },this);
