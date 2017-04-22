@@ -27,6 +27,7 @@ AquaCycle.Game.prototype = {
     *   CREATE FUNCTION
     ******************************************************/
     create: function(){
+        this.checkCurrentLevel();
         this.loadLevel();
 
         //create the keyboard controls self explanatory, walking speed will be related to shift key
@@ -62,7 +63,7 @@ AquaCycle.Game.prototype = {
         },this);
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
-        this.checkCurrentLevel();
+        
         this.loadPrey();
         this.loadItems();
         this.loadPredators();
@@ -115,10 +116,10 @@ AquaCycle.Game.prototype = {
        CURRENT_LEVEL = Cookies.get('currentLevel');
        if (CURRENT_LEVEL == null ) {
             Cookies.set('currentLevel','1');
-            CURRENT_LEVEL = 1;
+            CURRENT_LEVEL = Cookies.get("currentLevel");
        }
        else {
-         
+         CURRENT_LEVEL = Cookies.get('currentLevel');
        }
     },
     
@@ -126,16 +127,25 @@ AquaCycle.Game.prototype = {
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
     loadLevel:function(){
-        this.map = this.game.add.tilemap('level1');
-        //this.map.addTilesetImage('DepthTileMockups','world');
-        //this.map.addTilesetImage('predator', 'predator');
-        this.map.addTilesetImage('DepthTileMockups','world2');
-        this.map.addTilesetImage('DepthTileMockups1','world1');
-        this.backgroundLayer = this.map.createLayer("background");
-        this.blockedLayer = this.map.createLayer("collideLayer");
-        this.map.setCollisionBetween(1, 600, true, 'collideLayer');
+        if(CURRENT_LEVEL == "1"){
+            this.map = this.game.add.tilemap('level1');
+            //this.map.addTilesetImage('DepthTileMockups','world');
+            //this.map.addTilesetImage('predator', 'predator');
+            this.map.addTilesetImage('DepthTileMockups','world2');
+            this.map.addTilesetImage('DepthTileMockups1','world1');
+            this.backgroundLayer = this.map.createLayer("background");
+            this.blockedLayer = this.map.createLayer("collideLayer");
+            this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
-        this.backgroundLayer.resizeWorld();   
+            this.backgroundLayer.resizeWorld();
+        }
+        
+        else if(CURRENT_LEVEL == "2"){
+
+        }
+        else if(CURRENT_LEVEL == "3"){
+
+        }
     },
 
     loadHealthBar: function() {
