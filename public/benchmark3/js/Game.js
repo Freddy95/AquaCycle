@@ -80,7 +80,7 @@ AquaCycle.Game.prototype = {
     update: function(){
         //if the modal is shown and the game is not paused it should be
         if($('#myModal').hasClass('in') && !this.game.paused){
-            console.log("should be paused");
+            //console.log("should be paused");
             this.game.paused = true;
             this.gamePaused = !this.gamePaused;
         }
@@ -88,6 +88,7 @@ AquaCycle.Game.prototype = {
         //player movement method
         if(playerLoaded){
             this.game.physics.arcade.collide(this.player, this.predators, this.takeDamage, null, this);
+            this.game.physics.arcade.collide(this.predators, this.predators);
             this.game.physics.arcade.collide(this.player, this.blockedLayer);
             this.game.physics.arcade.collide(this.predators,this.blockedLayer);
             this.game.physics.arcade.collide(this.prey, this.blockedLayer);
@@ -276,8 +277,6 @@ AquaCycle.Game.prototype = {
     	//add to experience bars
         if(expBar.width < 200){
             expBar.width = expBar.width + 5;
-            //this is down bc this is an anonymous function and lost context of "this"
-            console.log(this);
         }
         if(itemsFound.indexOf(edible.name) === -1){
             itemsFound.push(edible.name);
@@ -383,7 +382,6 @@ AquaCycle.Game.prototype = {
             predator = this.predators.hash[i];
            
             //click event
-            console.log(this.player);
             predator.events.onInputDown.add(this.getObjectInformation, {objs : itemsFound, object : predator });
         }
 
@@ -393,36 +391,49 @@ AquaCycle.Game.prototype = {
             predator.anchor.setTo(0.5,0.5);
             //predator.body.allowRotation = false;
             
-            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16]);
+            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
             //allows predators to be clicked on
             predator.inputEnabled = true;
+            predator.animations.play('move');
         });
 
         
     },
 
     movePredators: function(){
-        // TODO: Need to smooth out movement
-        // Then need to make predators move toward player when in two diff agro ranges
+        // TODO: Then need to make predators move toward player when in two diff agro ranges
             // one for close up and the other a bit farther away with faster movement
             // Add something like an isStalking boolean
         this.predators.forEach(function(predator){
             if(predator.isMoving == false){
+                // Setup the movement for the predator
                 predator.body.angularVelocity = 0;
-                predator.body.fixedRotation = true;
                 predator.isMoving = true;
-                predator.animations.play("move",20,true);
-                var randomDirection = this.game.rnd.integerInRange(0,10);
-                if(randomDirection <= 5){
-                    predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
+                // Check the predator's distance from the player
+                var distanceFromPlayer = this.game.physics.arcade.distanceBetween(predator,this.player);
+                if(distanceFromPlayer < 300) {
+                    console.log("Moving toward player");
+                    var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
+                    // The predator is in the aggro range, so move toward player
+                    // TODO: need to fix this so it is also angled toward the player
+                    predator.angle = angle;
+                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,150));
+                } else {
+                    // Move a random direction
+                    var randomDirection = this.game.rnd.integerInRange(0,10);
+                    if(randomDirection <= 5) {
+                        // Move in one direction
+                        predator.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
+                    }
+                    if(randomDirection > 6) {
+                        // Or move in the other
+                        predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
+                    }
+                    // Copy that velocity
+                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
+                    // Follow that direction for a set priod of time
+                    this.game.time.events.add(1000,this.stopPredators,this);
                 }
-                if(randomDirection > 6){
-                    predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
-                }
-                predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
-                //var randomTime = this.game.rnd.integerInRange(1,8)*100;
-                //this.game.time.events.add(randomTime,this.anglePredators,this);
-                this.game.time.events.add(300,this.stopPredators,this);
             }
             
         },this);
@@ -447,7 +458,7 @@ AquaCycle.Game.prototype = {
         var p;
         var result = this.findObjectsByType('prey',this.map,'itemLayer');
         
-        console.log(result);
+        //console.log(result);
         result.forEach(function(element) {
             element.properties.sprite = element.properties.name;
             this.createFromTiledObject(element,this.prey);
@@ -529,8 +540,6 @@ AquaCycle.Game.prototype = {
     // This method will get the information on mouseclick down of a certain object clicked
     getObjectInformation: function(){
         //add to user
-        console.log('player');
-        console.log(this);
         if(this.objs.indexOf(this.object.name) === -1){
             this.objs.push(this.object.name);
             
@@ -541,7 +550,6 @@ AquaCycle.Game.prototype = {
         if(expBar.width < 200){
             expBar.width = expBar.width + 20;
             //this is down bc this is an anonymous function and lost context of "this"
-            console.log(this);
         }
         infotext.text = this.object.info;
         // Changing the title and color for each type of item
@@ -569,10 +577,10 @@ AquaCycle.Game.prototype = {
     // Method to pause the game, will invert the paused boolean once pressed
     pauseGame: function(){
         if(this.gamePaused){
-            console.log("unpaused");
+            //console.log("unpaused");
             this.game.paused = false;
         } else {
-            console.log("paused");
+            //console.log("paused");
             this.game.paused = true;
         }
         $('#btn').click();
@@ -583,7 +591,7 @@ AquaCycle.Game.prototype = {
     pauseUpdate: function(){
         //if the pause menu is not shown the game should be playing
         if(!($('#myModal').hasClass('in')) && this.game.paused && !(this.healthBar.children[1] == null) && expBar.width != 200){
-            console.log("should be unpaused");
+            //console.log("should be unpaused");
             this.game.paused = false;
             this.gamePaused = !this.gamePaused;
         }
