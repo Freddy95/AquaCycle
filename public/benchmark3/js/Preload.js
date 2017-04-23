@@ -7,7 +7,7 @@ AquaCycle.Preload.prototype = {
         // Load the levels of the game and their assets
         AquaCycle.game.load.tilemap('level1','assets/level1_withObjects.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.image('tiles','assets/depth_tiles.png');
-        AquaCycle.game.load.image('infobox','assets/infobox.png');
+        AquaCycle.game.load.image('infobox','assets/infobox_small.png');
         AquaCycle.game.load.image('heart','assets/heart.png');
 
         // Load the player sprite sheets

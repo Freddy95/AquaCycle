@@ -9,6 +9,7 @@
 
 .modal-footer{
 	padding-top: 0px;
+	border: 0px;
 }
 
 .modal-body{
@@ -51,6 +52,7 @@ table {
 caption {
 	text-align: center;
 	color: #2a4157;
+	border: 0px;
 }
 
 /* Tab Modal Styling */
@@ -76,8 +78,9 @@ caption {
 
 .tab-pane {
 	height: 460px;
-	overflow-y:scroll;
-	width:100%;
+	width: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 /* Items Found Tab Styling */
@@ -86,6 +89,23 @@ caption {
    margin-left: auto;
    margin-right: auto;
    display: block;
+}
+
+#item {
+	border: 2px solid blue;
+}
+
+#prey {
+	border: 2px solid green;
+}
+
+#predator {
+	border: 2px solid red;
+}
+
+/* Gameplay Tab Styling */
+#subheading {
+	color: #2a4157;
 }
 
 /* Win/Lose Modal Styling */

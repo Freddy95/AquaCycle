@@ -272,17 +272,25 @@ AquaCycle.Game.prototype = {
 
     eat: function(player, edible) {
     	//add to experience bars
-        if(expBar.width < 200){
-            expBar.width = expBar.width + 5;
+        if(expBar.width < 200) {
+            if(itemsFound.indexOf(edible.name) === -1){
+                itemsFound.push(edible.name);
+                
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+
+                expBar.width = expBar.width + 20;
+            } else {
+                expBar.width = expBar.width + 5;
+            }
+            // Set style and change title
+            infotext.text = edible.info;
+            typetext.text = "Prey Added to Objects Found";
+            typestyle = { font: '20px Arial', fill: 'green' };
+            typetext.setStyle(typestyle);
+            // Eat a shrimp
+        	edible.destroy();
         }
-        if(itemsFound.indexOf(edible.name) === -1){
-            itemsFound.push(edible.name);
-            
-            var objectImage = "<img src=\"../assets/" + edible.name + ".png\" class=\"item\">"
-            $('#items').append(objectImage);
-        }
-        // Eat a shrimp
-    	edible.destroy();
     },
 
     takeDamage: function() {
@@ -541,35 +549,41 @@ AquaCycle.Game.prototype = {
         if(this.objs.indexOf(this.object.name) === -1){
             this.objs.push(this.object.name);
             
-            var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-            $('#items').append(objectInfo);
+            //var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+            //$('#items').append(objectInfo);
 
-            /*
-                TODO: Need to make it so players only get EXP for clicking on an item once
-            */
             // Add to experience bar
             if(expBar.width < 200){
                 expBar.width = expBar.width + 20;
             }
-        }
-        
-        infotext.text = this.object.info;
-        // Changing the title and color for each type of item
-        if(this.object.type == "predator") {
-            // Set style and change title
-            typetext.text = "Predator Information";
-            typestyle = { font: '20px Arial', fill: 'red' };
-            typetext.setStyle(typestyle);
-        } else if (this.object.type == "item") {
-            // Set style and change title
-            typetext.text = "Item Information";
-            typestyle = { font: '20px Arial', fill: 'blue' };
-            typetext.setStyle(typestyle);
-        } else if (this.object.type == "prey") {
-            // Set style and change title
-            typetext.text = "Prey Information";
-            typestyle = { font: '20px Arial', fill: 'green' };
-            typetext.setStyle(typestyle);
+
+            infotext.text = "Press ESC for more information.";
+            // Changing the title and color for each type of item
+            if(this.object.type == "predator") {
+                // Set style and change title
+                typetext.text = "Predator Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'red' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            } else if (this.object.type == "item") {
+                // Set style and change title
+                typetext.text = "Item Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'blue' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            } else if (this.object.type == "prey") {
+                // Set style and change title
+                typetext.text = "Prey Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'green' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            }
         }
     },
 
