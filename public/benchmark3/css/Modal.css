@@ -108,6 +108,10 @@ caption {
 	color: #2a4157;
 }
 
+p {
+	color: #2a4157;
+}
+
 /* Win/Lose Modal Styling */
 #winModal{
 	text-align: center;
