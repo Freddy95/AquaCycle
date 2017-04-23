@@ -13,3 +13,8 @@ Get a web browser and a text editor
 
 ### Who do I talk to? ###
 Kwaku
+
+
+Dying Music 
+
+http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
