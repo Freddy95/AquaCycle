@@ -148,7 +148,6 @@ AquaCycle.Game.prototype = {
 
         }
     },
-
     checkCurrentLevel:function() {
         //a jquery library to get the current level from a stored cookie
        CURRENT_LEVEL = Cookies.get('currentLevel');
@@ -161,6 +160,14 @@ AquaCycle.Game.prototype = {
        }
     },
 
+    goToNextLevel:function(){
+        if(CURRENT_LEVEL!="3"){
+            var nextLevel = parseInt(CURRENT_LEVEL)+1;
+            CURRENT_LEVEL = nextLevel.toString();
+            Cookies.set('currentLevel',CURRENT_LEVEL);
+            this.state.start('Game');
+        }
+    },
     loadHealthBar: function() {
         // Load the health bar
         this.healthBar = this.game.add.group();
