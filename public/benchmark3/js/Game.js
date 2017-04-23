@@ -43,6 +43,7 @@ AquaCycle.Game.prototype = {
             DOWN:           this.game.input.keyboard.addKey(Phaser.Keyboard.S),
             LEFT:           this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             RIGHT:          this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+            INVINCIBLE:     this.game.input.keyboard.addKey(Phaser.Keyboard.I),
             TOGGLE_SPEED:   this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
             ONE:            this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
             TWO:            this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
@@ -118,6 +119,7 @@ AquaCycle.Game.prototype = {
 
         if(expBar.width >= 200) {
             $('#winbtn').click();
+            
             this.game.paused = true;
         }
     },
