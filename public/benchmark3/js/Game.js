@@ -28,7 +28,8 @@ var DIE_ANIM;
 var deathPlaying = false;
 // Level Variables
 var CURRENT_LEVEL;
-
+//sound variables
+var discoverSound = new Audio("sounds/discover.mp3");
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -654,7 +655,9 @@ AquaCycle.Game.prototype = {
                 var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
             }
+        discoverSound.play();
         }
+        
     },
 
     /*****************************************************
