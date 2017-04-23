@@ -242,10 +242,19 @@ AquaCycle.Game.prototype = {
     ******************************************************/
     loadPlayer: function(){
         result = this.findObjectsByType('playerStart', this.map, 'objectLayer')
-        this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
-        IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
-        SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
-        FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
+        if(CURRENT_LEVEL == "1"){
+            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
+            IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
+            SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
+            FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
+        }else if(CURRENT_LEVEL == "2"){
+            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'barracudafish');
+            IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5,6,7], 10, true);
+            SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5,6,7], 20, true);
+            FAST_ANIM = this.player.animations.add('fast',[0,1,2,3,4,5,6,7], 30, true);
+            
+        }
+        
         AquaCycle.game.physics.arcade.enable(this.player);
         AquaCycle.game.camera.follow(this.player);
         this.player.anchor.setTo(0.5,0.5);
