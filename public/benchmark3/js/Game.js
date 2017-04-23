@@ -29,6 +29,7 @@ var deathPlaying = false;
 // Level Variables
 var CURRENT_LEVEL;
 //sound variables
+var winMusicPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
 AquaCycle.Game.prototype = {
     /*****************************************************
@@ -359,7 +360,8 @@ AquaCycle.Game.prototype = {
 
                 // Remove the player
                 playerLoaded = false;
-
+                //immediatley playing the losing music then a little bit after process the player dying 
+                this.game.time.events.add(0,this.playDyingMusic,this)
                 this.game.time.events.add(1, this.playDeath, this);
 
     		} else {
@@ -386,10 +388,9 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.camera.follow(this.dead_player);
 
         this.player.destroy();
-                
         this.dead_player.animations.play('die');
 
-        this.game.time.events.add(3000, this.endGame, this);
+        this.game.time.events.add(5000, this.endGame, this);
     },
 
     endGame: function() {
@@ -397,6 +398,11 @@ AquaCycle.Game.prototype = {
         this.game.paused = true;
     },
 
+//add the dying music and play it
+    playDyingMusic: function() {
+        var dyingMusic = this.game.add.audio('dying');
+        dyingMusic.play();
+    },
     scalePlayer:function(){
         if(this.healthBar.children[1]!=null){
                 if(expBar.width<=60){
