@@ -12,7 +12,7 @@ var result;
 var itemsFound = [];
 var totalItems;
 // Moving Variables
-var movingSlow = false;
+var movingSlow = true;
 var SLOW_VELOCITY = 200;
 var FAST_VELOCITY = 500;
 var playerSpeed = 350;
@@ -58,6 +58,7 @@ AquaCycle.Game.prototype = {
                 else{
                     playerSpeed = FAST_VELOCITY;
                 }
+                console.log("You are moving slow: " + this.movingSlow);
         },this);
 
         //add a listener function so that when the one button is pressed level one is loaded
@@ -256,6 +257,7 @@ AquaCycle.Game.prototype = {
             IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5,6,7], 10, true);
             SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5,6,7], 20, true);
             FAST_ANIM = this.player.animations.add('fast',[0,1,2,3,4,5,6,7], 30, true);
+            
         }
         
         AquaCycle.game.physics.arcade.enable(this.player);
@@ -301,7 +303,7 @@ AquaCycle.Game.prototype = {
     eat: function(player, edible) {
     	//add to experience bars
         if(expBar.width < 200) {
-            if(itemsFound.indexOf(edible.name) === -1){
+            if(itemsFound.indexOf(edible.name) === -1) {
                 itemsFound.push(edible.name);
                 
                 var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
@@ -446,14 +448,20 @@ AquaCycle.Game.prototype = {
                 predator.isMoving = true;
                 // Check the predator's distance from the player
                 var distanceFromPlayer = this.game.physics.arcade.distanceBetween(predator,this.player);
-                if(distanceFromPlayer < 300) {
-                    console.log("Moving toward player");
+                if(distanceFromPlayer < 100) {
+                    // The player is moving fast so the aggro range is greater
+                    console.log("You are moving SLOW and someone is chasing you");
                     var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
                     // The predator is in the aggro range, so move toward player
-                    // TODO: need to fix this so it is also angled toward the player
-                    //predator.body.angularVelocity = angle;
                     predator.angle = angle;
-                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,150));
+                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
+                } else if((distanceFromPlayer < 500) && !this.movingSlow) {
+                    // The player is moving slow so the aggro range is smaller
+                    console.log("You are moving FAST and someone is chasing you");
+                    var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
+                    // The predator is in the aggro range, so move toward player
+                    predator.angle = angle;
+                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
                 } else {
                     // Move a random direction
                     var randomDirection = this.game.rnd.integerInRange(0,10);
@@ -466,7 +474,7 @@ AquaCycle.Game.prototype = {
                         predator.body.angularVelocity = this.game.rnd.integerInRange(0,150);
                     }
                     // Copy that velocity
-                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,150));
+                    predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(predator.angle,200));
                     // Follow that direction for a set priod of time
                     this.game.time.events.add(1000,this.stopPredators,this);
                 }
