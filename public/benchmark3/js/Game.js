@@ -604,7 +604,7 @@ AquaCycle.Game.prototype = {
                 typestyle = { font: '20px Arial', fill: 'red' };
                 typetext.setStyle(typestyle);
                 // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
             } else if (this.object.type == "item") {
                 // Set style and change title
@@ -612,7 +612,7 @@ AquaCycle.Game.prototype = {
                 typestyle = { font: '20px Arial', fill: 'blue' };
                 typetext.setStyle(typestyle);
                 // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
             } else if (this.object.type == "prey") {
                 // Set style and change title
@@ -620,7 +620,7 @@ AquaCycle.Game.prototype = {
                 typestyle = { font: '20px Arial', fill: 'green' };
                 typetext.setStyle(typestyle);
                 // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
             }
         }
