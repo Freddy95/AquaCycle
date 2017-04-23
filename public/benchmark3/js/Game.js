@@ -4,12 +4,13 @@ AquaCycle.Game = function(){};
 var player, predators, prey;
 // World Variables
 var map, backgroundlayer, controls;
-var infobox, infotext, infostyle, typetext, typestyle;
+var infobox, infotext, infostyle, typetext, typestyle, foundstat;
 var healthBar;
 var expBar;
 // Metric Variables
 var result;
 var itemsFound = [];
+var totalItems;
 // Moving Variables
 var movingSlow = false;
 var SLOW_VELOCITY = 200;
@@ -130,6 +131,8 @@ AquaCycle.Game.prototype = {
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
             this.backgroundLayer.resizeWorld();
+
+            totalItems = 8;
         }
         
         else if(CURRENT_LEVEL == "2"){
@@ -195,8 +198,14 @@ AquaCycle.Game.prototype = {
         infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
         infotext = this.game.add.text(0,0,'', infostyle);
         infotext.x = infobox.x + 5;
-        infotext.y = infobox.y + 30;
+        infotext.y = infobox.y + 55;
         infotext.fixedToCamera = true;
+
+        // Get the number of items left found
+        foundstat = this.game.add.text(0,0, 'Found ' + 0 + ' objects out of ' + totalItems ,infostyle);
+        foundstat.x = infobox.x + 5;
+        foundstat.y = infobox.y + 30;
+        foundstat.fixedToCamera = true;
 
         // Add the type text to the box
         typestyle = { font: '20px Arial', fill: '#2a4157', boundsAlignH: 'center' };
@@ -286,6 +295,8 @@ AquaCycle.Game.prototype = {
                 $('#items').append(objectInfo);
 
                 expBar.width = expBar.width + 20;
+
+                foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
             } else {
                 expBar.width = expBar.width + 5;
             }
@@ -563,6 +574,7 @@ AquaCycle.Game.prototype = {
                 expBar.width = expBar.width + 20;
             }
 
+            foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
             infotext.text = "Press ESC for more information.";
             // Changing the title and color for each type of item
             if(this.object.type == "predator") {
