@@ -14,8 +14,8 @@ var totalItems;
 // Moving Variables
 var movingSlow = true;
 var SLOW_VELOCITY = 200;
-var FAST_VELOCITY = 500;
-var playerSpeed = 350;
+var FAST_VELOCITY = 400;
+var playerSpeed = 200;
 var predatorsMoving = false;
 // Loading Variables
 var gamePaused = false;
@@ -40,7 +40,7 @@ AquaCycle.Game.prototype = {
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
             UP:             this.game.input.keyboard.addKey(Phaser.Keyboard.W),
-            DOWN:           this.game.input.keyboard.addKey(Phaser.Keyboard.S),
+            //DOWN:           this.game.input.keyboard.addKey(Phaser.Keyboard.S),
             LEFT:           this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             RIGHT:          this.game.input.keyboard.addKey(Phaser.Keyboard.D),
             TOGGLE_SPEED:   this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
@@ -252,7 +252,7 @@ AquaCycle.Game.prototype = {
             IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
             SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
             FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
-        }else if(CURRENT_LEVEL == "2"){
+        } else if(CURRENT_LEVEL == "2"){
             this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'barracudafish');
             IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5,6,7], 10, true);
             SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5,6,7], 20, true);
@@ -333,7 +333,7 @@ AquaCycle.Game.prototype = {
                 this.healthBar.children.pop();
 
                 // Create the dying shark
-                this.dead_player = this.game.add.sprite(this.player.body.x, this.player.body.y, 'player');
+                this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'player');
                 DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
                 this.dead_player.angle = this.player.angle;
 
@@ -448,15 +448,15 @@ AquaCycle.Game.prototype = {
                 predator.isMoving = true;
                 // Check the predator's distance from the player
                 var distanceFromPlayer = this.game.physics.arcade.distanceBetween(predator,this.player);
-                if(distanceFromPlayer < 100) {
-                    // The player is moving fast so the aggro range is greater
+                if(distanceFromPlayer < 150) {
+                    // The player is moving slow so the aggro range is smaller
                     console.log("You are moving SLOW and someone is chasing you");
                     var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
                     // The predator is in the aggro range, so move toward player
                     predator.angle = angle;
                     predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
-                } else if((distanceFromPlayer < 500) && !this.movingSlow) {
-                    // The player is moving slow so the aggro range is smaller
+                } else if((distanceFromPlayer < 400) && !this.movingSlow && this.player.animations.currentAnim != IDLE_ANIM) {
+                    // The player is moving fast so the aggro range is greater
                     console.log("You are moving FAST and someone is chasing you");
                     var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
                     // The predator is in the aggro range, so move toward player
@@ -530,16 +530,38 @@ AquaCycle.Game.prototype = {
     movePrey: function(){
         this.prey.forEach(function(p){
             if(p.isMoving == false){
+                // Setup the movement for the prey
+                p.body.angularVelocity = 0;
                 p.isMoving = true;
-                var randomDirection = this.game.rnd.integerInRange(0,10);
-                if(randomDirection <= 5){
-                    p.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
+                // Check the prey's distance from the player
+                var distanceFromPlayer = this.game.physics.arcade.distanceBetween(p,this.player);
+                if(distanceFromPlayer < 150) {
+                    // The player is moving slow so the aggro range is smaller
+                    console.log("You are moving SLOW and someone is chasing you");
+                    var angle = Math.PI - ((this.game.physics.arcade.angleBetween(p, this.player)) * (180/Math.PI));
+                    // The prey is in the aggro range, so move away from the player
+                    p.angle = angle;
+                    p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
+                } else if((distanceFromPlayer < 400) && !this.movingSlow && this.player.animations.currentAnim != IDLE_ANIM) {
+                    // The player is moving fast so the aggro range is larger
+                    console.log("You are moving FAST and someone is chasing you");
+                    var angle = Math.PI - ((this.game.physics.arcade.angleBetween(p, this.player)) * (180/Math.PI));
+                    // The prey is in the aggro range, so move away from the player
+                    p.angle = angle;
+                    p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
+                } else {
+                    // The prey should move randomly
+                    p.isMoving = true;
+                    var randomDirection = this.game.rnd.integerInRange(0,10);
+                    if(randomDirection <= 5){
+                        p.body.angularVelocity = -this.game.rnd.integerInRange(0,150);
+                    }
+                    if(randomDirection > 6){
+                        p.body.angularVelocity = this.game.rnd.integerInRange(0,150);
+                    }
+                    p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(p.angle,150));
+                    this.game.time.events.add(1000,this.stopPrey,this); 
                 }
-                if(randomDirection > 6){
-                    p.body.angularVelocity = this.game.rnd.integerInRange(0,150);
-                }
-                p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(p.angle,150));
-                this.game.time.events.add(1000,this.stopPrey,this); 
             }
             
         },this);
