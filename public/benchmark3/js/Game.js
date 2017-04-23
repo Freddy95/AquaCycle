@@ -28,9 +28,10 @@ var DIE_ANIM;
 var deathPlaying = false;
 // Level Variables
 var CURRENT_LEVEL;
-//sound variables
+// Sound Variables
 var winMusicPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
+
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -295,7 +296,7 @@ AquaCycle.Game.prototype = {
     loadPlayer: function(){
         result = this.findObjectsByType('playerStart', this.map, 'objectLayer')
         if(CURRENT_LEVEL == "1"){
-            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
+            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'blacktipshark');
             IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
             SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
             FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
