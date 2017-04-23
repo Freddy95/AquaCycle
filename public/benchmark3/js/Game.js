@@ -28,7 +28,9 @@ var DIE_ANIM;
 var deathPlaying = false;
 // Level Variables
 var CURRENT_LEVEL;
-
+//sound variables
+var winMusicPlaying = false;
+var discoverSound = new Audio("sounds/discover.mp3");
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -43,6 +45,7 @@ AquaCycle.Game.prototype = {
             //DOWN:           this.game.input.keyboard.addKey(Phaser.Keyboard.S),
             LEFT:           this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             RIGHT:          this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+            INVINCIBLE:     this.game.input.keyboard.addKey(Phaser.Keyboard.I),
             TOGGLE_SPEED:   this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
             ONE:            this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
             TWO:            this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
@@ -118,6 +121,7 @@ AquaCycle.Game.prototype = {
 
         if(expBar.width >= 200) {
             $('#winbtn').click();
+            
             this.game.paused = true;
         }
     },
@@ -367,7 +371,8 @@ AquaCycle.Game.prototype = {
 
                 // Remove the player
                 playerLoaded = false;
-
+                //immediatley playing the losing music then a little bit after process the player dying 
+                this.game.time.events.add(0,this.playDyingMusic,this)
                 this.game.time.events.add(1, this.playDeath, this);
 
     		} else {
@@ -394,10 +399,9 @@ AquaCycle.Game.prototype = {
         AquaCycle.game.camera.follow(this.dead_player);
 
         this.player.destroy();
-                
         this.dead_player.animations.play('die');
 
-        this.game.time.events.add(3000, this.endGame, this);
+        this.game.time.events.add(5000, this.endGame, this);
     },
 
     endGame: function() {
@@ -405,6 +409,11 @@ AquaCycle.Game.prototype = {
         this.game.paused = true;
     },
 
+//add the dying music and play it
+    playDyingMusic: function() {
+        var dyingMusic = this.game.add.audio('dying');
+        dyingMusic.play();
+    },
     scalePlayer:function(){
         if(this.healthBar.children[1]!=null){
                 if(expBar.width<=60){
@@ -663,7 +672,9 @@ AquaCycle.Game.prototype = {
                 var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
             }
+        discoverSound.play();
         }
+        
     },
 
     /*****************************************************
