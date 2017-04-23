@@ -541,17 +541,18 @@ AquaCycle.Game.prototype = {
         if(this.objs.indexOf(this.object.name) === -1){
             this.objs.push(this.object.name);
             
-            var objectImage = "<img src=\"../assets/" + this.object.name + ".png\" class=\"item\">"
-            $('#items').append(objectImage);
+            var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+            $('#items').append(objectInfo);
+
+            /*
+                TODO: Need to make it so players only get EXP for clicking on an item once
+            */
+            // Add to experience bar
+            if(expBar.width < 200){
+                expBar.width = expBar.width + 20;
+            }
         }
-        //add to experience bars
-        /*
-            TODO: Need to make it so players only get EXP for clicking on an item once
-        */
-        if(expBar.width < 200){
-            expBar.width = expBar.width + 20;
-            //this is down bc this is an anonymous function and lost context of "this"
-        }
+        
         infotext.text = this.object.info;
         // Changing the title and color for each type of item
         if(this.object.type == "predator") {
