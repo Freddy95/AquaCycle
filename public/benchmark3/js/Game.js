@@ -41,16 +41,19 @@ AquaCycle.Game.prototype = {
 
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
+            // GAME CONTROLS
             UP:             this.game.input.keyboard.addKey(Phaser.Keyboard.W),
-            //DOWN:           this.game.input.keyboard.addKey(Phaser.Keyboard.S),
             LEFT:           this.game.input.keyboard.addKey(Phaser.Keyboard.A),
             RIGHT:          this.game.input.keyboard.addKey(Phaser.Keyboard.D),
-            INVINCIBLE:     this.game.input.keyboard.addKey(Phaser.Keyboard.I),
             TOGGLE_SPEED:   this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT),
+            PAUSE:          this.game.input.keyboard.addKey(Phaser.Keyboard.ESC),
+            // CHEAT CONTROLS
+            INVINCIBLE:     this.game.input.keyboard.addKey(Phaser.Keyboard.I),
             ONE:            this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
             TWO:            this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
             THREE:          this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
-            PAUSE:          this.game.input.keyboard.addKey(Phaser.Keyboard.ESC),
+            LOSE:           this.game.input.keyboard.addKey(Phaser.Keyboard.L),
+            WIN:            this.game.input.keyboard.addKey(Phaser.Keyboard.V)
         };
         //add a listener function the shift key to toggle walking speed
         playerSpeed = SLOW_VELOCITY;
@@ -64,6 +67,26 @@ AquaCycle.Game.prototype = {
                     playerSpeed = FAST_VELOCITY;
                 }
                 console.log("You are moving slow: " + this.movingSlow);
+        },this);
+
+        this.controls.WIN.onDown.add(function(){
+            expBar.width = 200;
+        },this);
+
+        this.controls.LOSE.onDown.add(function(){
+            while(this.healthBar.children[1] != null) {
+                this.healthBar.children.pop();
+            }
+            this.takeDamage();
+        },this);
+
+        this.controls.INVINCIBLE.onDown.add(function(){
+            // Change player's vulnerability
+            this.vulnerable();
+            // Change the player's alpha level
+            this.player.alpha = 0.5;
+            // Add timer event to change back vulnerability
+            this.game.time.events.add(2000, this.vulnerable, this);
         },this);
 
         //add a listener function so that when the one button is pressed level one is loaded
@@ -566,14 +589,12 @@ AquaCycle.Game.prototype = {
                 var distanceFromPlayer = this.game.physics.arcade.distanceBetween(p,this.player);
                 if(distanceFromPlayer < 150) {
                     // The player is moving slow so the aggro range is smaller
-                    console.log("You are moving SLOW and someone is chasing you");
                     var angle = Math.PI - ((this.game.physics.arcade.angleBetween(p, this.player)) * (180/Math.PI));
                     // The prey is in the aggro range, so move away from the player
                     p.angle = angle;
                     p.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,350));
                 } else if((distanceFromPlayer < 400) && !this.movingSlow && this.player.animations.currentAnim != IDLE_ANIM) {
                     // The player is moving fast so the aggro range is larger
-                    console.log("You are moving FAST and someone is chasing you");
                     var angle = Math.PI - ((this.game.physics.arcade.angleBetween(p, this.player)) * (180/Math.PI));
                     // The prey is in the aggro range, so move away from the player
                     p.angle = angle;
