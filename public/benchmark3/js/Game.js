@@ -1,27 +1,34 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
-// global variables to be initialized
-var controls, player, predators, prey;
-var map, backgroundlayer;
-var infobox, infotext, infostyle, typetext, typestyle;
+// Sprite Variables
+var player, predators, prey;
+// World Variables
+var map, backgroundlayer, controls;
+var infobox, infotext, infostyle, typetext, typestyle, foundstat;
 var healthBar;
 var expBar;
+// Metric Variables
 var result;
 var itemsFound = [];
-//this is the toggle boolean for chaning the user's speed from "running" to "walking",
+var totalItems;
+// Moving Variables
 var movingSlow = false;
-var gamePaused = false;
-var playerLoaded = false;
-var predatorsMoving = false;
-var deathPlaying = false;
 var SLOW_VELOCITY = 200;
 var FAST_VELOCITY = 500;
 var playerSpeed = 350;
+var predatorsMoving = false;
+// Loading Variables
+var gamePaused = false;
+var playerLoaded = false;
+// Animation Variables
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
 var DIE_ANIM;
+var deathPlaying = false;
+// Level Variables
 var CURRENT_LEVEL;
+
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -124,6 +131,8 @@ AquaCycle.Game.prototype = {
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
             this.backgroundLayer.resizeWorld();
+
+            totalItems = 8;
         }
         
         else if(CURRENT_LEVEL == "2"){
@@ -189,8 +198,14 @@ AquaCycle.Game.prototype = {
         infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
         infotext = this.game.add.text(0,0,'', infostyle);
         infotext.x = infobox.x + 5;
-        infotext.y = infobox.y + 30;
+        infotext.y = infobox.y + 55;
         infotext.fixedToCamera = true;
+
+        // Get the number of items left found
+        foundstat = this.game.add.text(0,0, 'Found ' + 0 + ' objects out of ' + totalItems ,infostyle);
+        foundstat.x = infobox.x + 5;
+        foundstat.y = infobox.y + 30;
+        foundstat.fixedToCamera = true;
 
         // Add the type text to the box
         typestyle = { font: '20px Arial', fill: '#2a4157', boundsAlignH: 'center' };
@@ -280,17 +295,27 @@ AquaCycle.Game.prototype = {
 
     eat: function(player, edible) {
     	//add to experience bars
-        if(expBar.width < 200){
-            expBar.width = expBar.width + 5;
+        if(expBar.width < 200) {
+            if(itemsFound.indexOf(edible.name) === -1){
+                itemsFound.push(edible.name);
+                
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+
+                expBar.width = expBar.width + 20;
+
+                foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
+            } else {
+                expBar.width = expBar.width + 5;
+            }
+            // Set style and change title
+            infotext.text = "Press ESC for more information.";
+            typetext.text = "Prey Added to Objects Found";
+            typestyle = { font: '20px Arial', fill: 'green' };
+            typetext.setStyle(typestyle);
+            // Eat a shrimp
+        	edible.destroy();
         }
-        if(itemsFound.indexOf(edible.name) === -1){
-            itemsFound.push(edible.name);
-            
-            var objectImage = "<img src=\"../assets/" + edible.name + ".png\" class=\"item\">"
-            $('#items').append(objectImage);
-        }
-        // Eat a shrimp
-    	edible.destroy();
     },
 
     takeDamage: function() {
@@ -549,35 +574,42 @@ AquaCycle.Game.prototype = {
         if(this.objs.indexOf(this.object.name) === -1){
             this.objs.push(this.object.name);
             
-            var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-            $('#items').append(objectInfo);
+            //var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+            //$('#items').append(objectInfo);
 
-            /*
-                TODO: Need to make it so players only get EXP for clicking on an item once
-            */
             // Add to experience bar
             if(expBar.width < 200){
                 expBar.width = expBar.width + 20;
             }
-        }
-        
-        infotext.text = this.object.info;
-        // Changing the title and color for each type of item
-        if(this.object.type == "predator") {
-            // Set style and change title
-            typetext.text = "Predator Information";
-            typestyle = { font: '20px Arial', fill: 'red' };
-            typetext.setStyle(typestyle);
-        } else if (this.object.type == "item") {
-            // Set style and change title
-            typetext.text = "Item Information";
-            typestyle = { font: '20px Arial', fill: 'blue' };
-            typetext.setStyle(typestyle);
-        } else if (this.object.type == "prey") {
-            // Set style and change title
-            typetext.text = "Prey Information";
-            typestyle = { font: '20px Arial', fill: 'green' };
-            typetext.setStyle(typestyle);
+
+            foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
+            infotext.text = "Press ESC for more information.";
+            // Changing the title and color for each type of item
+            if(this.object.type == "predator") {
+                // Set style and change title
+                typetext.text = "Predator Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'red' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            } else if (this.object.type == "item") {
+                // Set style and change title
+                typetext.text = "Item Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'blue' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            } else if (this.object.type == "prey") {
+                // Set style and change title
+                typetext.text = "Prey Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'green' };
+                typetext.setStyle(typestyle);
+                // Add the object info to the objects found page
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                $('#items').append(objectInfo);
+            }
         }
     },
 
