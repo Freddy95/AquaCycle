@@ -142,7 +142,16 @@ AquaCycle.Game.prototype = {
         }
         
         else if(CURRENT_LEVEL == "2"){
+            this.map = this.game.add.tilemap('level2');
+            //this.map.addTilesetImage('DepthTileMockups','world');
+            //this.map.addTilesetImage('predator', 'predator');
+            this.map.addTilesetImage('tiles','tiles');
+            //this.map.addTilesetImage('DepthTileMockups1','world1');
+            this.backgroundLayer = this.map.createLayer("backgroundLayer");
+            this.blockedLayer = this.map.createLayer("collideLayer");
+            this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
+            this.backgroundLayer.resizeWorld();
         }
         else if(CURRENT_LEVEL == "3"){
 
@@ -165,6 +174,8 @@ AquaCycle.Game.prototype = {
             var nextLevel = parseInt(CURRENT_LEVEL)+1;
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
+            console.log("NEXT LEVEL");
+            console.log(this);
             this.state.start('Game');
         }
     },
@@ -261,9 +272,9 @@ AquaCycle.Game.prototype = {
             FAST_ANIM = this.player.animations.add('fast',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 30, true);
         } else if(CURRENT_LEVEL == "2"){
             this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'barracudafish');
-            IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5,6,7], 10, true);
-            SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5,6,7], 20, true);
-            FAST_ANIM = this.player.animations.add('fast',[0,1,2,3,4,5,6,7], 30, true);
+            IDLE_ANIM = this.player.animations.add('idle',[3,7,11,15,2,6,10,14], 10, true);
+            SLOW_ANIM = this.player.animations.add('slow',[3,7,11,15,2,6,10,14], 20, true);
+            FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
             
         }
         
