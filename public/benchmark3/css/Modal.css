@@ -1,5 +1,5 @@
 .modal-content{
-	background-color: #F2E7C9;
+	background-color: #d0bda5;
 }
 .modal-header{
 	padding-bottom: 0px;
@@ -46,6 +46,26 @@ caption{
 	margin-top: 5%;
 	width: 10%;
 	height: auto;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+	border: 1px #826D61 solid;
+	background-color: #F2E7C9 !important;
+}
+
+.nav-tabs > li > a:hover {
+	border: 1px #826D61 solid;
+	background-color: #F2E7C9;
+}
+
+.nav-tabs > li > a {
+	color: #2a4157;
+}
+
+.nav-tabs {
+	border-bottom: 1px #826D61 solid;
 }
 
 #dieModal{
