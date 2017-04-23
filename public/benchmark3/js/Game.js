@@ -31,6 +31,8 @@ var CURRENT_LEVEL;
 //sound variables
 var winMusicPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
+//level 2 timer
+var timer;
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -88,6 +90,9 @@ AquaCycle.Game.prototype = {
         this.loadHealthBar();
         this.loadExperienceBar();
         this.loadInfoBox();
+        if(CURRENT_LEVEL == "2"){
+            this.loadTimer();
+        }
     },
 
     /*****************************************************
@@ -156,6 +161,7 @@ AquaCycle.Game.prototype = {
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
             this.backgroundLayer.resizeWorld();
+            totalItems = 6;
         }
         else if(CURRENT_LEVEL == "3"){
 
@@ -242,6 +248,12 @@ AquaCycle.Game.prototype = {
         typetext.y = infobox.y + 5;
         typetext.fixedToCamera = true;
     },
+    loadTimer: function(){
+        this.game.add.text(210,10, "Time Remaining: ", null).fixedToCamera = true;
+        timer = this.game.add.text(450,10, 20, null);
+        timer.fixedToCamera = true;
+        this.game.time.events.add(1000, this.decreaseTimer, this);
+    },
 
     /*****************************************************
     *   HELPER FUNCTIONS
@@ -262,6 +274,18 @@ AquaCycle.Game.prototype = {
         Object.keys(element.properties).forEach(function(key){
             sprite[key] = element.properties[key];
         });
+    },
+
+    decreaseTimer: function(){
+
+        timer.text = timer.text - 1;
+        if(timer.text == 0){
+            this.endGame();
+        }
+        else{
+            this.game.time.events.add(1000, this.decreaseTimer, this);
+        }
+        
     },
 
     /*****************************************************
@@ -335,7 +359,12 @@ AquaCycle.Game.prototype = {
 
                 foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
             } else {
-                expBar.width = expBar.width + 5;
+                
+                if(CURRENT_LEVEL == "2"){
+                    expBar.width = expBar.width + 20;
+                }else{
+                    expBar.width = expBar + 5;
+                }
             }
             // Set style and change title
             infotext.text = "Press ESC for more information.";
@@ -639,10 +668,16 @@ AquaCycle.Game.prototype = {
             //var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
             //$('#items').append(objectInfo);
 
-            // Add to experience bar
-            if(expBar.width < 200){
-                expBar.width = expBar.width + 20;
+            // Add to experience bar if current level not 2
+            if(CURRENT_LEVEL != "2"){
+                if(expBar.width < 200){
+                    expBar.width = expBar.width + 20;
+                }
+            }else{
+
+                timer.text = parseInt(timer.text) + 5;
             }
+            
 
             foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
             infotext.text = "Press ESC for more information.";
