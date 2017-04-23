@@ -53,6 +53,8 @@ AquaCycle.Game.prototype = {
             PAUSE:          this.game.input.keyboard.addKey(Phaser.Keyboard.ESC),
         };
         //add a listener function the shift key to toggle walking speed
+        playerSpeed = SLOW_VELOCITY;
+        this.movingSlow = true;
         this.controls.TOGGLE_SPEED.onDown.add(function(){
                 this.movingSlow = !this.movingSlow;
                 if(this.movingSlow){
