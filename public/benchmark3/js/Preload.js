@@ -10,6 +10,13 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.image('infobox','assets/infobox_small.png');
         AquaCycle.game.load.image('heart','assets/heart.png');
 
+        //load sounds
+        AquaCycle.game.load.audio('discover','sounds/discover.mp3');
+        AquaCycle.game.load.audio('dying','sounds/dying.mp3');
+        AquaCycle.game.load.audio('swimming_slow','sounds/swimming_slow.mp3');
+        AquaCycle.game.load.audio('swimming_fast','sounds/swimming_fast.mp3');
+        AquaCycle.game.load.audio('winning','sounds/winning.mp3')
+
         // Load the player sprite sheets
         AquaCycle.game.load.spritesheet('player', 'assets/blacktip_shark.png',128,64);
         AquaCycle.game.load.spritesheet('barracudafish', 'assets/barracudafish.png', 128,64);
