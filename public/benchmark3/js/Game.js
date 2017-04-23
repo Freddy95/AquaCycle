@@ -108,21 +108,6 @@ AquaCycle.Game.prototype = {
             this.game.paused = true;
         }
     },
-
-    /*****************************************************
-    *   CONFIG FUNCTIONS
-    ******************************************************/
-    checkCurrentLevel:function() {
-        //a jquery library to get the current level from a stored cookie
-       CURRENT_LEVEL = Cookies.get('currentLevel');
-       if (CURRENT_LEVEL == null ) {
-            Cookies.set('currentLevel','1');
-            CURRENT_LEVEL = Cookies.get("currentLevel");
-       }
-       else {
-         CURRENT_LEVEL = Cookies.get('currentLevel');
-       }
-    },
     
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
@@ -132,9 +117,9 @@ AquaCycle.Game.prototype = {
             this.map = this.game.add.tilemap('level1');
             //this.map.addTilesetImage('DepthTileMockups','world');
             //this.map.addTilesetImage('predator', 'predator');
-            this.map.addTilesetImage('DepthTileMockups','world2');
-            this.map.addTilesetImage('DepthTileMockups1','world1');
-            this.backgroundLayer = this.map.createLayer("background");
+            this.map.addTilesetImage('tiles','tiles');
+            //this.map.addTilesetImage('DepthTileMockups1','world1');
+            this.backgroundLayer = this.map.createLayer("backgroundLayer");
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
 
@@ -147,6 +132,18 @@ AquaCycle.Game.prototype = {
         else if(CURRENT_LEVEL == "3"){
 
         }
+    },
+
+    checkCurrentLevel:function() {
+        //a jquery library to get the current level from a stored cookie
+       CURRENT_LEVEL = Cookies.get('currentLevel');
+       if (CURRENT_LEVEL == null ) {
+            Cookies.set('currentLevel','1');
+            CURRENT_LEVEL = Cookies.get("currentLevel");
+       }
+       else {
+         CURRENT_LEVEL = Cookies.get('currentLevel');
+       }
     },
 
     loadHealthBar: function() {
@@ -228,7 +225,7 @@ AquaCycle.Game.prototype = {
     *   PLAYER FUNCTIONS
     ******************************************************/
     loadPlayer: function(){
-        result = this.findObjectsByType('playerStart', this.map, 'itemLayer')
+        result = this.findObjectsByType('playerStart', this.map, 'objectLayer')
         this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'player');
         IDLE_ANIM = this.player.animations.add('idle',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 10, true);
         SLOW_ANIM = this.player.animations.add('slow',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
@@ -372,7 +369,7 @@ AquaCycle.Game.prototype = {
         this.predators = this.game.add.group();
         this.predators.enableBody = true;
         var predator;
-        result = this.findObjectsByType('predator',this.map,'itemLayer');
+        result = this.findObjectsByType('predator',this.map,'objectLayer');
         
         result.forEach(function(element){
             element.properties.sprite = 'predator';
@@ -416,6 +413,7 @@ AquaCycle.Game.prototype = {
                     var angle = (this.game.physics.arcade.angleBetween(predator, this.player)) * (180/Math.PI);
                     // The predator is in the aggro range, so move toward player
                     // TODO: need to fix this so it is also angled toward the player
+                    //predator.body.angularVelocity = angle;
                     predator.angle = angle;
                     predator.body.velocity.copyFrom(this.game.physics.arcade.velocityFromAngle(angle,150));
                 } else {
@@ -456,7 +454,7 @@ AquaCycle.Game.prototype = {
         this.prey = this.game.add.group();
         this.prey.enableBody = true;
         var p;
-        var result = this.findObjectsByType('prey',this.map,'itemLayer');
+        var result = this.findObjectsByType('prey',this.map,'objectLayer');
         
         //console.log(result);
         result.forEach(function(element) {
@@ -517,7 +515,7 @@ AquaCycle.Game.prototype = {
         this.items = this.game.add.group();
         this.items.enableBody = true;
         var item;
-        var result = this.findObjectsByType('item', this.map, 'itemLayer');
+        var result = this.findObjectsByType('item', this.map, 'objectLayer');
 
 
         result.forEach(function(element){
@@ -547,6 +545,9 @@ AquaCycle.Game.prototype = {
             $('#items').append(objectImage);
         }
         //add to experience bars
+        /*
+            TODO: Need to make it so players only get EXP for clicking on an item once
+        */
         if(expBar.width < 200){
             expBar.width = expBar.width + 20;
             //this is down bc this is an anonymous function and lost context of "this"

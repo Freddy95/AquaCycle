@@ -5,9 +5,8 @@ AquaCycle.Preload = function(){};
 AquaCycle.Preload.prototype = {
     preload: function(){
         // Load the levels of the game and their assets
-        AquaCycle.game.load.tilemap('level1','assets/level1.json',null,Phaser.Tilemap.TILED_JSON);
-        AquaCycle.game.load.image('world1','assets/DepthTileMockups.png');
-        AquaCycle.game.load.image('world2','assets/Tiled/DepthTileMockups.png');
+        AquaCycle.game.load.tilemap('level1','assets/level1_withObjects.json',null,Phaser.Tilemap.TILED_JSON);
+        AquaCycle.game.load.image('tiles','assets/depth_tiles.png');
         AquaCycle.game.load.image('infobox','assets/infobox.png');
         AquaCycle.game.load.image('heart','assets/heart.png');
 
@@ -20,6 +19,7 @@ AquaCycle.Preload.prototype = {
         // Load the prey sprite sheets
         AquaCycle.game.load.image('pinkshrimp','assets/pinkshrimp.png');
         AquaCycle.game.load.image('brownshrimp','assets/brownshrimp.png');
+        AquaCycle.game.load.image('peacockflounder','assets/peacockflounder.png');
 
         // Load the item images
         AquaCycle.game.load.image('shipwreck','assets/shipwreck.png');
