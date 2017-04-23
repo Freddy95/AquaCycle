@@ -1,27 +1,33 @@
 var AquaCycle = AquaCycle || {};
 AquaCycle.Game = function(){};
-// global variables to be initialized
-var controls, player, predators, prey;
-var map, backgroundlayer;
+// Sprite Variables
+var player, predators, prey;
+// World Variables
+var map, backgroundlayer, controls;
 var infobox, infotext, infostyle, typetext, typestyle;
 var healthBar;
 var expBar;
+// Metric Variables
 var result;
 var itemsFound = [];
-//this is the toggle boolean for chaning the user's speed from "running" to "walking",
+// Moving Variables
 var movingSlow = false;
-var gamePaused = false;
-var playerLoaded = false;
-var predatorsMoving = false;
-var deathPlaying = false;
 var SLOW_VELOCITY = 200;
 var FAST_VELOCITY = 500;
 var playerSpeed = 350;
+var predatorsMoving = false;
+// Loading Variables
+var gamePaused = false;
+var playerLoaded = false;
+// Animation Variables
 var IDLE_ANIM;
 var SLOW_ANIM;
 var FAST_ANIM;
 var DIE_ANIM;
+var deathPlaying = false;
+// Level Variables
 var CURRENT_LEVEL;
+
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -276,7 +282,7 @@ AquaCycle.Game.prototype = {
             if(itemsFound.indexOf(edible.name) === -1){
                 itemsFound.push(edible.name);
                 
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
                 $('#items').append(objectInfo);
 
                 expBar.width = expBar.width + 20;
@@ -284,7 +290,7 @@ AquaCycle.Game.prototype = {
                 expBar.width = expBar.width + 5;
             }
             // Set style and change title
-            infotext.text = edible.info;
+            infotext.text = "Press ESC for more information.";
             typetext.text = "Prey Added to Objects Found";
             typestyle = { font: '20px Arial', fill: 'green' };
             typetext.setStyle(typestyle);
