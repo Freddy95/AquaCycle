@@ -1,4 +1,4 @@
-The cheats for this level are the Following Keybord keys
+The cheats for this level are the following keybord keys
 
     I(i): Temporary Invicibility
     1: Skip to Level One
