@@ -13,3 +13,21 @@ AquaCycle.game.state.add('Game', AquaCycle.Game);
 //AquaCycle.game.state.add('Level2',AquaCycle.game)
 //after adding game states start the boot function
 AquaCycle.game.state.start('Boot');
+
+//had to add the winning music here so that the game wouldn't consistantly play music
+var winButtonClicked = false;
+function playWinningMusic(){
+    if(!winMusicPlaying){
+        winMusic.play();
+        setTimeout(function(){
+            if(!winButtonClicked){
+                winMusicPlaying = true;
+                levelMusic.stop();
+                 $('#winbtn').click();
+                winMusicPlaying = true;
+            }
+           
+        },4000)
+        
+    }
+}

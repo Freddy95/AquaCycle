@@ -31,8 +31,10 @@ var CURRENT_LEVEL;
 var timer;
 // Sound Variables
 var winMusicPlaying = false;
+var movingSoundPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
-
+var winMusic = new Audio("sounds/winning.mp3");
+var levelMusic;
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -44,8 +46,8 @@ AquaCycle.Game.prototype = {
         this.checkCurrentLevel();
         this.loadLevel();
 
-        var levelmusic = AquaCycle.game.add.audio('bgMusic');
-        levelmusic.play("",0,0.8,true);
+        levelMusic = AquaCycle.game.add.audio('bgMusic');
+        levelMusic.play("",0,0.8,true);
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
             // GAME CONTROLS
@@ -162,10 +164,13 @@ AquaCycle.Game.prototype = {
         }
 
         if(expBar.width >= 200) {
-            $('#winbtn').click();
+            //had to create a method in the main javascript file so that the music would play while game paused
+            setTimeout(playWinningMusic,1);
             this.game.paused = true;
         }
     },
+
+
     
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
@@ -228,11 +233,13 @@ AquaCycle.Game.prototype = {
     },
 
     goToNextLevel: function(){
+        //console.log(AquaCycle.game.state);
         if(CURRENT_LEVEL!="3"){
             var nextLevel = parseInt(CURRENT_LEVEL)+1;
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
-            this.state.start('Game');
+            AquaCycle.game.state.start('Game');
+            history.go(0)
         }
     },
 
@@ -324,16 +331,58 @@ AquaCycle.Game.prototype = {
         });
     },
 
+    //TODO: think of a different way to call the sound playing
     decreaseTimer: function(){
 
         timer.text = timer.text - 1;
         if(timer.text == 0){
-            this.endGame();
+           while(this.healthBar.children[1] != null) {
+                this.healthBar.children.pop();
+            }
+            this.takeDamage();
         }
         else{
             this.game.time.events.add(1000, this.decreaseTimer, this);
         }
         
+    },
+
+    playDeath: function(){
+        AquaCycle.game.camera.follow(this.dead_player);
+
+        this.player.destroy();
+        this.dead_player.animations.play('die');
+
+        this.game.time.events.add(5000, this.endGame, this);
+    },
+
+    //add the dying music and play it
+    playDyingMusic: function() {
+        var dyingMusic = this.game.add.audio('dying');
+        dyingMusic.play();
+    },
+
+    /*
+        Method to see if the player is moving, if so play the apropriate
+        sound effect for their current speed
+    */
+    playMovingSounds: function(){
+        if(!movingSoundPlaying){
+            movingSoundPlaying = true;
+            if(this.controls.UP.isDown){
+
+                if(playerSpeed == SLOW_VELOCITY){
+                    movingSlowSound = this.game.add.audio('swimming_slow');
+                    movingSlowSound.play();
+                }
+                else{
+                    movingFastSpeed = this.game.add.audio('swimming_fast');
+                    movingFastSpeed.play();
+                }   
+                setTimeout(function(){movingSoundPlaying=false},7000);
+                
+            }
+        }
     },
 
     /*****************************************************
@@ -378,13 +427,14 @@ AquaCycle.Game.prototype = {
         if(this.controls.UP.isDown) {
                 this.player.body.velocity.copyFrom(
                     this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
-                    );
+                );
                 //check player velocity to determine animation to play
                 if(playerSpeed == SLOW_VELOCITY){
                     this.player.animations.play('slow');
                 }else{
                     this.player.animations.play('fast');
                 }
+                this.game.time.events.add(0,this.playMovingSounds,this);
         }else {
             //check to see if player is currently idling
             if(this.player.animations.currentAnim !=  IDLE_ANIM){
@@ -393,6 +443,7 @@ AquaCycle.Game.prototype = {
         }
 
     },
+
 
     eat: function(player, edible) {
     	//add to experience bars
@@ -461,6 +512,9 @@ AquaCycle.Game.prototype = {
     		} else {
     			// Remove one heart from the health bar
     			this.healthBar.children.pop();
+                //play damage audio
+                var damageSound = this.game.add.audio('damage');
+                damageSound.play();
 		        // Change player's vulnerability
 		        this.vulnerable();
 		        // Change the player's alpha level
@@ -478,25 +532,11 @@ AquaCycle.Game.prototype = {
         this.player.alpha = 1;
     },
 
-    playDeath: function(){
-        AquaCycle.game.camera.follow(this.dead_player);
-
-        this.player.destroy();
-        this.dead_player.animations.play('die');
-
-        this.game.time.events.add(5000, this.endGame, this);
-    },
-
     endGame: function() {
         $('#diebtn').click();
         this.game.paused = true;
     },
 
-//add the dying music and play it
-    playDyingMusic: function() {
-        var dyingMusic = this.game.add.audio('dying');
-        dyingMusic.play();
-    },
     scalePlayer:function(){
         if(this.healthBar.children[1]!=null){
                 if(expBar.width<=60){
