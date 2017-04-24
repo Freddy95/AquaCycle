@@ -276,7 +276,7 @@ AquaCycle.Game.prototype = {
 
     loadInfoBox: function() {
         // Add the info box and the infobox text
-        infobox = this.game.add.sprite(950,10,'infobox');
+        infobox = this.game.add.sprite(905,10,'infobox');
         infobox.alpha = 0.8;
         infobox.fixedToCamera = true;
         infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
@@ -449,8 +449,15 @@ AquaCycle.Game.prototype = {
                 this.healthBar.children.pop();
 
                 // Create the dying shark
-                this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'blacktipshark');
-                DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
+                
+                if(CURRENT_LEVEL == "1"){
+                    this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'blacktipshark');
+                    DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
+                }else if(CURRENT_LEVEL == "2"){
+                    this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'barracudafish');
+                    DIE_ANIM = this.dead_player.animations.add('die',[1,5,9,13,0,4,8,12], 3, false);
+                }
+                
                 this.dead_player.angle = this.player.angle;
 
                 if(expBar.width<=60){
@@ -517,9 +524,14 @@ AquaCycle.Game.prototype = {
         this.predators.enableBody = true;
         var predator;
         result = this.findObjectsByType('predator',this.map,'objectLayer');
-        
+        var p;
+        if(CURRENT_LEVEL == "1"){
+            p = 'predator';
+        }else if(CURRENT_LEVEL == "2"){
+            p = 'blacktipshark';
+        }
         result.forEach(function(element){
-            element.properties.sprite = 'predator';
+            element.properties.sprite = p;
             this.createFromTiledObject(element,this.predators);
         },this);  
         for (var i = 0; i < this.predators.hash.length; i++) {
@@ -534,8 +546,12 @@ AquaCycle.Game.prototype = {
             predator.body.collideWorldBounds = true;
             predator.anchor.setTo(0.5,0.5);
             //predator.body.allowRotation = false;
+            if(CURRENT_LEVEL == "1"){
+                predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
+            }else if(CURRENT_LEVEL == "2"){
+                predator.animations.add('move',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
+            }
             
-            predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
             //allows predators to be clicked on
             predator.inputEnabled = true;
             predator.animations.play('move');
