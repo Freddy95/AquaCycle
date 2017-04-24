@@ -241,11 +241,11 @@ AquaCycle.Game.prototype = {
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
             this.backgroundLayer.resizeWorld();
-            // Set the total number of items
-            totalItems = objectsToFind.length;
             // Load the objects for the level
             objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
             currentObject = objectsToFind.pop();
+            // Set the total number of items
+            totalItems = objectsToFind.length;
             // Set the modal text
             var objective = "<p>For this level, you are on a <b>scavenger hunt</b> where you will be shown an object underneath the information box that you must locate before the timer runs out. When you find the object, click on it to register it to the <b>Objects Found</b> page in this menu. This will cause the <b>progress bar</b> to increase and you will recieve the next object to look for. Each time you find an object in the game the timer will reset, but any time you have left will be added to that base time. This means the faster you find an object, the more time you will have to find the next object. Eating prey will also give you a small amount of extra time.</p><br><p>Your <b>goal</b> is to find all the objects in the scavenger hunt, completely filling the progress bar.</p>";
             $('#objective').append(objective);
@@ -517,7 +517,8 @@ AquaCycle.Game.prototype = {
                 } else {
                     if(CURRENT_LEVEL == "2") {
                         expBar.width = expBar.width + 20;
-                    } else if (CURRENT_LEVEL == "1") {
+                    } 
+                    else if (CURRENT_LEVEL == "1") {
                         expBar.width = expBar.width + 5;
                     }
                 }
@@ -870,6 +871,8 @@ AquaCycle.Game.prototype = {
             } else if(CURRENT_LEVEL == "3") {
                 // Make the time increase by 20 because they've found the item
                 timer.text = parseInt(timer.text) + 20;
+                //increment the expbar because they found an item
+                expBar.width = expBar.width + (200/totalItems);
                 if(this.object.name == currentObject) {
                     foundObject = true;
                     console.log("Found a " + currentObject);
