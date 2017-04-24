@@ -516,7 +516,8 @@ AquaCycle.Game.prototype = {
                 } else {
                     if(CURRENT_LEVEL == "2") {
                         expBar.width = expBar.width + 20;
-                    } else if (CURRENT_LEVEL == "1") {
+                    } 
+                    else if (CURRENT_LEVEL == "1") {
                         expBar.width = expBar.width + 5;
                     }
                 }
@@ -869,6 +870,8 @@ AquaCycle.Game.prototype = {
             } else if(CURRENT_LEVEL == "3") {
                 // Make the time increase by 20 because they've found the item
                 timer.text = parseInt(timer.text) + 20;
+                //increment the expbar because they found an item
+                expBar.width = expBar.width + (200/totalItems);
                 if(this.object.name == currentObject) {
                     foundObject = true;
                     console.log("Found a " + currentObject);
