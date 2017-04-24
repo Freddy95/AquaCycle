@@ -335,7 +335,10 @@ AquaCycle.Game.prototype = {
 
         timer.text = timer.text - 1;
         if(timer.text == 0){
-            this.endGame();
+           while(this.healthBar.children[1] != null) {
+                this.healthBar.children.pop();
+            }
+            this.takeDamage();
         }
         else{
             this.game.time.events.add(1000, this.decreaseTimer, this);
