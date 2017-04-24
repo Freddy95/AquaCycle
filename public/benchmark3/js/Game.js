@@ -31,6 +31,7 @@ var CURRENT_LEVEL;
 var timer;
 // Sound Variables
 var winMusicPlaying = false;
+var movingSoundPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
 var winMusic = new Audio("sounds/winning.mp3");
 AquaCycle.Game.prototype = {
@@ -356,6 +357,29 @@ AquaCycle.Game.prototype = {
         dyingMusic.play();
     },
 
+    /*
+        Method to see if the player is moving, if so play the apropriate
+        sound effect for their current speed
+    */
+    playMovingSounds: function(){
+        if(!movingSoundPlaying){
+            movingSoundPlaying = true;
+            if(this.controls.UP.isDown){
+
+                if(playerSpeed == SLOW_VELOCITY){
+                    movingSlowSound = this.game.add.audio('swimming_slow');
+                    movingSlowSound.play();
+                }
+                else{
+                    movingFastSpeed = this.game.add.audio('swimming_fast');
+                    movingFastSpeed.play();
+                }   
+                setTimeout(function(){movingSoundPlaying=false},7000);
+                
+            }
+        }
+    },
+
     /*****************************************************
     *   PLAYER FUNCTIONS
     ******************************************************/
@@ -398,13 +422,14 @@ AquaCycle.Game.prototype = {
         if(this.controls.UP.isDown) {
                 this.player.body.velocity.copyFrom(
                     this.game.physics.arcade.velocityFromAngle(this.player.angle,playerSpeed)
-                    );
+                );
                 //check player velocity to determine animation to play
                 if(playerSpeed == SLOW_VELOCITY){
                     this.player.animations.play('slow');
                 }else{
                     this.player.animations.play('fast');
                 }
+                this.game.time.events.add(0,this.playMovingSounds,this);
         }else {
             //check to see if player is currently idling
             if(this.player.animations.currentAnim !=  IDLE_ANIM){
@@ -413,6 +438,7 @@ AquaCycle.Game.prototype = {
         }
 
     },
+
 
     eat: function(player, edible) {
     	//add to experience bars
