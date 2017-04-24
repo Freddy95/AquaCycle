@@ -32,7 +32,7 @@ var timer;
 // Sound Variables
 var winMusicPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
-
+var winMusic = new Audio("sounds/winning.mp3");
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -162,10 +162,13 @@ AquaCycle.Game.prototype = {
         }
 
         if(expBar.width >= 200) {
-            $('#winbtn').click();
+            //had to create a method in the main javascript file so that the music would play while game paused
+            setTimeout(playWinningMusic,1);
             this.game.paused = true;
         }
     },
+
+
     
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
@@ -336,6 +339,21 @@ AquaCycle.Game.prototype = {
         
     },
 
+    playDeath: function(){
+        AquaCycle.game.camera.follow(this.dead_player);
+
+        this.player.destroy();
+        this.dead_player.animations.play('die');
+
+        this.game.time.events.add(5000, this.endGame, this);
+    },
+
+    //add the dying music and play it
+    playDyingMusic: function() {
+        var dyingMusic = this.game.add.audio('dying');
+        dyingMusic.play();
+    },
+
     /*****************************************************
     *   PLAYER FUNCTIONS
     ******************************************************/
@@ -471,25 +489,11 @@ AquaCycle.Game.prototype = {
         this.player.alpha = 1;
     },
 
-    playDeath: function(){
-        AquaCycle.game.camera.follow(this.dead_player);
-
-        this.player.destroy();
-        this.dead_player.animations.play('die');
-
-        this.game.time.events.add(5000, this.endGame, this);
-    },
-
     endGame: function() {
         $('#diebtn').click();
         this.game.paused = true;
     },
 
-//add the dying music and play it
-    playDyingMusic: function() {
-        var dyingMusic = this.game.add.audio('dying');
-        dyingMusic.play();
-    },
     scalePlayer:function(){
         if(this.healthBar.children[1]!=null){
                 if(expBar.width<=60){
