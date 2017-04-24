@@ -44,6 +44,8 @@ AquaCycle.Game.prototype = {
         this.checkCurrentLevel();
         this.loadLevel();
 
+        var levelmusic = AquaCycle.game.add.audio('bgMusic');
+        levelmusic.play("",0,0.8,true);
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
             // GAME CONTROLS
