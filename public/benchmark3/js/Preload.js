@@ -17,6 +17,7 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.audio('swimming_slow','sounds/swimming_slow.mp3');
         AquaCycle.game.load.audio('swimming_fast','sounds/swimming_fast.mp3');
         AquaCycle.game.load.audio('winning','sounds/winning.mp3')
+        AquaCycle.game.load.audio('bgMusic','sounds/bensound-slowmotion.mp3');
 
         // Load the player sprite sheets
         AquaCycle.game.load.spritesheet('blacktipshark', 'assets/blacktip_shark.png',128,64);
