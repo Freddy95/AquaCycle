@@ -241,19 +241,20 @@ AquaCycle.Game.prototype = {
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
             this.backgroundLayer.resizeWorld();
-            // Set the total number of items
-            totalItems = objectsToFind.length;
             // Load the objects for the level
             objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
             currentObject = objectsToFind.pop();
+            // Set the total number of items
+            totalItems = objectsToFind.length;
             // Set the modal text
-            var objective = "<p>For this level, you are on a <b>scavenger hunt</b>! You will be shown an item underneath the info-box and you must find it before the timer in the top left runs out. As you find items, your <b>progress bar will fill up</b> and you will recieve another item to find. Your <b>goal</b> is to find all the items in the scavenger hunt and completely fill the progress bar. To <b>\"find\"</b> an item simply click on that item. Once an item is found, your timer will increase by 20 seconds to give you time to find the next item in the scavenger hunt. <b>Also</b>, you can eat prey to gain a few seconds as well. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
+            var objective = "<p>For this level, you are on a <b>scavenger hunt</b> where you will be shown an object underneath the information box that you must locate before the timer runs out. When you find the object, click on it to register it to the <b>Objects Found</b> page in this menu. This will cause the <b>progress bar</b> to increase and you will recieve the next object to look for. Each time you find an object in the game the timer will reset, but any time you have left will be added to that base time. This means the faster you find an object, the more time you will have to find the next object. Eating prey will also give you a small amount of extra time.</p><br><p>Your <b>goal</b> is to find all the objects in the scavenger hunt, completely filling the progress bar.</p>";
             $('#objective').append(objective);
 
             var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>more time</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
             $('#controls').append(controls);
 
-            var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p><br><p><b>Don't forget about exploring</b>, it is unlikely you will be able to win without gaining a little more time to hunt so you can go unnoticed.</p>";
+            var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p>";
+
             $('#strategy').append(strategy);
 
             //set cookie max level
@@ -517,7 +518,8 @@ AquaCycle.Game.prototype = {
                 } else {
                     if(CURRENT_LEVEL == "2") {
                         expBar.width = expBar.width + 20;
-                    } else if (CURRENT_LEVEL == "1") {
+                    } 
+                    else if (CURRENT_LEVEL == "1") {
                         expBar.width = expBar.width + 5;
                     }
                 }
@@ -870,6 +872,8 @@ AquaCycle.Game.prototype = {
             } else if(CURRENT_LEVEL == "3") {
                 // Make the time increase by 20 because they've found the item
                 timer.text = parseInt(timer.text) + 20;
+                //increment the expbar because they found an item
+                expBar.width = expBar.width + (200/totalItems);
                 if(this.object.name == currentObject) {
                     foundObject = true;
                     console.log("Found a " + currentObject);
