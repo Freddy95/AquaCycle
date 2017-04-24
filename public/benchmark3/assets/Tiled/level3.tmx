@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="1811">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="150" tilewidth="32" tileheight="32" nextobjectid="1859">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="45" columns="5">
   <image source="../depth_tiles.png" width="160" height="288"/>
   <tile id="18">
@@ -10889,6 +10889,300 @@
     <property name="info" value="The Blacktip shark gets its name from the distinctive black markings on the tips of its fins. The shark lives off of most coastal waters near the equator and has a history of attacking humans 28 times unprovoked. The fish is target by several fisheries and its diet consists of many different kinds of fish including shrimp and porcupine fish."/>
     <property name="name" value="shark"/>
     <property name="type" value="predator"/>
+   </properties>
+  </object>
+  <object id="1815" gid="20" x="1600.16" y="4449.33" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1817" gid="20" x="1407.23" y="4349.66" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1818" gid="20" x="1205.21" y="3955.72" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1819" gid="20" x="2055.72" y="4611.27" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1820" gid="20" x="2968.85" y="4461.78" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1821" gid="20" x="2486.02" y="4496.12" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1822" gid="20" x="2624.4" y="4057.74" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1823" gid="20" x="3937.54" y="3673.9" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1824" gid="20" x="4064.81" y="4019.35" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1825" gid="20" x="3225.41" y="3161.78" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1826" gid="20" x="368.848" y="4555.72" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1827" gid="20" x="1003.19" y="4460.77" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1828" gid="20" x="46.6263" y="4030.46" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1829" gid="20" x="91.0707" y="3058.75" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1830" gid="20" x="1912.28" y="4522.06" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1832" gid="20" x="2697.13" y="4473.9" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1833" gid="20" x="2200.16" y="4538.55" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1834" gid="20" x="2175.92" y="3542.59" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1835" gid="20" x="776.929" y="3155.72" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1836" gid="20" x="1458.75" y="3118.34" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1837" gid="20" x="1127.43" y="2470.87" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1838" gid="20" x="2016.32" y="2748.65" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1839" gid="20" x="2287.03" y="2396.12" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1840" gid="20" x="1447.64" y="2110.26" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1841" gid="20" x="1447.64" y="2110.26" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1842" gid="20" x="743.596" y="1814.3" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1843" gid="20" x="229.455" y="2125.41" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1844" gid="20" x="697.131" y="1377.94" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1845" gid="20" x="229.455" y="1329.45" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1846" gid="20" x="423.394" y="1754.71" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1847" gid="20" x="1505.21" y="1574.91" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1848" gid="20" x="2987.03" y="916.323" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1849" gid="20" x="4694.1" y="2160.77" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1850" gid="20" x="4240.57" y="1938.55" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1851" gid="20" x="4655.72" y="4179.96" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="sixpack"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1852" gid="20" x="3797.13" y="3413.29" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1853" gid="20" x="4601.17" y="2177.94" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1854" gid="20" x="3809.25" y="1464.81" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1855" gid="20" x="4250.67" y="392.081" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1856" gid="20" x="618.343" y="545.616" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1857" gid="20" x="141.576" y="372.889" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
+   </properties>
+  </object>
+  <object id="1858" gid="20" x="345.616" y="745.616" width="32" height="32">
+   <properties>
+    <property name="info" value="Discarded trash can be found in areas of Florida's Oceans. Trash can be harmful to all ocean life and can seriously effect an animal's development and health."/>
+    <property name="name" value="soda"/>
+    <property name="type" value="trash"/>
    </properties>
   </object>
  </objectgroup>

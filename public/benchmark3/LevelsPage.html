@@ -4,15 +4,19 @@
 		<meta charset="UTF-8" />
 
 		<title>Levels</title>
-		 <script src="jquery.min.js"></script>
+		 <script src = "js/levels.js"></script>
+    	<script src = "js/jquery.min.js"></script>
+        <script src = "js/js.cookie.js"></script>
+
 		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	
     	<link rel="stylesheet" type="text/css" href="css/LevelsPage.css">
     	<link rel="stylesheet" type="text/css" href="css/NavBar1.css">
 
 	</head>
-	<body>
+	<body onload="load()">
 		<nav class="navbar bg-primary">
 		  	<div class="container-fluid">
 		    
@@ -40,38 +44,38 @@
 			<div class="row">
 				<div class="col-md-4">
 
-					<div class="well">
+					<button type="button" class="well" id="btn1" onclick="goToLevel(1)"> 
 
-						
-						<a href ="Game.html"><div class="level">
-							<h3 class="levelTitle">Level 1</h3>
-							<hr>
-							<img src="images/shark.png" class="sprite">
-							<p>Location: Florida Coast<br></br>Description: The Blacktip shark gets its name from the distinctive black markings on the tips of its fins. The shark lives off of most coastal waters near the equator and has a history of attacking humans 28 times unprovoked. The fish is target by several fisheries and its diet consists of many different kinds of fish including shrimp and porcupine fish.</p>
-						</div></a>
-					</div>
+						    <div class="level">
+								<h3 class="levelTitle">Level 1</h3>
+								<hr>
+								<img src="images/shark.png" class="sprite">
+								<p>Description: The Blacktip shark gets its name from the distinctive black markings on the tips of its fins. The shark lives off of most coastal waters near the equator and has a history of attacking humans 28 times unprovoked. The fish is target by several fisheries and its diet consists of many different kinds of fish including shrimp and porcupine fish.</p>
+							</div>
+	
+					</button>
 
 				</div>
 				<div class="col-md-4">
-					<div class="well">
+					<button class="well" id="btn2" disabled onclick="goToLevel(2)">
 						<div class="row level">
 							<h3 class="levelTitle">Level 2</h3>
 							<hr>
 							<img src="images/fish.png" class="sprite">
-							<p>Location: Florida Coast<br></br>Description: The Barracuda Fish is known for its long size, feirce appearance, and aggresive behavior using their have fang-like teeth of different sizes. The Barracuda Fish is typically found in the mediterrean sea as well as the altantic coast of North America to Brazil. Warning: Barracuda Fish are known to be dangerous to swimmers.</p>
+							<p>Description: The Barracuda Fish is known for its long size, feirce appearance, and aggresive behavior using their have fang-like teeth of different sizes. The Barracuda Fish is typically found in the mediterrean sea as well as the altantic coast of North America to Brazil. Warning: Barracuda Fish are known to be dangerous to swimmers.</p>
 						</div>
-					</div>
+					</button>
 				</div>
 				<div class="col-md-4">
-					<div class="well">
+					<button class="well" id="btn3" disabled onclick="goToLevel(3)">
 						<div class="row level">
 							<h3 class="levelTitle">Level 3</h3>
 							<hr>
 							<img src="images/jellyfish.png" class="sprite">
 							<p>This is the same as level 2 at the moment.This place is to be determined. So lets talk about fishies. Fishies are awesome and they taste good too so thats a win-win. Kinda weird when you see the eyeballs tho.
-								</p>
+							</p>
 						</div>
-					</div>
+					</button>
 				</div>
 			</div>
 		</div>
