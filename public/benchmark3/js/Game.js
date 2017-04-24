@@ -29,6 +29,9 @@ var deathPlaying = false;
 // Level Variables
 var CURRENT_LEVEL;
 var timer;
+var currentObject;
+var foundObject = false;
+var objectsToFind = [];
 // Sound Variables
 var winMusicPlaying = false;
 var movingSoundPlaying = false;
@@ -111,6 +114,12 @@ AquaCycle.Game.prototype = {
             Cookies.set('currentLevel','2');
             history.go(0);
         },this);
+
+        this.controls.THREE.onDown.add(function(){
+            Cookies.set('currentLevel','3');
+            history.go(0);
+        },this);
+
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         
@@ -122,7 +131,7 @@ AquaCycle.Game.prototype = {
         this.loadHealthBar();
         this.loadExperienceBar();
         this.loadInfoBox();
-        if(CURRENT_LEVEL == "2"){
+        if(CURRENT_LEVEL == "2" || CURRENT_LEVEL == "3") {
             this.loadTimer();
         }
 
@@ -168,6 +177,7 @@ AquaCycle.Game.prototype = {
             setTimeout(playWinningMusic,1);
             this.game.paused = true;
         }
+        console.log(objectsToFind);
     },
 
 
@@ -216,7 +226,26 @@ AquaCycle.Game.prototype = {
             $('#strategy').append(strategy);
         } else if(CURRENT_LEVEL == "3") {
             // Load level 3
+            this.map = this.game.add.tilemap('level3');
+            this.map.addTilesetImage('tiles','tiles');
+            this.backgroundLayer = this.map.createLayer("backgroundLayer");
+            this.blockedLayer = this.map.createLayer("collideLayer");
+            this.map.setCollisionBetween(1, 600, true, 'collideLayer');
+            this.backgroundLayer.resizeWorld();
+            // Set the total number of items
+            totalItems = objectsToFind.length;
+            // Load the objects for the level
+            objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
+            currentObject = objectsToFind.pop();
+            // Set the modal text
+            var objective = "<p>For this level, you must collect enough <b>prey</b> to fill the <b>experience bar</b> before the <b>timer</b> in the top left runs out. You can gain more time by interacting with different objects in the ocean. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
+            $('#objective').append(objective);
 
+            var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>more time</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
+            $('#controls').append(controls);
+
+            var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p><br><p><b>Don't forget about exploring</b>, it is unlikely you will be able to win without gaining a little more time to hunt so you can go unnoticed.</p>";
+            $('#strategy').append(strategy);
         }
     },
 
@@ -239,7 +268,7 @@ AquaCycle.Game.prototype = {
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
             AquaCycle.game.state.start('Game');
-            history.go(0)
+            history.go(0);
         }
     },
 
@@ -400,7 +429,11 @@ AquaCycle.Game.prototype = {
             IDLE_ANIM = this.player.animations.add('idle',[3,7,11,15,2,6,10,14], 10, true);
             SLOW_ANIM = this.player.animations.add('slow',[3,7,11,15,2,6,10,14], 20, true);
             FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
-            
+        } else if(CURRENT_LEVEL == "3") {
+            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'barracudafish');
+            IDLE_ANIM = this.player.animations.add('idle',[3,7,11,15,2,6,10,14], 10, true);
+            SLOW_ANIM = this.player.animations.add('slow',[3,7,11,15,2,6,10,14], 20, true);
+            FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
         }
         
         AquaCycle.game.physics.arcade.enable(this.player);
@@ -447,30 +480,37 @@ AquaCycle.Game.prototype = {
 
     eat: function(player, edible) {
     	//add to experience bars
-        if(expBar.width < 200) {
-            if(itemsFound.indexOf(edible.name) === -1) {
-                itemsFound.push(edible.name);
-                
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
-                $('#items').append(objectInfo);
+        if(CURRENT_LEVEL == "1" || CURRENT_LEVEL == "2") {
+            if(expBar.width < 200) {
+                if(itemsFound.indexOf(edible.name) === -1) {
+                    itemsFound.push(edible.name);
+                    
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
+                    $('#items').append(objectInfo);
 
-                expBar.width = expBar.width + 20;
-
-                foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
-            } else {
-                if(CURRENT_LEVEL == "2") {
                     expBar.width = expBar.width + 20;
+
+                    foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
                 } else {
-                    expBar.width = expBar.width + 5;
+                    if(CURRENT_LEVEL == "2") {
+                        expBar.width = expBar.width + 20;
+                    } else if (CURRENT_LEVEL == "1") {
+                        expBar.width = expBar.width + 5;
+                    }
                 }
+                // Set style and change title
+                infotext.text = "Press ESC for more information.";
+                typetext.text = "Prey Added to Objects Found";
+                typestyle = { font: '20px Arial', fill: 'green' };
+                typetext.setStyle(typestyle);
+                // Eat a shrimp
+            	edible.destroy();
             }
-            // Set style and change title
-            infotext.text = "Press ESC for more information.";
-            typetext.text = "Prey Added to Objects Found";
-            typestyle = { font: '20px Arial', fill: 'green' };
-            typetext.setStyle(typestyle);
-            // Eat a shrimp
-        	edible.destroy();
+        } else {
+            // Level 3 logic for eating
+            edible.destroy();
+            // Increase the amount of time they have to find the next item
+            timer.text = parseInt(timer.text) + 5;
         }
     },
 
@@ -487,6 +527,9 @@ AquaCycle.Game.prototype = {
                     this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'blacktipshark');
                     DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
                 }else if(CURRENT_LEVEL == "2"){
+                    this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'barracudafish');
+                    DIE_ANIM = this.dead_player.animations.add('die',[1,5,9,13,0,4,8,12], 3, false);
+                } else if(CURRENT_LEVEL == "3"){
                     this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'barracudafish');
                     DIE_ANIM = this.dead_player.animations.add('die',[1,5,9,13,0,4,8,12], 3, false);
                 }
@@ -506,7 +549,7 @@ AquaCycle.Game.prototype = {
                 // Remove the player
                 playerLoaded = false;
                 //immediatley playing the losing music then a little bit after process the player dying 
-                this.game.time.events.add(0,this.playDyingMusic,this)
+                this.game.time.events.add(0,this.playDyingMusic,this);
                 this.game.time.events.add(1, this.playDeath, this);
 
     		} else {
@@ -562,9 +605,11 @@ AquaCycle.Game.prototype = {
         result = this.findObjectsByType('predator',this.map,'objectLayer');
         var p;
         if(CURRENT_LEVEL == "1"){
-            p = 'predator';
-        }else if(CURRENT_LEVEL == "2"){
+            p = 'tigershark';
+        } else if(CURRENT_LEVEL == "2"){
             p = 'blacktipshark';
+        } else if (CURRENT_LEVEL == "3") {
+            p = 'tigershark';
         }
         result.forEach(function(element){
             element.properties.sprite = p;
@@ -584,8 +629,10 @@ AquaCycle.Game.prototype = {
             //predator.body.allowRotation = false;
             if(CURRENT_LEVEL == "1"){
                 predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
-            }else if(CURRENT_LEVEL == "2"){
+            } else if(CURRENT_LEVEL == "2"){
                 predator.animations.add('move',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
+            } else if(CURRENT_LEVEL == "3") {
+                predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
             }
             
             //allows predators to be clicked on
@@ -762,53 +809,67 @@ AquaCycle.Game.prototype = {
 
     // This method will get the information on mouseclick down of a certain object clicked
     getObjectInformation: function(){
-        //add to user
+        // add to user
         if(this.objs.indexOf(this.object.name) === -1){
             this.objs.push(this.object.name);
-            
-            //var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + this.object.name + ".png\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-            //$('#items').append(objectInfo);
 
             // Add to experience bar if current level not 2
-            if(CURRENT_LEVEL != "2"){
+            if(CURRENT_LEVEL == "1") {
                 if(expBar.width < 200){
                     expBar.width = expBar.width + 20;
                 }
-            }else{
-
+            } else if(CURRENT_LEVEL == "2") {
                 timer.text = parseInt(timer.text) + 5;
+            } else if(CURRENT_LEVEL == "3") {
+                // Make the time increase by 20 because they've found the item
+                timer.text = parseInt(timer.text) + 20;
+                if(this.object.name == currentObject) {
+                    foundObject = true;
+                    console.log("Found a " + foundObject);
+                    currentObject = objectsToFind.pop();
+                }
             }
             
-
-            foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
-            infotext.text = "Press ESC for more information.";
-            // Changing the title and color for each type of item
-            if(this.object.type == "predator") {
-                // Set style and change title
-                typetext.text = "Predator Added to Objects Found";
-                typestyle = { font: '20px Arial', fill: 'red' };
-                typetext.setStyle(typestyle);
-                // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-                $('#items').append(objectInfo);
-            } else if (this.object.type == "item") {
-                // Set style and change title
-                typetext.text = "Item Added to Objects Found";
-                typestyle = { font: '20px Arial', fill: 'blue' };
-                typetext.setStyle(typestyle);
-                // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-                $('#items').append(objectInfo);
-            } else if (this.object.type == "prey") {
-                // Set style and change title
-                typetext.text = "Prey Added to Objects Found";
-                typestyle = { font: '20px Arial', fill: 'green' };
-                typetext.setStyle(typestyle);
-                // Add the object info to the objects found page
-                var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
-                $('#items').append(objectInfo);
+            if (CURRENT_LEVEL == "1" || CURRENT_LEVEL == "2" || (CURRENT_LEVEL == "3" && foundObject == true)) {
+                foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
+                infotext.text = "Press ESC for more information.";
+                // Changing the title and color for each type of item
+                if(this.object.type == "predator") {
+                    // Set style and change title
+                    typetext.text = "Predator Added to Objects Found";
+                    typestyle = { font: '20px Arial', fill: 'red' };
+                    typetext.setStyle(typestyle);
+                    // Add the object info to the objects found page
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"predator\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                    $('#items').append(objectInfo);
+                } else if (this.object.type == "item") {
+                    // Set style and change title
+                    typetext.text = "Item Added to Objects Found";
+                    typestyle = { font: '20px Arial', fill: 'blue' };
+                    typetext.setStyle(typestyle);
+                    // Add the object info to the objects found page
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"item\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                    $('#items').append(objectInfo);
+                } else if (this.object.type == "prey") {
+                    // Set style and change title
+                    typetext.text = "Prey Added to Objects Found";
+                    typestyle = { font: '20px Arial', fill: 'green' };
+                    typetext.setStyle(typestyle);
+                    // Add the object info to the objects found page
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                    $('#items').append(objectInfo);
+                } else if (this.object.type == "trash") {
+                    // Set style and change title
+                    typetext.text = "Trash Added to Objects Found";
+                    typestyle = { font: '20px Arial', fill: 'black' };
+                    typetext.setStyle(typestyle);
+                    // Add the object info to the objects found page
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + this.object.name + ".png\" id=\"trash\"></div><div class=\"col-md-9\">" + this.object.info + "</div></div><br></br>";
+                    $('#items').append(objectInfo);
+                }
+                foundObject = false;
+                discoverSound.play();
             }
-        discoverSound.play();
         }
         
     },

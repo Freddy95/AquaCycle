@@ -91,6 +91,10 @@ caption {
    display: block;
 }
 
+#trash {
+	border: 2px solid black;
+}
+
 #item {
 	border: 2px solid blue;
 }
