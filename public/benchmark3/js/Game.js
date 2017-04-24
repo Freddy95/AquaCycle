@@ -271,7 +271,7 @@ AquaCycle.Game.prototype = {
 
     loadInfoBox: function() {
         // Add the info box and the infobox text
-        infobox = this.game.add.sprite(950,10,'infobox');
+        infobox = this.game.add.sprite(905,10,'infobox');
         infobox.alpha = 0.8;
         infobox.fixedToCamera = true;
         infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
