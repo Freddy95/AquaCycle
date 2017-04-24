@@ -8,16 +8,16 @@
         <script src = "js/Boot.js"></script>
         <script src = "js/Game.js"></script>
         <script src = "js/Preload.js"></script>
-        <link rel = "stylesheet" type="text/css" href="css/Game.css">
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel = "stylesheet" type="text/css" href="css/Game.css">
         <link rel="stylesheet" type="text/css" href="css/Modal.css">
     </head>
-    <body style="background-color:#c9ccb2;">
+    <body>
         <script src = "js/Main.js"></script>
         <div id ="game_location"></div>
         <button type="button" id="btn" data-toggle="modal" data-target="#myModal" style="display:none"></button>
+        <button type="button" id="start" data-toggle="modal" data-target="#startModal" style="display:none"></button>
         <button type="button" id="diebtn" data-toggle="modal" data-target="#dieModal" style="display:none" data-backdrop="static"></button>
         <button type="button" id="winbtn" data-toggle="modal" data-target="#winModal" style="display:none" data-backdrop="static"></button>
         <!-- PAUSE MODAL -->
@@ -52,32 +52,28 @@
                     </ul>
                     <div class="tab-content">
                     <!-- Items Tab -->
-                    <div class="tab-pane active" id="tab1">
+                    <div class="tab-pane" id="tab1">
                         <h2 id="pauseHeading">Objects Found</h2>
                       <div id="items"></div>
                     </div>
                     <!-- Gameplay Tab -->
-                    <div class="tab-pane" id="tab2">
+                    <div class="tab-pane active" id="tab2">
                       <h2 id="pauseHeading">Gameplay</h2>
                       <!-- Gameplay sections -->
-                      <h4 id="objective" class="subheading">Objective</h4>
+                      <h4 class="subheading">Objective</h4>
                       <!-- Append a div via JavaScript -->
-                      <br>
-                      <h4 id="controls" class="subheading">Controls</h4>
-                      <div>
-                        <p><em>Keyboard Controls:</em></p>
-                        <p>| <b>W</b> | Press this button to move forward</p>
-                        <p>| <b>A</b> | Press this button to move to the left</p>
-                        <p>| <b>D</b> | Press this button to move to the right</p>
-                        <p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p>
-                        <p>| <b>ESC</b> | Press this button to enter and exit this menu</p>
-                        <br>
-                        <p><em>Mouse Controls:</em></p>
-                        <p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>experience</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>
+                      <div id="objective">
                       </div>
                       <br>
-                      <h4 id="strategy" class="subheading">Strategy</h4>
+                      <h4 class="subheading">Controls</h4>
                       <!-- Append a div via JavaScript -->
+                      <div id="controls">
+                      </div>
+                      <br>
+                      <h4 class="subheading">Strategy</h4>
+                      <!-- Append a div via JavaScript -->
+                      <div id="strategy">
+                      </div>
                       <br>
                     </div>
                     </div>
@@ -87,9 +83,25 @@
             </div>
           </div>
         </div>
+        <!-- START LEVEL MODAL -->
+        <div id="startModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 id="objective" class="subheading">Objective</h4>
+              <!-- PUT STUFF HERE -->
+              </div>
+            <div class="modal-footer"></div>
+            </div>
+
+          </div>
+        </div>
         <!-- DIE MODAL -->
         <div id="dieModal" class="modal fade" role="dialog">
-          <div class="modal-dialog modal-sm">
+          <div class="modal-dialog modal-md">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -121,7 +133,7 @@
                <h3>You Won!</h3>
                <table id="dieTable">
                 <tr>
-                    <td><a class="btn btn-danger" href="javascript:history.go(0)">Restart</a></td>
+                    <td><a class="btn btn-danger" onclick="AquaCycle.Game.prototype.goToNextLevel()">Next Level</a></td>
                     <td><a class="btn btn-primary" href="../GameStartPage.html">Home</a></td>
                 </tr>
                </table>
