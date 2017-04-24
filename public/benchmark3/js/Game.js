@@ -260,6 +260,8 @@ AquaCycle.Game.prototype = {
 
             //set cookie max level
             Cookies.set('maxLevel', "3");
+            $('#nextLevelBtn').prop('disabled', true);
+            $('#winNextLevelBtn').html("Restart").attr('onclick', 'javascript:history.go(0)');
         }
     },
 
@@ -514,7 +516,7 @@ AquaCycle.Game.prototype = {
                 if(itemsFound.indexOf(edible.name) === -1) {
                     itemsFound.push(edible.name);
                     
-                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"../assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
+                    var objectInfo = "<div class=\"row\"><div class=\"col-md-3 image\"><img src=\"assets/" + edible.name + ".png\" id=\"prey\"></div><div class=\"col-md-9\">" + edible.info + "</div></div><br></br>";
                     $('#items').append(objectInfo);
 
                     expBar.width = expBar.width + 20;
