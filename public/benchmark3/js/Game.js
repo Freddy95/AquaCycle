@@ -243,7 +243,7 @@ AquaCycle.Game.prototype = {
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
             this.backgroundLayer.resizeWorld();
             // Load the objects for the level
-            objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
+            objectsToFind = ["shark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
             currentObject = objectsToFind.pop();
             // Set the total number of items
             totalItems = objectsToFind.length + 1;
@@ -638,11 +638,9 @@ AquaCycle.Game.prototype = {
         var p;
         if(CURRENT_LEVEL == "1"){
             p = 'tigershark';
-        } else if(CURRENT_LEVEL == "2"){
+        } else {
             p = 'blacktipshark';
-        } else if (CURRENT_LEVEL == "3") {
-            p = 'tigershark';
-        }
+        } 
         result.forEach(function(element){
             element.properties.sprite = p;
             this.createFromTiledObject(element,this.predators);
@@ -661,11 +659,9 @@ AquaCycle.Game.prototype = {
             //predator.body.allowRotation = false;
             if(CURRENT_LEVEL == "1"){
                 predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
-            } else if(CURRENT_LEVEL == "2"){
+            } else {
                 predator.animations.add('move',[2,5,8,11,14,17,20,23,26,29,1,4,7,10,13,16,19,22,25,28], 20, true);
-            } else if(CURRENT_LEVEL == "3") {
-                predator.animations.add('move',[1,3,5,7,9,11,13,15,17,0,2,4,6,8,10,12,14,16], 20, true);
-            }
+            } 
             
             //allows predators to be clicked on
             predator.inputEnabled = true;
