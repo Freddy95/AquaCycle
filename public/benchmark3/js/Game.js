@@ -109,6 +109,7 @@ AquaCycle.Game.prototype = {
 
         this.controls.TWO.onDown.add(function(){
             Cookies.set('currentLevel','2');
+
             history.go(0);
         },this);
         //add a listener function to esc key to generate pause menu
@@ -195,6 +196,11 @@ AquaCycle.Game.prototype = {
 
             var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p>";
             $('#strategy').append(strategy);
+
+            //set max level
+            if(Cookies.get('maxLevel') == null){
+                Cookies.set('maxLevel', "1");
+            }
         } else if(CURRENT_LEVEL == "2") {
             // Load level 2
             this.map = this.game.add.tilemap('level2');
@@ -206,7 +212,7 @@ AquaCycle.Game.prototype = {
             // Set the total number of items
             totalItems = 6;
             // Set the modal text
-            var objective = "<p>For this level, you must collect enough <b>prey</b> to fill the <b>experience bar</b> before the <b>timer</b> in the top left runs out. You can gain more time by interacting with different objects in the ocean. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
+            var objective = "<p>For this level, you must eat enough <b>prey</b> to fill the <b>progress bar</b> before the <b>timer</b> in the top left runs out. You can gain more time by interacting with different objects in the ocean. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
             $('#objective').append(objective);
 
             var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>more time</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
@@ -214,9 +220,16 @@ AquaCycle.Game.prototype = {
 
             var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p><br><p><b>Don't forget about exploring</b>, it is unlikely you will be able to win without gaining a little more time to hunt so you can go unnoticed.</p>";
             $('#strategy').append(strategy);
+            if(parseInt(Cookies.get('maxLevel')) < 2){
+                Cookies.set('maxLevel', "2");
+            }
         } else if(CURRENT_LEVEL == "3") {
             // Load level 3
 
+
+            //set cookie max level
+            Cookies.set('maxLevel', "3");
+            
         }
     },
 
@@ -238,6 +251,14 @@ AquaCycle.Game.prototype = {
             var nextLevel = parseInt(CURRENT_LEVEL)+1;
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
+            var maxLevel = Cookies.get('maxLevel');
+            if(maxLevel == null){
+                Cookies.set('maxLevel', nextLevel.toString());
+            }else{
+                if(parseInt(maxLevel) < nextLevel){
+                    Cookies.set('maxLevel', nextLevel.toString());
+                }
+            }
             AquaCycle.game.state.start('Game');
             history.go(0)
         }
