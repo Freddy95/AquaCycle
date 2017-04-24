@@ -354,18 +354,20 @@ AquaCycle.Game.prototype = {
 
     //TODO: think of a different way to call the sound playing
     decreaseTimer: function(){
-
-        timer.text = timer.text - 1;
-        if(timer.text == 0){
-           while(this.healthBar.children[1] != null) {
-                this.healthBar.children.pop();
+        if(playerLoaded){
+            timer.text = timer.text - 1;
+            if(timer.text == 0){
+                while(this.healthBar.children[1] != null) {
+                    this.healthBar.children.pop();
+                }
+                this.takeDamage();
             }
-            this.takeDamage();
+            else{
+                this.game.time.events.add(1000, this.decreaseTimer, this);
+            }
+            
         }
-        else{
-            this.game.time.events.add(1000, this.decreaseTimer, this);
-        }
-        
+     
     },
 
     playDeath: function(){
