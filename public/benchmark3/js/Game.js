@@ -241,11 +241,11 @@ AquaCycle.Game.prototype = {
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
             this.backgroundLayer.resizeWorld();
-            // Set the total number of items
-            totalItems = objectsToFind.length;
             // Load the objects for the level
             objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
             currentObject = objectsToFind.pop();
+            // Set the total number of items
+            totalItems = objectsToFind.length;
             // Set the modal text
             var objective = "<p>For this level, you are on a <b>scavenger hunt</b>! You will be shown an item underneath the info-box and you must find it before the timer in the top left runs out. As you find items, your <b>progress bar will fill up</b> and you will recieve another item to find. Your <b>goal</b> is to find all the items in the scavenger hunt and completely fill the progress bar. To <b>\"find\"</b> an item simply click on that item. Once an item is found, your timer will increase by 20 seconds to give you time to find the next item in the scavenger hunt. <b>Also</b>, you can eat prey to gain a few seconds as well. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
             $('#objective').append(objective);
