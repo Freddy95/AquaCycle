@@ -331,6 +331,7 @@ AquaCycle.Game.prototype = {
         });
     },
 
+    //TODO: think of a different way to call the sound playing
     decreaseTimer: function(){
 
         timer.text = timer.text - 1;
