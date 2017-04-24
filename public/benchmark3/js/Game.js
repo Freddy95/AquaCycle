@@ -38,6 +38,9 @@ AquaCycle.Game.prototype = {
     *   CREATE FUNCTION
     ******************************************************/
     create: function(){
+        //$('#objective').empty();
+        //$('#controls').empty();
+        //$('#strategy').empty();
         this.checkCurrentLevel();
         this.loadLevel();
 
@@ -68,7 +71,6 @@ AquaCycle.Game.prototype = {
                 else{
                     playerSpeed = FAST_VELOCITY;
                 }
-                console.log("You are moving slow: " + this.movingSlow);
         },this);
 
         this.controls.WIN.onDown.add(function(){
@@ -97,12 +99,13 @@ AquaCycle.Game.prototype = {
             on that way we can just check to see what level the user is on via cookie and load the appropriate level
         */
         this.controls.ONE.onDown.add(function(){
-            this.state.start('Game');
+            Cookies.set('currentLevel','1');
+            history.go(0)
         },this);
 
         this.controls.TWO.onDown.add(function(){
-            music = this.game.add.audio('winning');
-            music.play();
+            Cookies.set('currentLevel','2');
+            history.go(0);
         },this);
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
@@ -118,13 +121,20 @@ AquaCycle.Game.prototype = {
         if(CURRENT_LEVEL == "2"){
             this.loadTimer();
         }
+
+        this.game.paused = true;
     },
 
     /*****************************************************
     *   UPDATE FUNCTION
     ******************************************************/
     update: function(){
-        //if the modal is shown and the game is not paused it should be
+        // if the modal is shown and the game is not paused it should be
+        if(!($('#myModal').hasClass('in')) && this.game.paused){
+            this.pauseGame();
+        }
+
+        // if the modal is shown and the game is not paused it should be
         if($('#myModal').hasClass('in') && !this.game.paused){
             //console.log("should be paused");
             this.game.paused = true;
@@ -151,7 +161,6 @@ AquaCycle.Game.prototype = {
 
         if(expBar.width >= 200) {
             $('#winbtn').click();
-            
             this.game.paused = true;
         }
     },
@@ -159,40 +168,52 @@ AquaCycle.Game.prototype = {
     /*****************************************************
     *   WORLD & LEVEL FUNCTIONS
     ******************************************************/
-    loadLevel:function(){
-        if(CURRENT_LEVEL == "1"){
+    loadLevel: function(){
+        if(CURRENT_LEVEL == "1") {
+            // Load level 1
             this.map = this.game.add.tilemap('level1');
-            //this.map.addTilesetImage('DepthTileMockups','world');
-            //this.map.addTilesetImage('predator', 'predator');
             this.map.addTilesetImage('tiles','tiles');
-            //this.map.addTilesetImage('DepthTileMockups1','world1');
             this.backgroundLayer = this.map.createLayer("backgroundLayer");
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
-
             this.backgroundLayer.resizeWorld();
-
+            // Set the total number of items
             totalItems = 8;
-        }
-        
-        else if(CURRENT_LEVEL == "2"){
+            // Set the modal text
+            var objective = "<p>For this level, you must collect enough <b>experience</b> to fill the <b>experience bar</b> in the top left. You can gain a little experience by eating prey, but most of your experience will come from interacting with different objects in the ocean. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
+            $('#objective').append(objective);
+
+            var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>experience</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
+            $('#controls').append(controls);
+
+            var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p>";
+            $('#strategy').append(strategy);
+        } else if(CURRENT_LEVEL == "2") {
+            // Load level 2
             this.map = this.game.add.tilemap('level2');
-            //this.map.addTilesetImage('DepthTileMockups','world');
-            //this.map.addTilesetImage('predator', 'predator');
             this.map.addTilesetImage('tiles','tiles');
-            //this.map.addTilesetImage('DepthTileMockups1','world1');
             this.backgroundLayer = this.map.createLayer("backgroundLayer");
             this.blockedLayer = this.map.createLayer("collideLayer");
             this.map.setCollisionBetween(1, 600, true, 'collideLayer');
-
             this.backgroundLayer.resizeWorld();
+            // Set the total number of items
             totalItems = 6;
-        }
-        else if(CURRENT_LEVEL == "3"){
+            // Set the modal text
+            var objective = "<p>For this level, you must collect enough <b>prey</b> to fill the <b>experience bar</b> before the <b>timer</b> in the top left runs out. You can gain more time by interacting with different objects in the ocean. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
+            $('#objective').append(objective);
+
+            var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>more time</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
+            $('#controls').append(controls);
+
+            var strategy = "<p>The <b>closer</b> you are to a fish, and the <b>faster</b> you are moving, the more likely it is that they will notice you. For <em>hunting</em>, move slowly toward your prey, then, just before they are about to run away, speed up in a zig zag motion to make a quick catch. Be <em>careful</em> though, if you move too quickly you'll catch the attention of other predators looking for a meal.</p><br><p><b>Don't forget about exploring</b>, it is unlikely you will be able to win without gaining a little more time to hunt so you can go unnoticed.</p>";
+            $('#strategy').append(strategy);
+        } else if(CURRENT_LEVEL == "3") {
+            // Load level 3
 
         }
     },
-    checkCurrentLevel:function() {
+
+    checkCurrentLevel: function() {
         //a jquery library to get the current level from a stored cookie
        CURRENT_LEVEL = Cookies.get('currentLevel');
        if (CURRENT_LEVEL == null ) {
@@ -204,16 +225,15 @@ AquaCycle.Game.prototype = {
        }
     },
 
-    goToNextLevel:function(){
+    goToNextLevel: function(){
         if(CURRENT_LEVEL!="3"){
             var nextLevel = parseInt(CURRENT_LEVEL)+1;
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
-            console.log("NEXT LEVEL");
-            console.log(this);
             this.state.start('Game');
         }
     },
+
     loadHealthBar: function() {
         // Load the health bar
         this.healthBar = this.game.add.group();
@@ -273,6 +293,7 @@ AquaCycle.Game.prototype = {
         typetext.y = infobox.y + 5;
         typetext.fixedToCamera = true;
     },
+
     loadTimer: function(){
         this.game.add.text(210,10, "Time Remaining: ", null).fixedToCamera = true;
         timer = this.game.add.text(450,10, 20, null);
@@ -384,11 +405,10 @@ AquaCycle.Game.prototype = {
 
                 foundstat.text = "Found " + itemsFound.length + " objects out of " + totalItems;
             } else {
-                
-                if(CURRENT_LEVEL == "2"){
+                if(CURRENT_LEVEL == "2") {
                     expBar.width = expBar.width + 20;
-                }else{
-                    expBar.width = expBar + 5;
+                } else {
+                    expBar.width = expBar.width + 5;
                 }
             }
             // Set style and change title
@@ -409,7 +429,7 @@ AquaCycle.Game.prototype = {
                 this.healthBar.children.pop();
 
                 // Create the dying shark
-                this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'player');
+                this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'blacktipshark');
                 DIE_ANIM = this.dead_player.animations.add('die',[0,3,6,9,12,15,18,21], 3, false);
                 this.dead_player.angle = this.player.angle;
 
