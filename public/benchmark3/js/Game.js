@@ -231,11 +231,13 @@ AquaCycle.Game.prototype = {
     },
 
     goToNextLevel: function(){
+        //console.log(AquaCycle.game.state);
         if(CURRENT_LEVEL!="3"){
             var nextLevel = parseInt(CURRENT_LEVEL)+1;
             CURRENT_LEVEL = nextLevel.toString();
             Cookies.set('currentLevel',CURRENT_LEVEL);
-            this.state.start('Game');
+            AquaCycle.game.state.start('Game');
+            history.go(0)
         }
     },
 
