@@ -260,6 +260,7 @@ AquaCycle.Game.prototype = {
             //set cookie max level
             Cookies.set('maxLevel', "3");
             $('#nextLevelBtn').prop('disabled', true);
+            $('#winNextLevelBtn').html("Restart").attr('onclick', 'javascript:history.go(0)');
         }
     },
 
