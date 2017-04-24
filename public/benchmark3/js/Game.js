@@ -878,9 +878,13 @@ AquaCycle.Game.prototype = {
                     timer.text = parseInt(timer.text) + 20;
                     //increment the expbar because they found an item
                     expBar.width = expBar.width + (200/totalItems);
+                    if(objectsToFind.length === 0){
+                        expBar.width = 200;
+                    }
                     // Set the new object to find
                     foundObject = true;
                     currentObject = objectsToFind.pop();
+                    
                     // Show the new object to find
                     objectToFind.destroy();
                     objectToFind = AquaCycle.game.add.sprite(905,100,currentObject);
