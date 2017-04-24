@@ -4,5 +4,5 @@ The cheats for this level are the following keybord keys
     1: Skip to Level One
     2: Skip to Level Two
     3: Skip to Level 3
-    L: Win current level
-    V: Die and lose current level
+    V: Win current level
+    L: Die and lose current level
