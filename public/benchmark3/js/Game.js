@@ -32,6 +32,7 @@ var timer;
 var currentObject;
 var foundObject = false;
 var objectsToFind = [];
+var objectToFind;
 // Sound Variables
 var winMusicPlaying = false;
 var movingSoundPlaying = false;
@@ -245,7 +246,7 @@ AquaCycle.Game.prototype = {
             objectsToFind = ["tigershark","seagrass","conchshell","sanddollar","grouper","tuna","mulletfish","soda","sixpack"];
             currentObject = objectsToFind.pop();
             // Set the total number of items
-            totalItems = objectsToFind.length;
+            totalItems = objectsToFind.length + 1;
             // Set the modal text
             var objective = "<p>For this level, you are on a <b>scavenger hunt</b> where you will be shown an object underneath the information box that you must locate before the timer runs out. When you find the object, click on it to register it to the <b>Objects Found</b> page in this menu. This will cause the <b>progress bar</b> to increase and you will recieve the next object to look for. Each time you find an object in the game the timer will reset, but any time you have left will be added to that base time. This means the faster you find an object, the more time you will have to find the next object. Eating prey will also give you a small amount of extra time.</p><br><p>Your <b>goal</b> is to find all the objects in the scavenger hunt, completely filling the progress bar.</p>";
             $('#objective').append(objective);
@@ -351,6 +352,11 @@ AquaCycle.Game.prototype = {
         typetext.x = infobox.x + 5;
         typetext.y = infobox.y + 5;
         typetext.fixedToCamera = true;
+
+        if(CURRENT_LEVEL == "3") {
+            objectToFind = this.game.add.sprite(905,100,currentObject);
+            objectToFind.fixedToCamera = true;
+        }
     },
 
     loadTimer: function(){
@@ -869,15 +875,18 @@ AquaCycle.Game.prototype = {
             } else if(CURRENT_LEVEL == "2") {
                 timer.text = parseInt(timer.text) + 5;
             } else if(CURRENT_LEVEL == "3") {
-                // Make the time increase by 20 because they've found the item
-                timer.text = parseInt(timer.text) + 20;
-                //increment the expbar because they found an item
-                expBar.width = expBar.width + (200/totalItems);
                 if(this.object.name == currentObject) {
+                    // Make the time increase by 20 because they've found the item
+                    timer.text = parseInt(timer.text) + 20;
+                    //increment the expbar because they found an item
+                    expBar.width = expBar.width + (200/totalItems);
+                    // Set the new object to find
                     foundObject = true;
-                    console.log("Found a " + currentObject);
                     currentObject = objectsToFind.pop();
-                    console.log("Looking for a " + currentObject);
+                    // Show the new object to find
+                    objectToFind.destroy();
+                    objectToFind = AquaCycle.game.add.sprite(905,100,currentObject);
+                    objectToFind.fixedToCamera = true;
                 }
             }
             
