@@ -108,14 +108,18 @@
              
               <div class="modal-body">
                <h3>You Lose!</h3>
+               <div class="row">
+               <img src="images/fish_skeleton.png">
+               </div>
+               <br>
+               <div class="row">
                <table id="dieTable">
                 <tr>
                     <td><a class="btn btn-danger" href="javascript:history.go(0)">Restart</a></td>
                     <td><a class="btn btn-primary" href="../GameStartPage.html">Home</a></td>
                 </tr>
                </table>
-               
-               
+               </div>
               </div>
             <div class="modal-footer"></div>
             </div>
@@ -131,14 +135,18 @@
              
               <div class="modal-body">
                <h3>You Won!</h3>
+               <div class="row">
+               <img src="images/winning_star.png">
+               </div>
+               <br>
+               <div class="row">
                <table id="dieTable">
                 <tr>
                     <td><a class="btn btn-danger" onclick="AquaCycle.Game.prototype.goToNextLevel()">Next Level</a></td>
                     <td><a class="btn btn-primary" href="../GameStartPage.html">Home</a></td>
                 </tr>
                </table>
-               
-               
+               </div>
               </div>
             <div class="modal-footer"></div>
             </div>
