@@ -15,13 +15,18 @@ AquaCycle.game.state.add('Game', AquaCycle.Game);
 AquaCycle.game.state.start('Boot');
 
 //had to add the winning music here so that the game wouldn't consistantly play music
+var winButtonClicked = false;
 function playWinningMusic(){
     if(!winMusicPlaying){
         winMusic.play();
-        console.log(winMusic);
         setTimeout(function(){
-            $('#winbtn').click();
-            winMusicPlaying = true;
+            if(!winButtonClicked){
+                winMusicPlaying = true;
+                levelMusic.stop();
+                 $('#winbtn').click();
+                winMusicPlaying = true;
+            }
+           
         },4000)
         
     }

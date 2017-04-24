@@ -34,6 +34,7 @@ var winMusicPlaying = false;
 var movingSoundPlaying = false;
 var discoverSound = new Audio("sounds/discover.mp3");
 var winMusic = new Audio("sounds/winning.mp3");
+var levelMusic;
 AquaCycle.Game.prototype = {
     /*****************************************************
     *   CREATE FUNCTION
@@ -45,8 +46,8 @@ AquaCycle.Game.prototype = {
         this.checkCurrentLevel();
         this.loadLevel();
 
-        var levelmusic = AquaCycle.game.add.audio('bgMusic');
-        levelmusic.play("",0,0.8,true);
+        levelMusic = AquaCycle.game.add.audio('bgMusic');
+        levelMusic.play("",0,0.8,true);
         //create the keyboard controls self explanatory, walking speed will be related to shift key
         this.controls = {
             // GAME CONTROLS
@@ -507,6 +508,9 @@ AquaCycle.Game.prototype = {
     		} else {
     			// Remove one heart from the health bar
     			this.healthBar.children.pop();
+                //play damage audio
+                var damageSound = this.game.add.audio('damage');
+                damageSound.play();
 		        // Change player's vulnerability
 		        this.vulnerable();
 		        // Change the player's alpha level
