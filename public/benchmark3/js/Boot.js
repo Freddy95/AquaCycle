@@ -7,6 +7,7 @@ AquaCycle.Boot.prototype = {
 
     preload: function() {
         //use this to load assets for load screen
+        this.load.image('logo','images/logo1.png');
     },
 
     create: function(){
