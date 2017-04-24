@@ -124,6 +124,7 @@ AquaCycle.Game.prototype = {
         //add a listener function to esc key to generate pause menu
         this.controls.PAUSE.onDown.add(this.pauseGame,this);
         
+        this.loadTrash();
         this.loadPrey();
         this.loadItems();
         this.loadPredators();
@@ -178,7 +179,6 @@ AquaCycle.Game.prototype = {
             setTimeout(playWinningMusic,1);
             this.game.paused = true;
         }
-        console.log(objectsToFind);
     },
 
 
@@ -249,7 +249,7 @@ AquaCycle.Game.prototype = {
             // Set the modal text
             var objective = "<p>For this level, you are on a <b>scavenger hunt</b>! You will be shown an item underneath the info-box and you must find it before the timer in the top left runs out. As you find items, your <b>progress bar will fill up</b> and you will recieve another item to find. Your <b>goal</b> is to find all the items in the scavenger hunt and completely fill the progress bar. To <b>\"find\"</b> an item simply click on that item. Once an item is found, your timer will increase by 20 seconds to give you time to find the next item in the scavenger hunt. <b>Also</b>, you can eat prey to gain a few seconds as well. Be careful though, there are <em>predators</em> who will hunt you if you make yourself noticeable.</p>";
             $('#objective').append(objective);
-            
+
             var controls = "<p><em>Keyboard Controls:</em></p><p>| <b>W</b> | Press this button to move forward</p><p>| <b>A</b> | Press this button to move to the left</p><p>| <b>D</b> | Press this button to move to the right</p><p>| <b>SHIFT</b> | Press this button to toggle moving slow and fast</p><p>| <b>ESC</b> | Press this button to enter and exit this menu</p><br><p><em>Mouse Controls:</em></p><p>While moving around, use your mouse to click on different objects in the game world. Finding new objects will earn you <b>more time</b> and facts about the objects will appear in the <b>Objects Found</b> tab of this menu.</p>";
             $('#controls').append(controls);
 
@@ -829,6 +829,30 @@ AquaCycle.Game.prototype = {
 
     },
 
+    loadTrash: function(){
+        this.pollution = this.game.add.group();
+        this.pollution.enableBody = true;
+        var trash;
+        var result = this.findObjectsByType('trash', this.map, 'objectLayer');
+
+
+        result.forEach(function(element){
+            element.properties.sprite = element.properties.name;
+            this.createFromTiledObject(element,this.pollution);
+        },this);  
+        for (var i = 0; i < this.pollution.hash.length; i++) {
+            trash = this.pollution.hash[i];
+           
+            //click event
+            trash.events.onInputDown.add(this.getObjectInformation, {object : trash, objs : itemsFound});
+        }
+
+        this.pollution.forEach(function(it){
+            it.inputEnabled = true;
+        });
+
+    },
+
     // This method will get the information on mouseclick down of a certain object clicked
     getObjectInformation: function(){
         // add to user
@@ -847,8 +871,9 @@ AquaCycle.Game.prototype = {
                 timer.text = parseInt(timer.text) + 20;
                 if(this.object.name == currentObject) {
                     foundObject = true;
-                    console.log("Found a " + foundObject);
+                    console.log("Found a " + currentObject);
                     currentObject = objectsToFind.pop();
+                    console.log("Looking for a " + currentObject);
                 }
             }
             

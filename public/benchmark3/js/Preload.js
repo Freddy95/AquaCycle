@@ -31,16 +31,18 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.image('pinkshrimp','assets/pinkshrimp.png');
         AquaCycle.game.load.image('brownshrimp','assets/brownshrimp.png');
         AquaCycle.game.load.image('peacockflounder','assets/peacockflounder.png');
+        AquaCycle.game.load.image('shark','assets/shark.png');
+        AquaCycle.game.load.image('mulletfish', 'assets/mulletfish.png');
+        AquaCycle.game.load.image('tuna', 'assets/tuna.png');
+        AquaCycle.game.load.image('grouper', 'assets/grouper.png');
 
         // Load the item images
         AquaCycle.game.load.image('shipwreck','assets/shipwreck.png');
         AquaCycle.game.load.image('seagrass', 'assets/seagrass.png');
         AquaCycle.game.load.image('sanddollar', 'assets/sanddollar.png');
         AquaCycle.game.load.image('conchshell', 'assets/conchshell.png');
-        AquaCycle.game.load.image('shark','assets/shark.png');
-        AquaCycle.game.load.image('mulletfish', 'assets/mulletfish.png');
-        AquaCycle.game.load.image('tuna', 'assets/tuna.png');
-        AquaCycle.game.load.image('grouper', 'assets/grouper.png');
+        AquaCycle.game.load.image('soda','assets/soda.png');
+        AquaCycle.game.load.image('sixpack','assets/sixpack.png');
     },
 
     create: function() {
