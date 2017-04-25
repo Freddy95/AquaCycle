@@ -13,6 +13,10 @@
         "source": "/benchmark2",
         "destination": "/benchmark2/GameStartPage.html",
         "type" : 301
+      },{
+        "source":"/benchmark3",
+        "destination": "/benchmark3/GameStartPage.html",
+        "type": 301
       }
     ],"rewrites": [ {
       "source": "**",
