@@ -1,0 +1,158 @@
+<!Doctype html>
+<!--Music Not Created by us, all credit goes to www.bensound.com-->
+    <head>
+        <title> Benchmark 3 </title>
+        <script src = "js/jquery.min.js"></script>
+        <script src = "js/js.cookie.js"></script>
+        <script src = "js/phaser.min.js"></script>
+        <script src = "js/Boot.js"></script>
+        <script src = "js/Game.js"></script>
+        <script src = "js/Preload.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel = "stylesheet" type="text/css" href="css/Game.css">
+        <link rel="stylesheet" type="text/css" href="css/Modal.css">
+    </head>
+    <body>
+        <script src = "js/Main.js"></script>
+        <div id ="game_location"></div>
+        <button type="button" id="btn" data-toggle="modal" data-target="#myModal" style="display:none"></button>
+        <button type="button" id="start" data-toggle="modal" data-target="#startModal" style="display:none"></button>
+        <button type="button" id="diebtn" data-toggle="modal" data-target="#dieModal" style="display:none" data-backdrop="static"></button>
+        <button type="button" id="winbtn" data-toggle="modal" data-target="#winModal" style="display:none" data-backdrop="static"></button>
+        <!-- PAUSE MODAL -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body" id="modal-body">
+                <!-- Pause Menu w/ Home, Save, & Restart buttons -->
+                <div class="col-md-3" id="pauseSettings" >
+                    <table>
+                        <caption><h3 id="h">Pause Menu</h3></caption>
+                        <tr>
+                            <td><a class="btn btn-primary" href="GameStartPage.html">Home</a></td>
+                        </tr>
+                        <tr>
+                            <td><a class="btn btn-primary" href="javascript:history.go(0)">Restart</a></td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-primary" onclick="AquaCycle.Game.prototype.goToNextLevel()" id="nextLevelBtn">Next Level</button></td>
+                        </tr>
+                    </table>      
+                </div>
+                <!-- Tab div w/ game rules & items found page -->
+                <div class="col-md-9" id="itemsFound" >
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!-- TAB HEADINGS -->
+                    <ul class="nav nav-tabs">
+                    <li><a href="#tab1" data-toggle="tab">Objects Found</a></li>
+                    <li class="active"><a href="#tab2" data-toggle="tab">Gameplay</a></li>
+                    </ul>
+                    <div class="tab-content">
+                    <!-- Items Tab -->
+                    <div class="tab-pane" id="tab1">
+                        <h2 id="pauseHeading">Objects Found</h2>
+                      <div id="items"></div>
+                    </div>
+                    <!-- Gameplay Tab -->
+                    <div class="tab-pane active" id="tab2">
+                      <h2 id="pauseHeading">Gameplay</h2>
+                      <!-- Gameplay sections -->
+                      <h4 class="subheading">Objective</h4>
+                      <!-- Append a div via JavaScript -->
+                      <div id="objective">
+                      </div>
+                      <br>
+                      <h4 class="subheading">Controls</h4>
+                      <!-- Append a div via JavaScript -->
+                      <div id="controls">
+                      </div>
+                      <br>
+                      <h4 class="subheading">Strategy</h4>
+                      <!-- Append a div via JavaScript -->
+                      <div id="strategy">
+                      </div>
+                      <br>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- START LEVEL MODAL -->
+        <div id="startModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 id="objective" class="subheading">Objective</h4>
+              <!-- PUT STUFF HERE -->
+              </div>
+            <div class="modal-footer"></div>
+            </div>
+
+          </div>
+        </div>
+        <!-- DIE MODAL -->
+        <div id="dieModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+             
+              <div class="modal-body">
+               <h3>You Lose!</h3>
+               <div class="row">
+               <img src="images/fish_skeleton.png">
+               </div>
+               <br>
+               <div class="row">
+               <table id="dieTable">
+                <tr>
+                    <td><a class="btn btn-danger" href="javascript:history.go(0)">Restart</a></td>
+                    <td><a class="btn btn-primary" href="GameStartPage.html">Home</a></td>
+                </tr>
+               </table>
+               </div>
+              </div>
+            <div class="modal-footer"></div>
+            </div>
+
+          </div>
+        </div>
+        <!-- WIN MODAL -->
+        <div id="winModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+             
+              <div class="modal-body">
+               <h3>You Won!</h3>
+               <div class="row">
+               <img src="images/winning_star.png">
+               </div>
+               <br>
+               <div class="row">
+               <table id="dieTable">
+                <tr>
+                    <td><a class="btn btn-danger" onclick="AquaCycle.Game.prototype.goToNextLevel()" id="winNextLevelBtn">Next Level</a></td>
+                    <td><a class="btn btn-primary" href="GameStartPage.html">Home</a></td>
+                </tr>
+               </table>
+               </div>
+              </div>
+            <div class="modal-footer"></div>
+            </div>
+
+          </div>
+        </div>
+    </body>
+
+</html>

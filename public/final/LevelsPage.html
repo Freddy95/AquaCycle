@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+
+		<title>Levels</title>
+		 <script src = "js/levels.js"></script>
+    	<script src = "js/jquery.min.js"></script>
+        <script src = "js/js.cookie.js"></script>
+
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	
+    	<link rel="stylesheet" type="text/css" href="css/LevelsPage.css">
+    	<link rel="stylesheet" type="text/css" href="css/NavBar1.css">
+
+	</head>
+	<body onload="load()">
+		<nav class="navbar bg-primary">
+		  	<div class="container-fluid">
+		    
+		    <div class="row">
+			      <ul class="nav navbar-nav">
+			      	<li class="navbar-header">
+				      <a class="navbar-brand" href="GameStartPage.html">
+				        <img id="nav-logo" alt="AquaCycle Logo" src="images/logo1.png">
+				      </a>
+		    		</li>
+		    		<li class="nav-b pull-right"><a href="HelpPage.html">Help</a></li>
+		    		<li class="nav-b pull-right"><a href="ControlsPage.html">Controls</a></li>	     	
+			        <li class="nav-b active pull-right"><a href="LevelsPage.html">Levels</a></li>
+			     	
+			      </ul>
+			     </div>
+		      
+			</div><!-- end of navbar-->
+		</nav>
+		<div class="container-fluid" id="div">
+			<div class="row" id="heading">
+				<h1>Levels</h1>
+
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+
+					<button type="button" class="well" id="btn1" onclick="goToLevel(1)"> 
+
+						    <div class="level">
+								<h3 class="levelTitle">Level 1</h3>
+								<hr>
+								<img src="images/shark.png" class="sprite">
+								<p>Description: The Blacktip shark gets its name from the distinctive black markings on the tips of its fins. The shark lives off of most coastal waters near the equator and has a history of attacking humans 28 times unprovoked. The fish is target by several fisheries and its diet consists of many different kinds of fish including shrimp and porcupine fish.</p>
+							</div>
+	
+					</button>
+
+				</div>
+				<div class="col-md-4">
+					<button class="well" id="btn2" disabled onclick="goToLevel(2)">
+						<div class="row level">
+							<h3 class="levelTitle">Level 2</h3>
+							<hr>
+							<img src="images/fish.png" class="sprite">
+							<p>Description: The Barracuda Fish is known for its long size, feirce appearance, and aggresive behavior using their have fang-like teeth of different sizes. The Barracuda Fish is typically found in the mediterrean sea as well as the altantic coast of North America to Brazil. Warning: Barracuda Fish are known to be dangerous to swimmers.</p>
+						</div>
+					</button>
+				</div>
+				<div class="col-md-4">
+					<button class="well" id="btn3" disabled onclick="goToLevel(3)">
+						<div class="row level">
+							<h3 class="levelTitle">Level 3</h3>
+							<hr>
+							<img src="images/fish.png" class="sprite">
+							<p>Description: The Barracuda Fish is known for its long size, feirce appearance, and aggresive behavior using their have fang-like teeth of different sizes. The Barracuda Fish is typically found in the mediterrean sea as well as the altantic coast of North America to Brazil. Warning: Barracuda Fish are known to be dangerous to swimmers.
+							</p>
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

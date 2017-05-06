@@ -1,0 +1,130 @@
+/* Generic Modal Styling */
+.modal-content{
+	background-color: #d0bda5;
+}
+
+.modal-header{
+	padding-bottom: 0px;
+}
+
+.modal-footer{
+	padding-top: 0px;
+	border: 0px;
+}
+
+.modal-body{
+	padding: 0;
+}
+
+#modal-body{
+	height: 70vh;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+.btn{
+	width: 50%; 
+}
+
+/* Pause Modal Styling */
+#pauseSettings{
+	text-align: center;
+	height: 100%;
+	border-right: 1px #826D61 solid;
+}
+
+#pauseHeading {
+	text-align: center;
+	color: #2a4157;
+}
+
+#itemsFound{
+	padding-top: 5px;
+}
+
+table {
+	height: 40%;
+	margin-top: 40%;
+	margin-left: 5%;
+	width: 90%;
+}
+
+caption {
+	text-align: center;
+	color: #2a4157;
+	border: 0px;
+}
+
+/* Tab Modal Styling */
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+	border: 1px #826D61 solid;
+	background-color: #F2E7C9 !important;
+}
+
+.nav-tabs > li > a:hover {
+	border: 1px #826D61 solid;
+	background-color: #F2E7C9;
+}
+
+.nav-tabs > li > a {
+	color: #2a4157;
+}
+
+.nav-tabs {
+	border-bottom: 1px #826D61 solid;
+}
+
+.tab-pane {
+	height: 460px;
+	width: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+/* Items Found Tab Styling */
+.image img {
+   width: 75%;
+   margin-left: auto;
+   margin-right: auto;
+   display: block;
+}
+
+#trash {
+	border: 2px solid black;
+}
+
+#item {
+	border: 2px solid blue;
+}
+
+#prey {
+	border: 2px solid green;
+}
+
+#predator {
+	border: 2px solid red;
+}
+
+/* Gameplay Tab Styling */
+.subheading {
+	color: #2a4157;
+}
+
+p {
+	color: #2a4157;
+}
+
+/* Win/Lose Modal Styling */
+#winModal{
+	text-align: center;
+}
+
+#dieModal{
+	text-align: center;
+}
+
+#dieTable{
+	margin-top: auto;
+}

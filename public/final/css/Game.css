@@ -1,0 +1,11 @@
+#game_location {
+    width: 70%;
+    height: 30;
+    margin: auto;
+    border: #2a4157 15px solid;
+    overflow: auto;
+}
+
+body {
+	background-color: #c9ccb2;
+}
