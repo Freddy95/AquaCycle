@@ -17,6 +17,11 @@
         "source":"/benchmark3",
         "destination": "/benchmark3/GameStartPage.html",
         "type": 301
+      },{
+        "source":"/",
+        "destination": "/final/GameStartPage.html",
+        "type":301
+
       }
     ],"rewrites": [ {
       "source": "**",
