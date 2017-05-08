@@ -10,7 +10,6 @@ function load () {
 			$('#btn2').prop('disabled', false);
 		}
 	}
-	// body...
 }
 
 function goToLevel(level){
