@@ -481,10 +481,10 @@ AquaCycle.Game.prototype = {
             SLOW_ANIM = this.player.animations.add('slow',[3,7,11,15,2,6,10,14], 20, true);
             FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
         } else if(CURRENT_LEVEL == "3") {
-            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'barracudafish');
-            IDLE_ANIM = this.player.animations.add('idle',[3,7,11,15,2,6,10,14], 10, true);
-            SLOW_ANIM = this.player.animations.add('slow',[3,7,11,15,2,6,10,14], 20, true);
-            FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
+            this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'seaturtle');
+            IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5], 10, true);
+            SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5], 20, true);
+            FAST_ANIM = this.player.animations.add('fast',[0,1,2,3,4,5], 30, true);
         }
         
         AquaCycle.game.physics.arcade.enable(this.player);
