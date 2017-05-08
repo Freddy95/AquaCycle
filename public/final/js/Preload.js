@@ -28,7 +28,7 @@ AquaCycle.Preload.prototype = {
         // Load the player sprite sheets
         AquaCycle.game.load.spritesheet('blacktipshark', 'assets/blacktip_shark.png',128,64);
         AquaCycle.game.load.spritesheet('barracudafish', 'assets/barracudafish.png',128,64);
-        AquaCycle.game.load.spritesheet('seaturtle', 'assets/seaturtle_animation.png',128,128);
+        AquaCycle.game.load.spritesheet('seaturtle', 'assets/sea_turtle.png',64,64);
 
         // Load the predator sprite sheets
         AquaCycle.game.load.spritesheet('tigershark','assets/tiger_shark.png',192,96);

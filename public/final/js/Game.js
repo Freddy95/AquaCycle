@@ -482,9 +482,9 @@ AquaCycle.Game.prototype = {
             FAST_ANIM = this.player.animations.add('fast',[3,7,11,15,2,6,10,14], 30, true);
         } else if(CURRENT_LEVEL == "3") {
             this.player = AquaCycle.game.add.sprite(result[0].x,result[0].y,'seaturtle');
-            IDLE_ANIM = this.player.animations.add('idle',[0,1,2,3,4,5], 2, true);
-            SLOW_ANIM = this.player.animations.add('slow',[0,1,2,3,4,5], 5, true);
-            FAST_ANIM = this.player.animations.add('fast',[0,1,2,3,4,5], 10, true);
+            IDLE_ANIM = this.player.animations.add('idle',[1,3,5,7,9,11], 2, true);
+            SLOW_ANIM = this.player.animations.add('slow',[1,3,5,7,9,11], 5, true);
+            FAST_ANIM = this.player.animations.add('fast',[1,3,5,7,9,11], 10, true);
         }
         
         AquaCycle.game.physics.arcade.enable(this.player);
@@ -583,8 +583,8 @@ AquaCycle.Game.prototype = {
                     this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'barracudafish');
                     DIE_ANIM = this.dead_player.animations.add('die',[1,5,9,13,0,4,8,12], 3, false);
                 } else if(CURRENT_LEVEL == "3"){
-                    this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'barracudafish');
-                    DIE_ANIM = this.dead_player.animations.add('die',[1,5,9,13,0,4,8,12], 3, false);
+                    this.dead_player = this.game.add.sprite(this.player.body.x + 16, this.player.body.y + 16, 'seaturtle');
+                    DIE_ANIM = this.dead_player.animations.add('die',[0,2,4,6,8,10], 3, false);
                 }
                 
                 this.dead_player.angle = this.player.angle;
