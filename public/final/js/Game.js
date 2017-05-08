@@ -370,7 +370,7 @@ AquaCycle.Game.prototype = {
         typetext.fixedToCamera = true;
 
         if(CURRENT_LEVEL == "3") {
-            objectToFind = this.game.add.sprite(905,100,currentObject);
+            objectToFind = this.game.add.sprite(1030,100,currentObject);
             objectToFind.fixedToCamera = true;
         }
     },
@@ -923,7 +923,7 @@ AquaCycle.Game.prototype = {
                         
                         // Show the new object to find
                         objectToFind.destroy();
-                        objectToFind = AquaCycle.game.add.sprite(905,100,currentObject);
+                        objectToFind = AquaCycle.game.add.sprite(1030,100,currentObject);
                         objectToFind.fixedToCamera = true;
                     }
                 }
