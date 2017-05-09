@@ -643,17 +643,17 @@ AquaCycle.Game.prototype = {
                 }
                 else if(expBar.width ==60){
                     this.player.scale.setTo(1.0,1.0);
-                    playerSpeed += 50;
-                    SLOW_VELOCITY = 250;
-                    FAST_VELOCITY = 450;
+                    playerSpeed += 20;
+                    SLOW_VELOCITY = 220;
+                    FAST_VELOCITY = 420;
                     this.healthBar.create(this.healthBar.length * 32, 32, 'heart');
                 }
                 else if(expBar.width == 120){
                     this.player.scale.setTo(1.4, 1.4);
                     this.healthBar.create(this.healthBar.length * 32, 32, 'heart');
-                    playerSpeed += 50;
-                    SLOW_VELOCITY = 300;
-                    FAST_VELOCITY = 500;
+                    playerSpeed += 20;
+                    SLOW_VELOCITY = 240;
+                    FAST_VELOCITY = 440;
                 }
             }
     },
