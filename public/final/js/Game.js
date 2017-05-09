@@ -347,7 +347,14 @@ AquaCycle.Game.prototype = {
 
     loadInfoBox: function() {
         // Add the info box and the infobox text
-        infobox = this.game.add.sprite(905,10,'infobox');
+        if(CURRENT_LEVEL=="3"){
+            infobox = this.game.add.sprite(905,10,'infobox3')
+
+        }
+        else{
+            infobox = this.game.add.sprite(905,10,'infobox');
+        }
+        
         infobox.alpha = 0.8;
         infobox.fixedToCamera = true;
         infostyle = { font: '20px Arial', fill: '#2a4157', wordWrap: true, wordWrapWidth: infobox.width - 10, boundsAlignH: 'right' };
@@ -569,7 +576,7 @@ AquaCycle.Game.prototype = {
 
     takeDamage: function() {
         // The player has hit something that will cause it to take damage
-        if(!this.player.invincible) {
+        if(!this.player.invincible&&playerLoaded) {
             if(this.healthBar.children[1] == null) {
                 // play a dying animation and end the game
                 this.healthBar.children.pop();

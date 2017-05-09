@@ -13,7 +13,8 @@ AquaCycle.Preload.prototype = {
         AquaCycle.game.load.tilemap('level2', 'assets/level2.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.tilemap('level3', 'assets/level3.json',null,Phaser.Tilemap.TILED_JSON);
         AquaCycle.game.load.image('tiles','assets/depth_tiles.png');
-        AquaCycle.game.load.image('infobox','assets/infobox_modified.png');
+        AquaCycle.game.load.image('infobox','assets/infobox_small.png');
+        AquaCycle.game.load.image('infobox3','assets/infobox_modified.png');
         AquaCycle.game.load.image('heart','assets/heart.png');
 
         // Load sounds
